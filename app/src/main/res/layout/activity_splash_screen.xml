@@ -29,25 +29,11 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iv_icon"
-            android:background="@mipmap/icon"
             android:layout_above="@+id/tv_logo"
             android:layout_alignLeft="@+id/tv_logo"
             android:layout_alignStart="@+id/tv_logo"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Logistica"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            android:id="@+id/tv_logo"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:padding="20dp" />
+            android:src="@drawable/logo2"/>
 
     </LinearLayout>
 

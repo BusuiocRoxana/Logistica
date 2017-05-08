@@ -1,9 +1,11 @@
-package disertatie.com.disertatie;
+package disertatie.com.disertatie.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import disertatie.com.disertatie.R;
 
 public class SplashScreenActivity extends Activity {
 

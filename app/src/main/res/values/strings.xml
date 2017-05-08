@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Logistica</string>
     <string name="hello">Aplicatie Logistica</string>
+
+    <string name="pagina_principala">Pagina Principala</string>
+    <string name="pagina_date_interne">Detalii Companie</string>
+
+    <string name="denumire_material">Material</string>
+    <string name="stoc_minim">Stoc Minim</string>
+    <string name="stoc_curent">Stoc Curent</string>
+
+    <string name="denumire_furnizor">Furnizor</string>
+    <string name="numar_inreg_RC">Numar Inregistrare Registrul Comertului</string>
+    <string name="adresa_furnizor">Detalii Adresa</string>
+    <string name="rating">Rating</string>
 </resources>
