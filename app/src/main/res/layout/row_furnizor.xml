@@ -41,16 +41,16 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/ivEditMaterial"
-            android:layout_margin="10dp" />
-        <!-- android:src="@drawable/edit"-->
+            android:layout_margin="10dp"
+            android:src="@drawable/edit"/>
 
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/ivDeleteMaterial"
-            android:layout_margin="10dp" />
-        <!--android:src="@drawable/delete"-->
+            android:layout_margin="10dp"
+           android:src="@drawable/delete"/>
     </LinearLayout>
 
     <LinearLayout

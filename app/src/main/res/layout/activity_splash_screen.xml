@@ -31,8 +31,8 @@
             android:layout_above="@+id/tv_logo"
             android:layout_alignLeft="@+id/tv_logo"
             android:layout_alignStart="@+id/tv_logo"
-            android:layout_gravity="center_horizontal"/>
-            <!--android:src="@drawable/logo2"-->
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo2"/>
 
     </LinearLayout>
 

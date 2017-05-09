@@ -28,8 +28,8 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-               <!-- android:src="@drawable/company_data" -->
+                android:layout_height="wrap_content"
+                android:src="@drawable/company_data"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,8 +47,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"/>
-                <!--android:src="@drawable/activities"-->
+                android:layout_marginRight="10dp"
+                android:src="@drawable/activities"/>
 
 
             <TextView
@@ -66,8 +66,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"/>
-               <!-- android:src="@drawable/suppliers"-->
+                android:layout_marginRight="10dp"
+                android:src="@drawable/suppliers"/>
 
 
             <TextView
@@ -86,8 +86,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"  />
-               <!-- android:src="@drawable/materials"-->
+                android:layout_marginRight="10dp"
+                android:src="@drawable/materials"/>
 
 
             <TextView
