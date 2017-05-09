@@ -16,7 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.DateInterneActivity"></activity>
+        <activity android:name=".activities.DateInterneActivity" />
+        <activity android:name=".activities.MaterialsActivity" />
+        <activity android:name=".activities.FurnizoriActivity"></activity>
     </application>
 
 </manifest>

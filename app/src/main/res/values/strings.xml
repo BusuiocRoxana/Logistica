@@ -13,4 +13,9 @@
     <string name="numar_inreg_RC">Numar Inregistrare Registrul Comertului</string>
     <string name="adresa_furnizor">Detalii Adresa</string>
     <string name="rating">Rating</string>
+
+    <string name="materiale">Materiale</string>
+    <string name="furnizori">Furnizori</string>
+
+
 </resources>

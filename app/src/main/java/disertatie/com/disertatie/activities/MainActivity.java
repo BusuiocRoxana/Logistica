@@ -13,6 +13,9 @@ import disertatie.com.disertatie.R;
 public class MainActivity extends AppCompatActivity {
     private LinearLayout llDateInterne;
     private LinearLayout llActivitati;
+    private LinearLayout llMateriale;
+    private LinearLayout llFurnizori;
+
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         // toolbar setup
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
-            // use toolbar as actionbar
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -34,9 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
         llDateInterne=(LinearLayout)findViewById(R.id.llDateInterne);
         llActivitati=(LinearLayout)findViewById(R.id.llActivitati);
+        llMateriale = (LinearLayout)findViewById(R.id.llMateriale);
+        llFurnizori = (LinearLayout)findViewById(R.id.llFurnizori);
 
         llDateInterne.setOnClickListener(clickListener);
         llActivitati.setOnClickListener(clickListener);
+        llMateriale.setOnClickListener(clickListener);
+        llFurnizori.setOnClickListener(clickListener);
+
     }
 
     View.OnClickListener clickListener=new View.OnClickListener() {
@@ -50,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(i);
                     break;
                 case R.id.llActivitati:
+                    break;
+                case R.id.llMateriale:
+                    i = new Intent(MainActivity.this, MaterialsActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.llFurnizori:
+                    i = new Intent(MainActivity.this, FurnizoriActivity.class);
+                    startActivity(i);
                     break;
             }
         }
