@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.DateInterneActivity"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white_22"></RelativeLayout>
-
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:elevation="1dp"
+        android:orientation="vertical"
         android:visibility="visible">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/company_name"/>
-
+                android:src="@drawable/company_name" />
 
 
             <EditText
@@ -39,13 +37,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Denumire Companie"
-                android:textSize="@dimen/edit_text"/>
+                android:textSize="@dimen/edit_text" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
@@ -58,18 +56,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Numar Inregistrare Registrul Comertului"
-                android:textSize="@dimen/edit_text"/>
+                android:textSize="@dimen/edit_text" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/phone"/>
+                android:src="@drawable/phone" />
 
 
             <EditText
@@ -77,20 +75,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.94"
-                android:inputType="phone"
                 android:hint="Telefon"
-                android:textSize="@dimen/edit_text"/>
+                android:inputType="phone"
+                android:textSize="@dimen/edit_text" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/address"/>
+                android:src="@drawable/address" />
 
             <EditText
                 android:id="@+id/etAdresaCompanie"
@@ -98,13 +96,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Adresa"
-                android:textSize="@dimen/edit_text"/>
+                android:textSize="@dimen/edit_text" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
@@ -116,11 +114,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="textEmailAddress"
                 android:hint="Email"
-                android:textSize="@dimen/edit_text"/>
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/edit_text" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/toolbar"
+            android:background="@color/white_22">
+
+            <Button
+                android:id="@+id/btnSalveaza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="125dp"
+                android:layout_marginStart="125dp"
+                android:layout_marginTop="23dp"
+                android:text="@string/salveaza" />
+        </RelativeLayout>
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

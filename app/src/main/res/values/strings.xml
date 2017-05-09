@@ -17,5 +17,8 @@
     <string name="materiale">Materiale</string>
     <string name="furnizori">Furnizori</string>
 
+    <string name="salveaza">Salveaza</string>
+    <string name="salveaza_modificari">Salveaza Modificari</string>
+
 
 </resources>

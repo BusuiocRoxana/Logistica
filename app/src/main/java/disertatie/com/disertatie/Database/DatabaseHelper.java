@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String SPACE = " ";
 
-    public static final String DATABASE_NAME = "LOGISTICA.db";
+    public static final String DATABASE_NAME = "LOGISTICA";
     public static final String TABLE_COMPANIE = "COMPANIE";
 
     public static final String COLUMN_COD_COMPANIE = "COD_COMPANIE";
@@ -37,15 +37,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + SPACE + TABLE_COMPANIE +
                 "("
                 + COLUMN_COD_COMPANIE + SPACE
-                + "integer primary key,"
+                + "integer primary key AUTOINCREMENT NOT NULL,"
                 + COLUMN_DENUMIRE_COMPANIE + SPACE +
-                "text not null," +
+                "text," +
                 COLUMN_NR_INREG_RC + SPACE +
-                "text not null," +
+                "text," +
                 COLUMN_EMAIL_COMPANIE + SPACE +
                 "text," +
                 COLUMN_COD_ADRESA + SPACE +
-                "text," +
+                "integer," +
                 COLUMN_TELEFON_COMPANIE + SPACE +
                 "text)");
     }
@@ -59,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean insertCompanie(String denumire_companie, String nr_inreg_rc, String email, int cod_adresa,String telefon) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_COD_ADRESA, denumire_companie);
+        contentValues.put(COLUMN_DENUMIRE_COMPANIE, denumire_companie);
         contentValues.put(COLUMN_NR_INREG_RC, nr_inreg_rc);
         contentValues.put(COLUMN_EMAIL_COMPANIE, email);
         contentValues.put(COLUMN_COD_ADRESA, cod_adresa);
@@ -68,9 +68,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getData(int id) {
+    public Cursor getData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from"+SPACE+TABLE_COMPANIE+SPACE+"where"+SPACE+COLUMN_COD_COMPANIE+"="+id+"", null );
+        Cursor res =  db.rawQuery( "select * from"+SPACE+TABLE_COMPANIE+SPACE, null );
         return res;
     }
 
@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateCompanie (int cod_companie, String denumire_companie, String nr_inreg_rc, String email, int cod_adresa,String telefon) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_COD_ADRESA, denumire_companie);
+        contentValues.put(COLUMN_DENUMIRE_COMPANIE, denumire_companie);
         contentValues.put(COLUMN_NR_INREG_RC, nr_inreg_rc);
         contentValues.put(COLUMN_EMAIL_COMPANIE, email);
         contentValues.put(COLUMN_COD_ADRESA, cod_adresa);

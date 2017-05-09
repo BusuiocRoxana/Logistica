@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,6 +24,8 @@ public class DateInterneActivity extends AppCompatActivity {
     private EditText etEmailCompanie;
     private EditText etTelefonCompanie;
     private EditText etCodAdresaCompanie;
+
+    private Button btnSalveaza;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,50 +50,64 @@ public class DateInterneActivity extends AppCompatActivity {
         etEmailCompanie = (EditText) findViewById(R.id.etEmailCompanie);
         etTelefonCompanie = (EditText) findViewById(R.id.etTelefonCompanie);
         etCodAdresaCompanie = (EditText) findViewById(R.id.etAdresaCompanie);
+        btnSalveaza = (Button) findViewById(R.id.btnSalveaza);
 
         databaseHelper = new DatabaseHelper(this);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            int Value = extras.getInt("id");
+        btnSalveaza.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseHelper.insertCompanie(etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
+                        etEmailCompanie.getText().toString(), Integer.parseInt(etCodAdresaCompanie.getText().toString()),
+                        etTelefonCompanie.getText().toString());
+            }
+        });
 
-            if (Value > 0) {
-                //means this is the view part not the add contact part.
-                Cursor rs = databaseHelper.getData(Value);
-                id_To_Update = Value;
-                rs.moveToFirst();
+        // Bundle extras = getIntent().getExtras();
+        // if (extras != null) {
+        // int Value = extras.getInt("id");
 
-                String denumire = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_DENUMIRE_COMPANIE));
-                String nrInregRC = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_NR_INREG_RC));
-                String adresa = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_COD_ADRESA));
-                String telefon = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_TELEFON_COMPANIE));
-                String email = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_EMAIL_COMPANIE));
+        //if (Value > 0) {
 
-                if (!rs.isClosed()) {
-                    rs.close();
-                }
+        Cursor rs = databaseHelper.getData();
+        //id_To_Update = Value;
+        rs.moveToFirst();
+        if (rs.getCount() != 0) {
+            String denumire = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_DENUMIRE_COMPANIE));
+            String nrInregRC = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_NR_INREG_RC));
+            String adresa = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_COD_ADRESA));
+            String telefon = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_TELEFON_COMPANIE));
+            String email = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_EMAIL_COMPANIE));
 
-                etDenumireCompanie.setText((CharSequence) denumire);
-                etDenumireCompanie.setFocusable(false);
-                etDenumireCompanie.setClickable(false);
-
-                etTelefonCompanie.setText((CharSequence) telefon);
-                etTelefonCompanie.setFocusable(false);
-                etTelefonCompanie.setClickable(false);
-
-                etEmailCompanie.setText((CharSequence) email);
-                etEmailCompanie.setFocusable(false);
-                etEmailCompanie.setClickable(false);
-
-                etCodAdresaCompanie.setText((CharSequence) adresa);
-                etCodAdresaCompanie.setFocusable(false);
-                etCodAdresaCompanie.setClickable(false);
-
-                etTelefonCompanie.setText((CharSequence) telefon);
-                etTelefonCompanie.setFocusable(false);
-                etTelefonCompanie.setClickable(false);
+            if (!rs.isClosed()) {
+                rs.close();
             }
 
+            etDenumireCompanie.setText((CharSequence) denumire);
+            etDenumireCompanie.setFocusable(false);
+            etDenumireCompanie.setClickable(false);
+
+            etNrInregRC.setText((CharSequence) nrInregRC);
+            etNrInregRC.setFocusable(false);
+            etNrInregRC.setClickable(false);
+
+            etTelefonCompanie.setText((CharSequence) telefon);
+            etTelefonCompanie.setFocusable(false);
+            etTelefonCompanie.setClickable(false);
+
+            etEmailCompanie.setText((CharSequence) email);
+            etEmailCompanie.setFocusable(false);
+            etEmailCompanie.setClickable(false);
+
+            etCodAdresaCompanie.setText((CharSequence) adresa);
+            etCodAdresaCompanie.setFocusable(false);
+            etCodAdresaCompanie.setClickable(false);
+
+            etTelefonCompanie.setText((CharSequence) telefon);
+            etTelefonCompanie.setFocusable(false);
+            etTelefonCompanie.setClickable(false);
         }
     }
-}
+        }
+    //}
+//}
