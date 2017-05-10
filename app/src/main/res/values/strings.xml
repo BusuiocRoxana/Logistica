@@ -19,6 +19,8 @@
 
     <string name="salveaza">Salveaza</string>
     <string name="salveaza_modificari">Salveaza Modificari</string>
+    <string name="modifica">Modifica</string>
+    <string name="adauga_material">Adauga Material</string>
 
 
 </resources>

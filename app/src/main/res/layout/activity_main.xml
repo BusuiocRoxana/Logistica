@@ -27,8 +27,9 @@
             android:layout_marginRight="10dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/company_data"/>
 
             <TextView
@@ -45,8 +46,8 @@
             android:id="@+id/llActivitati">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/activities"/>
 
@@ -64,8 +65,8 @@
             android:id="@+id/llFurnizori">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/suppliers"/>
 
@@ -84,8 +85,8 @@
             android:id="@+id/llMateriale">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/materials"/>
 

@@ -3,20 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.DateInterneActivity"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activities.DateInterneActivity">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@color/white"
         android:elevation="1dp"
         android:orientation="vertical"
         android:visibility="visible">
@@ -27,8 +28,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/company_name" />
 
 
@@ -46,8 +47,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/rc" />
 
             <EditText
@@ -65,8 +66,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/phone" />
 
 
@@ -86,8 +87,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/address" />
 
             <EditText
@@ -105,8 +106,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/email" />
 
             <EditText
@@ -121,10 +122,28 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="241dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/toolbar"
             android:background="@color/white_22">
+
+            <Button
+                android:id="@+id/btnSalveazaModificari"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/salveaza_modificari"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnModifica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/modifica"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnSalveaza"
@@ -136,8 +155,10 @@
                 android:layout_marginLeft="125dp"
                 android:layout_marginStart="125dp"
                 android:layout_marginTop="23dp"
-                android:text="@string/salveaza" />
+                android:text="@string/salveaza"
+                android:visibility="visible" />
         </RelativeLayout>
+
     </LinearLayout>
 
 

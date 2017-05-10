@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,8 @@ public class DateInterneActivity extends AppCompatActivity {
     private EditText etCodAdresaCompanie;
 
     private Button btnSalveaza;
+    private Button btnModifica;
+    private Button btnSalveazaModificari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class DateInterneActivity extends AppCompatActivity {
         etTelefonCompanie = (EditText) findViewById(R.id.etTelefonCompanie);
         etCodAdresaCompanie = (EditText) findViewById(R.id.etAdresaCompanie);
         btnSalveaza = (Button) findViewById(R.id.btnSalveaza);
+        btnModifica = (Button)findViewById(R.id.btnModifica) ;
+        btnSalveazaModificari = (Button)findViewById(R.id.btnSalveazaModificari) ;
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -60,16 +65,55 @@ public class DateInterneActivity extends AppCompatActivity {
                 databaseHelper.insertCompanie(etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
                         etEmailCompanie.getText().toString(), Integer.parseInt(etCodAdresaCompanie.getText().toString()),
                         etTelefonCompanie.getText().toString());
+                btnSalveaza.setVisibility(View.GONE);
+                btnModifica.setVisibility(View.VISIBLE);
+
+                etDenumireCompanie.setEnabled(false);
+                etNrInregRC.setEnabled(false);
+                etEmailCompanie.setEnabled(false);
+                etCodAdresaCompanie.setEnabled(false);
+                etTelefonCompanie.setEnabled(false);
             }
         });
 
+        btnModifica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnModifica.setVisibility(View.GONE);
+                btnSalveazaModificari.setVisibility(View.VISIBLE);
+                etDenumireCompanie.setEnabled(true);
+                etNrInregRC.setEnabled(true);
+                etTelefonCompanie.setEnabled(true);
+                etEmailCompanie.setEnabled(true);
+                etCodAdresaCompanie.setEnabled(true);
+                etTelefonCompanie.setEnabled(true);
+
+
+            }
+        });
+
+        btnSalveazaModificari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnSalveazaModificari.setVisibility(View.GONE);
+                btnModifica.setVisibility(View.VISIBLE);
+                etDenumireCompanie.setEnabled(false);
+                etNrInregRC.setEnabled(false);
+                etEmailCompanie.setEnabled(false);
+                etCodAdresaCompanie.setEnabled(false);
+                etTelefonCompanie.setEnabled(false);
+                databaseHelper.updateCompanie(1,etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
+                        etEmailCompanie.getText().toString(),
+                        Integer.parseInt(etCodAdresaCompanie.getText().toString()),etTelefonCompanie.getText().toString());
+            }
+        });
         // Bundle extras = getIntent().getExtras();
         // if (extras != null) {
         // int Value = extras.getInt("id");
 
         //if (Value > 0) {
 
-        Cursor rs = databaseHelper.getData();
+        Cursor rs = databaseHelper.getCompany();
         //id_To_Update = Value;
         rs.moveToFirst();
         if (rs.getCount() != 0) {
@@ -79,33 +123,32 @@ public class DateInterneActivity extends AppCompatActivity {
             String telefon = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_TELEFON_COMPANIE));
             String email = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_EMAIL_COMPANIE));
 
+            Log.d("DB-TEST","DENUMIRE="+denumire);
+            Log.d("DB-TEST","NrInregRC="+nrInregRC);
+            Log.d("DB-TEST","ADRESA="+adresa);
+            Log.d("DB-TEST","TELEFON="+telefon);
+            Log.d("DB-TEST","email="+email);
+            Log.d("DB-TEST","---------------");
             if (!rs.isClosed()) {
                 rs.close();
             }
 
             etDenumireCompanie.setText((CharSequence) denumire);
-            etDenumireCompanie.setFocusable(false);
-            etDenumireCompanie.setClickable(false);
-
             etNrInregRC.setText((CharSequence) nrInregRC);
-            etNrInregRC.setFocusable(false);
-            etNrInregRC.setClickable(false);
-
             etTelefonCompanie.setText((CharSequence) telefon);
-            etTelefonCompanie.setFocusable(false);
-            etTelefonCompanie.setClickable(false);
-
             etEmailCompanie.setText((CharSequence) email);
-            etEmailCompanie.setFocusable(false);
-            etEmailCompanie.setClickable(false);
-
             etCodAdresaCompanie.setText((CharSequence) adresa);
-            etCodAdresaCompanie.setFocusable(false);
-            etCodAdresaCompanie.setClickable(false);
-
             etTelefonCompanie.setText((CharSequence) telefon);
-            etTelefonCompanie.setFocusable(false);
-            etTelefonCompanie.setClickable(false);
+
+
+            etDenumireCompanie.setEnabled(false);
+            etNrInregRC.setEnabled(false);
+            etEmailCompanie.setEnabled(false);
+            etCodAdresaCompanie.setEnabled(false);
+            etTelefonCompanie.setEnabled(false);
+
+            btnSalveaza.setVisibility(View.GONE);
+            btnModifica.setVisibility(View.VISIBLE);
         }
     }
         }

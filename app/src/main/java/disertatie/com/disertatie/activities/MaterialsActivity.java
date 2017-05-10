@@ -1,16 +1,23 @@
 package disertatie.com.disertatie.activities;
 
+import android.content.Intent;
+import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.adapters.MaterialsAdapter;
 import disertatie.com.disertatie.entities.Material;
@@ -21,6 +28,15 @@ public class MaterialsActivity extends AppCompatActivity{
     private List<Material> materialList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MaterialsAdapter mAdapter;
+    private DatabaseHelper databaseHelper;
+    private FloatingActionButton fabAdaugaMaterial;
+
+
+    private static int REQUEST_CODE = -1;
+    private static String COD_MATERIAL = "COD_MATERIAL";
+    private static String DENUMIRE_MATERIAL = "DENUMIRE_MATERIAL";
+    private static String STOC_CURENT = "STOC_CURENT";
+    private static String STOC_MINIM = "STOC_MINIM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +54,44 @@ public class MaterialsActivity extends AppCompatActivity{
             tv.setText(R.string.materiale);
         }
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_materials);
+        fabAdaugaMaterial = (FloatingActionButton) findViewById(R.id.flAdaugaMaterial);
 
-        mAdapter = new MaterialsAdapter(materialList);
+
+        materialList = new ArrayList<Material>();
+        databaseHelper = new DatabaseHelper(this);
+        try {
+            materialList = databaseHelper.getAllMaterials();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        mAdapter = new MaterialsAdapter(materialList, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        prepareMaterialData();
+
+
+
+        fabAdaugaMaterial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MaterialsActivity.this, AddMaterialActivity.class);
+                startActivityForResult(i, REQUEST_CODE );
+            }
+        });
+
+
+
     }
 
-    private void prepareMaterialData() {
-        Material material = new Material("Limonada",10, 3);
-        materialList.add(material);
-
-        material =  new Material("Apa plata", 20, 5);
-        materialList.add(material);
-
-        material =  new Material("Cafea", 30, 10);
-        materialList.add(material);
-
-        mAdapter.notifyDataSetChanged();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }
