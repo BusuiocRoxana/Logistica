@@ -1,8 +1,10 @@
 package disertatie.com.disertatie.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,7 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MyVi
     private List<Material> materialList;
     private Context context;
     private static String MATERIAL = "MATERIAL";
+    private ViewHolderCallbacks callbacks;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvDenumireMaterial;
@@ -46,9 +49,10 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MyVi
     }
 
 
-    public MaterialsAdapter(List<Material> materialsList, Context context) {
+    public MaterialsAdapter(List<Material> materialsList, Context context, ViewHolderCallbacks callbacks) {
         this.materialList = materialsList;
         this.context =  context;
+        this.callbacks = callbacks;
     }
 
     @Override
@@ -61,7 +65,7 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        Material material =  materialList.get(position);
+        final Material material =  materialList.get(position);
         holder.tvDenumireMaterial.setText(material.getDenumire_material());
         holder.tvStocCurent.setText(material.getStoc_curent()+"");
         holder.tvStocMinim.setText(material.getStoc_minim()+"");
@@ -78,6 +82,33 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MyVi
             }
         });
 
+        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Stergere material")
+                        .setMessage("Sunteti sigur ca vreti sa stergeti acest material?")
+                        .setPositiveButton(R.string.da, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                materialList.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position,materialList.size());
+                                callbacks.onDeleteClick(material);
+                            }
+                        })
+                        .setNegativeButton(R.string.nu, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+
+            }
+        });
+
     }
 
     @Override
@@ -85,5 +116,9 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MyVi
         return materialList.size();
     }
 
+
+    public interface ViewHolderCallbacks {
+        public void onDeleteClick(Material material);
+    }
 
 }

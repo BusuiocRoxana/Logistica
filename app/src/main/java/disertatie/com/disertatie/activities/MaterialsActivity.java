@@ -22,7 +22,7 @@ import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.adapters.MaterialsAdapter;
 import disertatie.com.disertatie.entities.Material;
 
-public class MaterialsActivity extends AppCompatActivity{
+public class MaterialsActivity extends AppCompatActivity implements  MaterialsAdapter.ViewHolderCallbacks{
 
     private Toolbar toolbar;
     private List<Material> materialList = new ArrayList<>();
@@ -52,6 +52,8 @@ public class MaterialsActivity extends AppCompatActivity{
             }
             TextView tv = (TextView) toolbar.findViewById(R.id.toolbar_title);
             tv.setText(R.string.materiale);
+
+
         }
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_materials);
         fabAdaugaMaterial = (FloatingActionButton) findViewById(R.id.flAdaugaMaterial);
@@ -66,7 +68,7 @@ public class MaterialsActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        mAdapter = new MaterialsAdapter(materialList, this);
+        mAdapter = new MaterialsAdapter(materialList, this, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -93,5 +95,17 @@ public class MaterialsActivity extends AppCompatActivity{
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+            mAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onDeleteClick(Material material) {
+        databaseHelper.deleteMaterial(material.getCod_material());
     }
 }

@@ -86,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean insertMaterial(String denumire_material, double stoc_minim, double stoc_curent) {
+    public boolean insertMaterial(String denumire_material, double stoc_curent, double stoc_minim) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DENUMIRE_MATERIAL, denumire_material);
@@ -136,7 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer deleteMaterial (Integer cod_material) {
+    public Integer deleteMaterial (int cod_material) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_MATERIALE,
                 COLUMN_COD_MATERIAL+" = ? ",
@@ -147,7 +147,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<Material> getAllMaterials() throws ParseException {
         ArrayList<Material> materialList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT "+COLUMN_DENUMIRE_MATERIAL+","
+        String query = "SELECT "+COLUMN_COD_MATERIAL+","
+                                +COLUMN_DENUMIRE_MATERIAL+","
                                 +COLUMN_STOC_CURENT+","
                                 +COLUMN_STOC_MINIM+SPACE+
                              " FROM " + TABLE_MATERIALE+SPACE
@@ -157,9 +158,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Material mat = new Material();
-                mat.setDenumire_material(cursor.getString(0));
-                mat.setStoc_curent(cursor.getDouble(1));
-                mat.setStoc_minim(cursor.getDouble(2));
+                mat.setCod_material(cursor.getInt(0));
+                mat.setDenumire_material(cursor.getString(1));
+                mat.setStoc_curent(cursor.getDouble(2));
+                mat.setStoc_minim(cursor.getDouble(3));
                 materialList.add(mat);
             }
             while (cursor.moveToNext());
