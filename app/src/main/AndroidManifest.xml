@@ -19,7 +19,8 @@
         <activity android:name=".activities.DateInterneActivity" />
         <activity android:name=".activities.MaterialsActivity" />
         <activity android:name=".activities.FurnizoriActivity" />
-        <activity android:name=".activities.AddMaterialActivity"></activity>
+        <activity android:name=".activities.AddMaterialActivity" />
+        <activity android:name=".activities.AddFurnizorActivity"></activity>
     </application>
 
 </manifest>

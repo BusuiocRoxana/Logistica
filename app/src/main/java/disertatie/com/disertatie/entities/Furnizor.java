@@ -1,22 +1,28 @@
 package disertatie.com.disertatie.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Roxana on 5/9/2017.
  */
-public class Furnizor {
+public class Furnizor implements Serializable {
 
     private int cod_furnizor;
     private String denumire_furnizor;
     private String nr_inregistrare_RC;
     private int cod_adresa;
     private int rating;
+    private String email;
 
-    public Furnizor(String denumire_furnizor, String nr_inregistrare_RC, int cod_adresa, int rating) {
+    public Furnizor(String denumire_furnizor, String nr_inregistrare_RC, int cod_adresa, int rating, String email) {
         this.denumire_furnizor = denumire_furnizor;
         this.nr_inregistrare_RC = nr_inregistrare_RC;
         this.cod_adresa = cod_adresa;
         this.rating = rating;
+        this.email = email;
     }
+
+    public Furnizor(){}
 
     public int getCod_furnizor() {
         return cod_furnizor;
@@ -56,5 +62,13 @@ public class Furnizor {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

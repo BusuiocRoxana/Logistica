@@ -10,6 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javax.xml.parsers.SAXParser;
+
+import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
 
 /**
@@ -22,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "LOGISTICA";
     public static final String TABLE_COMPANIE = "COMPANIE";
     public static final String TABLE_MATERIALE = "MATERIALE";
+    public static final String TABLE_FURNIZORI = "FURNIZORI";
 
     public static final String COLUMN_COD_COMPANIE = "COD_COMPANIE";
     public static final String COLUMN_DENUMIRE_COMPANIE = "DENUMIRE_COMPANIE";
@@ -34,6 +38,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DENUMIRE_MATERIAL = "DENUMIRE_MATERIAL";
     public static final String COLUMN_STOC_CURENT = "STOC_CURENT";
     public static final String COLUMN_STOC_MINIM = "STOC_MINIM";
+
+    public static final String COLUMN_COD_FURNIZOR = "COD_FURNIZOR";
+    public static final String COLUMN_DENUMIRE_FURNIZOR = "DENUMIRE_FURNIZOR";
+    public static final String COLUMN_NR_INREG_RC_FURNIZORI = "NR_INREG_RC_FURNIZORI";
+    //public static final String COLUMN_COD_ADRESA = "COD_ADRESA";
+    public static final String COLUMN_RATING = "RATING";
+    public static final String COLUMN_EMAIL_FURNIZOR = "EMAIL_FURNIZOR";
+
+
 
 
 
@@ -65,12 +78,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +COLUMN_DENUMIRE_MATERIAL+SPACE+"text,"
                 +COLUMN_STOC_MINIM+SPACE+" real,"
                 +COLUMN_STOC_CURENT+SPACE+"real)");
+
+        db.execSQL("create table"+ SPACE+TABLE_FURNIZORI+"("+COLUMN_COD_FURNIZOR+SPACE+"integer primary key AUTOINCREMENT NOT NULL,"
+                +COLUMN_DENUMIRE_FURNIZOR+SPACE+"text,"
+                +COLUMN_NR_INREG_RC_FURNIZORI+SPACE+"text,"
+                +COLUMN_COD_ADRESA+SPACE+"integer,"
+                +COLUMN_RATING+SPACE+"integer,"
+                +COLUMN_EMAIL_FURNIZOR+SPACE+"text)"
+        );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_COMPANIE);
         db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_MATERIALE);
+        db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_FURNIZORI);
         onCreate(db);
     }
 
@@ -93,6 +115,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_STOC_CURENT, stoc_curent);
         contentValues.put(COLUMN_STOC_MINIM, stoc_minim);
         db.insert(TABLE_MATERIALE, null, contentValues);
+        return true;
+    }
+
+    public boolean insertFurnizor(String denumire_furnizor, String nr_inreg_rc, int cod_adresa, int rating, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_DENUMIRE_FURNIZOR, denumire_furnizor);
+        contentValues.put(COLUMN_NR_INREG_RC_FURNIZORI, nr_inreg_rc);
+        contentValues.put(COLUMN_COD_ADRESA, cod_adresa);
+        contentValues.put(COLUMN_RATING, rating);
+        contentValues.put(COLUMN_EMAIL_FURNIZOR, email);
+        db.insert(TABLE_FURNIZORI, null, contentValues);
         return true;
     }
 
@@ -167,5 +201,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             while (cursor.moveToNext());
         }
         return materialList;
+    }
+
+    public boolean updateFurnizor(int cod_furnizor, String denumire_furnizor, String nr_inreg_Rc,
+                                int cod_adresa, int rating, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_DENUMIRE_FURNIZOR, denumire_furnizor);
+        contentValues.put(COLUMN_NR_INREG_RC_FURNIZORI, nr_inreg_Rc);
+        contentValues.put(COLUMN_COD_ADRESA, cod_adresa);
+        contentValues.put(COLUMN_RATING, rating);
+        contentValues.put(COLUMN_EMAIL_FURNIZOR, email);
+        db.update(TABLE_FURNIZORI, contentValues,
+                COLUMN_COD_FURNIZOR+" = ?", new String[] { Integer.toString(cod_furnizor) } );
+        return true;
+    }
+
+    public Integer deleteFurnizor (int cod_furnizor) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_FURNIZORI,
+                COLUMN_COD_FURNIZOR+" = ? ",
+                new String[] { Integer.toString(cod_furnizor) });
+    }
+
+
+    public ArrayList<Furnizor> getAllFurnizori() throws ParseException {
+        ArrayList<Furnizor> furnizorList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT "
+                +COLUMN_COD_FURNIZOR+","
+                +COLUMN_DENUMIRE_FURNIZOR+","
+                +COLUMN_NR_INREG_RC_FURNIZORI+","
+                +COLUMN_COD_ADRESA+SPACE+","
+                +COLUMN_RATING+SPACE+","
+                +COLUMN_EMAIL_FURNIZOR+SPACE+
+                " FROM " + TABLE_FURNIZORI+SPACE
+                +"ORDER BY "+COLUMN_COD_FURNIZOR;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Furnizor furnizor = new Furnizor();
+                furnizor.setCod_furnizor(cursor.getInt(0));
+                furnizor.setDenumire_furnizor(cursor.getString(1));
+                furnizor.setNr_inregistrare_RC(cursor.getString(2));
+                furnizor.setCod_adresa(cursor.getInt(3));
+                furnizor.setRating(cursor.getInt(4));
+                furnizor.setEmail(cursor.getString(5));
+                furnizorList.add(furnizor);
+            }
+            while (cursor.moveToNext());
+        }
+        return furnizorList;
     }
 }

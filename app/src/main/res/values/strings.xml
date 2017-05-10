@@ -21,9 +21,19 @@
     <string name="salveaza_modificari">Salveaza Modificari</string>
     <string name="modifica">Modifica</string>
     <string name="adauga_material">Adauga Material</string>
+    <string name="adauga_furnizor">Adauga Furnizor</string>
+    <string name="email_furnizor">Email</string>
 
     <string name="da">Da</string>
     <string name="nu">Nu</string>
+
+    <string-array name="ratings">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 
 
 </resources>

@@ -40,7 +40,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/ivEditMaterial"
+            android:id="@+id/ivEditFurnizor"
             android:layout_margin="10dp"
             android:src="@drawable/edit"/>
 
@@ -112,6 +112,24 @@
 
             <TextView
                 android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="30dp"
+                android:text="@string/email_furnizor" />
+
+            <TextView
+                android:id="@+id/tvEmailFurnizor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text" />
