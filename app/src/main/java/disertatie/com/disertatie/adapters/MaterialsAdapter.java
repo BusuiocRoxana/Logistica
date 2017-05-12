@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.activities.AddMaterialActivity;
 import disertatie.com.disertatie.activities.MaterialsActivity;
+import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
 
 /**
@@ -24,7 +26,7 @@ import disertatie.com.disertatie.entities.Material;
  */
 
 public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MyViewHolder> {
-    private List<Material> materialList;
+    private ArrayList<Material> materialList;
     private Context context;
     private static String MATERIAL = "MATERIAL";
     private ViewHolderCallbacks callbacks;
@@ -49,7 +51,7 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MyVi
     }
 
 
-    public MaterialsAdapter(List<Material> materialsList, Context context, ViewHolderCallbacks callbacks) {
+    public MaterialsAdapter(ArrayList<Material> materialsList, Context context, ViewHolderCallbacks callbacks) {
         this.materialList = materialsList;
         this.context =  context;
         this.callbacks = callbacks;
@@ -121,4 +123,8 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MyVi
         public void onDeleteClick(Material material);
     }
 
+    public void updateViewMaterials(ArrayList<Material> results) {
+        materialList = results;
+        notifyDataSetChanged();
+    }
 }

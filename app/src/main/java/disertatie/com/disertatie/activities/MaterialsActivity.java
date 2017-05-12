@@ -26,7 +26,7 @@ import disertatie.com.disertatie.entities.Material;
 public class MaterialsActivity extends AppCompatActivity implements  MaterialsAdapter.ViewHolderCallbacks{
 
     private Toolbar toolbar;
-    private List<Material> materialList = new ArrayList<>();
+    private ArrayList<Material> materialList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MaterialsAdapter mAdapter;
     private DatabaseHelper databaseHelper;
@@ -98,12 +98,7 @@ public class MaterialsActivity extends AppCompatActivity implements  MaterialsAd
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-            mAdapter.notifyDataSetChanged();
 
-    }
 
     @Override
     public void onDeleteClick(Material material) {
@@ -119,6 +114,18 @@ public class MaterialsActivity extends AppCompatActivity implements  MaterialsAd
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            materialList = databaseHelper.getAllMaterials();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        mAdapter.updateViewMaterials(materialList);
+
 
     }
 }

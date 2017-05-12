@@ -33,6 +33,8 @@ public class AddFurnizorActivity extends AppCompatActivity {
     private static String FURNIZOR = "FURNIZOR";
     private static int cod_furnizor = -1;
 
+    Integer[] ratings = new Integer[]{1, 2, 3, 4, 5};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,8 @@ public class AddFurnizorActivity extends AppCompatActivity {
         spinnerRating = (Spinner) findViewById(R.id.spinnerRating);
 
 
-        ArrayAdapter<String> spinnerRatingArrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.ratings));
+        ArrayAdapter<Integer> spinnerRatingArrayAdapter = new ArrayAdapter<Integer>(this,
+                android.R.layout.simple_spinner_dropdown_item,ratings);
         spinnerRating.setAdapter(spinnerRatingArrayAdapter);
 
         databaseHelper = new DatabaseHelper(this);
@@ -89,6 +91,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
             etNrInregRC.setText(furnizor.getNr_inregistrare_RC() + "");
             etAdresa.setText(furnizor.getCod_adresa() + "");
             etEmailFurnizor.setText(furnizor.getEmail()+"");
+            spinnerRating.setSelection(spinnerRatingArrayAdapter.getPosition(furnizor.getRating()));
             cod_furnizor = furnizor.getCod_furnizor();
         }
 

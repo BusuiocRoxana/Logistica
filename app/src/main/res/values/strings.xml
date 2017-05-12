@@ -10,7 +10,7 @@
     <string name="stoc_curent">Stoc Curent</string>
 
     <string name="denumire_furnizor">Furnizor</string>
-    <string name="numar_inreg_RC">Numar Inregistrare Registrul Comertului</string>
+    <string name="numar_inreg_RC">Numar Inregistrare\nRegistrul Comertului</string>
     <string name="adresa_furnizor">Detalii Adresa</string>
     <string name="rating">Rating</string>
 
@@ -26,14 +26,12 @@
 
     <string name="da">Da</string>
     <string name="nu">Nu</string>
-
-    <string-array name="ratings">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
-
+    
+    <string name="numar">Numar</string>
+    <string name="strada">Strada</string>
+    <string name="localitate">Localitate</string>
+    <string name="judet">Judet</string>
+    <string name="sector">Sector</string>
+    <string name="tara">Tara</string>
 
 </resources>

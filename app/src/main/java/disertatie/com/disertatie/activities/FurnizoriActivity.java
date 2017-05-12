@@ -26,7 +26,7 @@ import disertatie.com.disertatie.entities.Material;
 public class FurnizoriActivity extends AppCompatActivity implements  FurnizorAdapter.ViewHolderCallbacks{
 
     private Toolbar toolbar;
-    private List<Furnizor> furnizoriList;
+    private ArrayList<Furnizor> furnizoriList;
     private RecyclerView recyclerView;
     private FurnizorAdapter mAdapter;
     private DatabaseHelper databaseHelper;
@@ -78,15 +78,6 @@ public class FurnizoriActivity extends AppCompatActivity implements  FurnizorAda
         });
     }
 
-    /*private void prepareMaterialData() {
-        Furnizor furnizor = new Furnizor("Coca-Cola", "J20/12.12.2017",1, 5);
-        furnizoriList.add(furnizor);
-        furnizor = new Furnizor("Borsec", "J21/12.12.2016",2, 3);
-        furnizoriList.add(furnizor);
-        furnizor = new Furnizor("Bucovina", "J25/10.09.2015",3, 4);
-        furnizoriList.add(furnizor);
-        mAdapter.notifyDataSetChanged();
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,5 +94,18 @@ public class FurnizoriActivity extends AppCompatActivity implements  FurnizorAda
     @Override
     public void onDeleteClick(Furnizor furnizor) {
         databaseHelper.deleteFurnizor(furnizor.getCod_furnizor());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            furnizoriList = databaseHelper.getAllFurnizori();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        mAdapter.updateViewFurnizori(furnizoriList);
+
+
     }
 }
