@@ -13,6 +13,7 @@ public class Furnizor implements Serializable {
     private int cod_adresa;
     private int rating;
     private String email;
+    private Adresa adresa;
 
     public Furnizor(String denumire_furnizor, String nr_inregistrare_RC, int cod_adresa, int rating, String email) {
         this.denumire_furnizor = denumire_furnizor;
@@ -22,7 +23,23 @@ public class Furnizor implements Serializable {
         this.email = email;
     }
 
+    public Furnizor(String denumire_furnizor, String nr_inregistrare_RC, Adresa adresa, int rating, String email) {
+        this.denumire_furnizor = denumire_furnizor;
+        this.nr_inregistrare_RC = nr_inregistrare_RC;
+        this.adresa = adresa;
+        this.rating = rating;
+        this.email = email;
+    }
+
     public Furnizor(){}
+
+    public Adresa getAdresa() {
+        return adresa;
+    }
+
+    public void setAdresa(Adresa adresa) {
+        this.adresa = adresa;
+    }
 
     public int getCod_furnizor() {
         return cod_furnizor;

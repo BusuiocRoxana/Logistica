@@ -104,7 +104,9 @@ public class FurnizoriActivity extends AppCompatActivity implements  FurnizorAda
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        mAdapter.updateViewFurnizori(furnizoriList);
+        if(mAdapter != null) {
+            mAdapter.updateViewFurnizori(furnizoriList);
+        }
 
 
     }

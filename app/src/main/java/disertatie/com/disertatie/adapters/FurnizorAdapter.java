@@ -72,7 +72,7 @@ public class FurnizorAdapter extends RecyclerView.Adapter<FurnizorAdapter.MyView
         final Furnizor furnizor =  furnizoriList.get(position);
         holder.tvDenumireFurnizor.setText(furnizor.getDenumire_furnizor());
         holder.tvNrInregRC.setText(furnizor.getNr_inregistrare_RC());
-        holder.tvAdresaFurnizor.setText(String.valueOf(furnizor.getCod_adresa()));
+        holder.tvAdresaFurnizor.setText(String.valueOf(furnizor.getAdresa()));
         holder.tvRating.setText(String.valueOf(furnizor.getRating()));
         holder.tvEmail.setText(furnizor.getEmail());
 

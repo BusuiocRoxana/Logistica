@@ -9,10 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
+import disertatie.com.disertatie.entities.Adresa;
+import disertatie.com.disertatie.entities.Companie;
 
 public class DateInterneActivity extends AppCompatActivity {
 
@@ -30,6 +33,15 @@ public class DateInterneActivity extends AppCompatActivity {
     private Button btnSalveaza;
     private Button btnModifica;
     private Button btnSalveazaModificari;
+
+    private RelativeLayout rlAdresa;
+    private EditText etNumar;
+    private EditText etStrada;
+    private EditText etLocalitate;
+    private EditText etJudetSector;
+    private EditText etTara;
+    private int cod_adresa;
+    private int cod_companie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +70,64 @@ public class DateInterneActivity extends AppCompatActivity {
         btnModifica = (Button)findViewById(R.id.btnModifica) ;
         btnSalveazaModificari = (Button)findViewById(R.id.btnSalveazaModificari) ;
 
+        rlAdresa = (RelativeLayout)findViewById(R.id.adresaFurnizor);
+        etNumar = (EditText) rlAdresa.findViewById(R.id.etNumar);
+        etStrada = (EditText) rlAdresa.findViewById(R.id.etStrada);
+        etJudetSector = (EditText) rlAdresa.findViewById(R.id.etJudetSector);
+        etLocalitate = (EditText) rlAdresa.findViewById(R.id.etLocalitate);
+        etTara = (EditText) rlAdresa.findViewById(R.id.etTara);
+
         databaseHelper = new DatabaseHelper(this);
+
+        Companie companie  = databaseHelper.getCompany();
+        cod_companie = companie.getCod_companie();
+        cod_adresa = companie.getAdresa().getCod_adresa();
+        etDenumireCompanie.setText(companie.getDenumire_companie());
+        etNrInregRC.setText(companie.getNr_inreg_RC());
+        etTelefonCompanie.setText(companie.getTelefon());
+        etEmailCompanie.setText(companie.getEmail());
+        etNumar.setText(companie.getAdresa().getNumar()+"");
+        etStrada.setText(companie.getAdresa().getStrada());
+        etLocalitate.setText(companie.getAdresa().getLocalitate());
+        etJudetSector.setText(companie.getAdresa().getJudet_sector());
+        etTara.setText(companie.getAdresa().getTara());
+
+
+        etDenumireCompanie.setEnabled(false);
+        etNrInregRC.setEnabled(false);
+        etEmailCompanie.setEnabled(false);
+        etCodAdresaCompanie.setEnabled(false);
+        etTelefonCompanie.setEnabled(false);
+        etNumar.setEnabled(false);
+        etStrada.setEnabled(false);
+        etLocalitate.setEnabled(false);
+        etJudetSector.setEnabled(false);
+        etTara.setEnabled(false);
+
+
+        btnSalveaza.setVisibility(View.GONE);
+        btnModifica.setVisibility(View.VISIBLE);
 
         btnSalveaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.insertCompanie(etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
-                        etEmailCompanie.getText().toString(), Integer.parseInt(etCodAdresaCompanie.getText().toString()),
-                        etTelefonCompanie.getText().toString());
+
+                boolean isAddressInserted = databaseHelper.insertAdresa(
+                        Integer.parseInt(etNumar.getText().toString()),
+                        etStrada.getText().toString(),
+                        etLocalitate.getText().toString(),
+                        etJudetSector.getText().toString(),
+                        etTara.getText().toString());
+
+                if(isAddressInserted) {
+                    cod_adresa = databaseHelper.printAutoIncrements();
+                    Log.d("TEST_ADRESA", "cod_adresa=" + cod_adresa);
+                    databaseHelper.insertCompanie(etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
+                            etEmailCompanie.getText().toString(), cod_adresa,
+                            etTelefonCompanie.getText().toString());
+                }
+
+
                 btnSalveaza.setVisibility(View.GONE);
                 btnModifica.setVisibility(View.VISIBLE);
 
@@ -74,6 +136,12 @@ public class DateInterneActivity extends AppCompatActivity {
                 etEmailCompanie.setEnabled(false);
                 etCodAdresaCompanie.setEnabled(false);
                 etTelefonCompanie.setEnabled(false);
+                etNumar.setEnabled(false);
+                etStrada.setEnabled(false);
+                etLocalitate.setEnabled(false);
+                etJudetSector.setEnabled(false);
+                etTara.setEnabled(false);
+
             }
         });
 
@@ -88,6 +156,11 @@ public class DateInterneActivity extends AppCompatActivity {
                 etEmailCompanie.setEnabled(true);
                 etCodAdresaCompanie.setEnabled(true);
                 etTelefonCompanie.setEnabled(true);
+                etNumar.setEnabled(true);
+                etStrada.setEnabled(true);
+                etLocalitate.setEnabled(true);
+                etJudetSector.setEnabled(true);
+                etTara.setEnabled(true);
 
 
             }
@@ -103,54 +176,24 @@ public class DateInterneActivity extends AppCompatActivity {
                 etEmailCompanie.setEnabled(false);
                 etCodAdresaCompanie.setEnabled(false);
                 etTelefonCompanie.setEnabled(false);
-                databaseHelper.updateCompanie(1,etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
+                etNumar.setEnabled(false);
+                etStrada.setEnabled(false);
+                etLocalitate.setEnabled(false);
+                etJudetSector.setEnabled(false);
+                etTara.setEnabled(false);
+
+                Adresa adresa = new Adresa(cod_adresa,Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
+                        etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString());
+
+                databaseHelper.updateCompanie(cod_companie,etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
                         etEmailCompanie.getText().toString(),
-                        Integer.parseInt(etCodAdresaCompanie.getText().toString()),etTelefonCompanie.getText().toString());
+                        adresa, etTelefonCompanie.getText().toString());
             }
         });
-        // Bundle extras = getIntent().getExtras();
-        // if (extras != null) {
-        // int Value = extras.getInt("id");
-
-        //if (Value > 0) {
-
-        Cursor rs = databaseHelper.getCompany();
-        //id_To_Update = Value;
-        rs.moveToFirst();
-        if (rs.getCount() != 0) {
-            String denumire = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_DENUMIRE_COMPANIE));
-            String nrInregRC = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_NR_INREG_RC));
-            String adresa = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_COD_ADRESA));
-            String telefon = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_TELEFON_COMPANIE));
-            String email = rs.getString(rs.getColumnIndex(DatabaseHelper.COLUMN_EMAIL_COMPANIE));
-
-            Log.d("DB-TEST","DENUMIRE="+denumire);
-            Log.d("DB-TEST","NrInregRC="+nrInregRC);
-            Log.d("DB-TEST","ADRESA="+adresa);
-            Log.d("DB-TEST","TELEFON="+telefon);
-            Log.d("DB-TEST","email="+email);
-            Log.d("DB-TEST","---------------");
-            if (!rs.isClosed()) {
-                rs.close();
-            }
-
-            etDenumireCompanie.setText((CharSequence) denumire);
-            etNrInregRC.setText((CharSequence) nrInregRC);
-            etTelefonCompanie.setText((CharSequence) telefon);
-            etEmailCompanie.setText((CharSequence) email);
-            etCodAdresaCompanie.setText((CharSequence) adresa);
-            etTelefonCompanie.setText((CharSequence) telefon);
 
 
-            etDenumireCompanie.setEnabled(false);
-            etNrInregRC.setEnabled(false);
-            etEmailCompanie.setEnabled(false);
-            etCodAdresaCompanie.setEnabled(false);
-            etTelefonCompanie.setEnabled(false);
 
-            btnSalveaza.setVisibility(View.GONE);
-            btnModifica.setVisibility(View.VISIBLE);
-        }
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -164,5 +207,4 @@ public class DateInterneActivity extends AppCompatActivity {
 
     }
         }
-    //}
-//}
+  

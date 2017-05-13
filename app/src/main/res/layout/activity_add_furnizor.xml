@@ -31,14 +31,12 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:text="@string/denumire_furnizor" />
 
             <EditText
                 android:id="@+id/etDenumireFurnizor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_weight="0.79"
                 android:inputType="textPersonName" />
         </LinearLayout>
@@ -53,15 +51,14 @@
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/numar_inreg_RC" />
 
             <EditText
                 android:id="@+id/etNrInregRCFurnizor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:inputType="text" />
         </LinearLayout>
@@ -74,14 +71,9 @@
             tools:layout_editor_absoluteY="8dp">
 
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:text="@string/adresa_furnizor" />
-
-            <include
-                android:id="@+id/adresaFurnizor"
-                layout="@layout/adauga_adresa" />
 
             <EditText
                 android:id="@+id/etAdresaFurnizor"
@@ -91,6 +83,10 @@
                 android:ems="10"
                 android:inputType="text"
                 android:visibility="gone" />
+
+            <include
+                android:id="@+id/adresaFurnizor"
+                layout="@layout/adauga_adresa" />
 
         </LinearLayout>
         <LinearLayout
@@ -103,14 +99,12 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:text="@string/email_furnizor" />
 
             <EditText
                 android:id="@+id/etEmailFurnizor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
 
@@ -125,7 +119,6 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:text="@string/rating" />
 
             <Spinner

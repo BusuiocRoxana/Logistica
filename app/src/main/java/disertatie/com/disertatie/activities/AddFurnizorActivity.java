@@ -10,11 +10,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
+import disertatie.com.disertatie.entities.Adresa;
 import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
 
@@ -29,9 +32,17 @@ public class AddFurnizorActivity extends AppCompatActivity {
     private Button btnAdaugaFurnizor;
     private Button btnModificaFurnizor;
 
+    private RelativeLayout rlAdresa;
+    private EditText etNumar;
+    private EditText etStrada;
+    private EditText etLocalitate;
+    private EditText etJudetSector;
+    private EditText etTara;
+
     DatabaseHelper databaseHelper;
     private static String FURNIZOR = "FURNIZOR";
     private static int cod_furnizor = -1;
+    private static int cod_adresa = -1;
 
     Integer[] ratings = new Integer[]{1, 2, 3, 4, 5};
 
@@ -61,6 +72,15 @@ public class AddFurnizorActivity extends AppCompatActivity {
         btnModificaFurnizor = (Button) findViewById(R.id.btnModificaFurnizor) ;
         spinnerRating = (Spinner) findViewById(R.id.spinnerRating);
 
+        rlAdresa = (RelativeLayout)findViewById(R.id.adresaFurnizor);
+        etNumar = (EditText) rlAdresa.findViewById(R.id.etNumar);
+        etStrada = (EditText) rlAdresa.findViewById(R.id.etStrada);
+        etJudetSector = (EditText) rlAdresa.findViewById(R.id.etJudetSector);
+        etLocalitate = (EditText) rlAdresa.findViewById(R.id.etLocalitate);
+        etTara = (EditText) rlAdresa.findViewById(R.id.etTara);
+
+
+
 
         ArrayAdapter<Integer> spinnerRatingArrayAdapter = new ArrayAdapter<Integer>(this,
                 android.R.layout.simple_spinner_dropdown_item,ratings);
@@ -71,14 +91,28 @@ public class AddFurnizorActivity extends AppCompatActivity {
         btnAdaugaFurnizor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.insertFurnizor(etDenumireFurnizor.getText().toString(),
-                        etNrInregRC.getText().toString(),
-                        Integer.parseInt(etAdresa.getText().toString()),
-                        Integer.parseInt(spinnerRating.getSelectedItem().toString()), etEmailFurnizor.getText().toString());
+               boolean isAddressInserted = databaseHelper.insertAdresa(Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
+                        etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString());
+
+                if(isAddressInserted) {
+                    int cod_adresa = databaseHelper.printAutoIncrements();
+                    Log.d("TEST_ADRESA", "cod_adresa=" + cod_adresa);
+                    databaseHelper.insertFurnizor(etDenumireFurnizor.getText().toString(),
+                            etNrInregRC.getText().toString(),
+                            cod_adresa,
+                            Integer.parseInt(spinnerRating.getSelectedItem().toString()), etEmailFurnizor.getText().toString());
+                }
+
+                etNumar.setText("");
+                etStrada.setText("");
+                etLocalitate.setText("");
+                etJudetSector.setText("");
+                etTara.setText("");
 
                 etDenumireFurnizor.setText("");
                 etNrInregRC.setText("");
                 etAdresa.setText("");
+                etEmailFurnizor.setText("");
                 finish();
             }
         });
@@ -92,15 +126,24 @@ public class AddFurnizorActivity extends AppCompatActivity {
             etAdresa.setText(furnizor.getCod_adresa() + "");
             etEmailFurnizor.setText(furnizor.getEmail()+"");
             spinnerRating.setSelection(spinnerRatingArrayAdapter.getPosition(furnizor.getRating()));
+            etNumar.setText(furnizor.getAdresa().getNumar()+"");
+            etStrada.setText(furnizor.getAdresa().getStrada());
+            etLocalitate.setText(furnizor.getAdresa().getLocalitate());
+            etJudetSector.setText(furnizor.getAdresa().getJudet_sector());
+            etTara.setText(furnizor.getAdresa().getTara());
+
             cod_furnizor = furnizor.getCod_furnizor();
+            cod_adresa = furnizor.getAdresa().getCod_adresa();
         }
 
         btnModificaFurnizor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Adresa adresa = new Adresa(cod_adresa,Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
+                        etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString());
                 databaseHelper.updateFurnizor(cod_furnizor, etDenumireFurnizor.getText().toString(),
-                        etNrInregRC.getText().toString(),
-                        Integer.parseInt(etAdresa.getText().toString()), Integer.parseInt(spinnerRating.getSelectedItem().toString()),
+                        etNrInregRC.getText().toString(),adresa,
+                        Integer.parseInt(spinnerRating.getSelectedItem().toString()),
                         etEmailFurnizor.getText().toString());
                 finish();
             }
