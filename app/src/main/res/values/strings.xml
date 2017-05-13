@@ -26,12 +26,22 @@
 
     <string name="da">Da</string>
     <string name="nu">Nu</string>
-    
+
     <string name="numar">Numar</string>
     <string name="strada">Strada</string>
     <string name="localitate">Localitate</string>
     <string name="judet">Judet</string>
     <string name="sector">Sector</string>
     <string name="tara">Tara</string>
+
+    <string name="cerere_oferta">Cerere Oferta</string>
+    <string name="alege_material">Alege Material</string>
+    <string name="cantitate">Cantitate</string>
+    <string name="alege_furnizor">Alege Furnizor</string>
+    <string name="pret">Pret</string>
+    <string name="termen_limita_raspuns">Termen Limita Raspuns</string>
+    <string name="data_estimativa_livrare">Data Estimativa Livrare</string>
+    <string name="valoare">Valoare</string>
+
 
 </resources>

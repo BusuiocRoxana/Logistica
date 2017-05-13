@@ -88,4 +88,9 @@ public class Furnizor implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return denumire_furnizor;
+    }
 }

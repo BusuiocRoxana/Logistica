@@ -13,24 +13,24 @@
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/llDateInterne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical"
-            android:id="@+id/llDateInterne"
-            android:layout_marginRight="10dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/company_data"/>
+                android:src="@drawable/company_data" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -39,17 +39,17 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/llActivitati"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:id="@+id/llActivitati">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/activities"/>
+                android:src="@drawable/activities" />
 
 
             <TextView
@@ -57,18 +57,19 @@
                 android:layout_height="wrap_content"
                 android:text="Activitati" />
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/llFurnizori"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:id="@+id/llFurnizori">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/suppliers"/>
+                android:src="@drawable/suppliers" />
 
 
             <TextView
@@ -78,17 +79,17 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/llMateriale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:id="@+id/llMateriale">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/materials"/>
+                android:src="@drawable/materials" />
 
 
             <TextView
@@ -96,6 +97,31 @@
                 android:layout_height="wrap_content"
                 android:text="Materiale" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCerereOferta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/materials" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cerere_oferta" />
+        </LinearLayout>
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph"
+            android:layout_width="match_parent"
+            android:layout_height="200dip" />
 
     </LinearLayout>
 

@@ -50,4 +50,9 @@ public class Material implements Serializable {
     public void setStoc_minim(double stoc_minim) {
         this.stoc_minim = stoc_minim;
     }
+
+    @Override
+    public String toString() {
+        return denumire_material;
+    }
 }

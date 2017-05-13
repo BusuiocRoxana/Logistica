@@ -81,11 +81,11 @@ public class Adresa implements Serializable {
 
     @Override
     public String toString() {
-        return "Detalii adresa/n"+
-               "Numar " + numar +"/n"+
-                "Strada " + strada +"/n"+
-                "Judet/sector " + judet_sector  +"/n"+
-                "Localitate " + localitate +"/n"+
+        return "Detalii adresa"+"\'"+
+               "Numar " + numar +"\'"+
+                "Strada " + strada +"\'"+
+                "Judet/sector " + judet_sector+"\'"+
+                "Localitate " + localitate +"\'"+
                 "Tara " + tara;
     }
 }
