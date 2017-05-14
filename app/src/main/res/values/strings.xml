@@ -42,6 +42,9 @@
     <string name="termen_limita_raspuns">Termen Limita Raspuns</string>
     <string name="data_estimativa_livrare">Data Estimativa Livrare</string>
     <string name="valoare">Valoare</string>
+    <string name="verifica_doc">Verifica Document</string>
+    <string name="trimite_doc">Trimite Document</string>
+
 
 
 </resources>

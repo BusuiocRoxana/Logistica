@@ -7,7 +7,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,5 +25,7 @@
         <activity android:name=".activities.AddFurnizorActivity" />
         <activity android:name=".activities.CerereOfertaActivity"></activity>
     </application>
+
+
 
 </manifest>
