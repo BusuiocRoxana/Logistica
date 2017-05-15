@@ -168,172 +168,8 @@ public class CerereOfertaActivity extends AppCompatActivity {
         btnTrimiteCerere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    String textCerereOferta = "<!doctype html>\n" +
-                            "<html>\n" +
-                            "<head>\n" +
-                            "    <meta charset=\"utf-8\">\n" +
-                            "    <title>A simple, clean, and responsive HTML invoice template</title>\n" +
-                            "    \n" +
-                            "    <style>\n" +
-                            "    .invoice-box{\n" +
-                            "        max-width:800px;\n" +
-                            "        margin:auto;\n" +
-                            "        padding:30px;\n" +
-                            "        border:1px solid #eee;\n" +
-                            "        box-shadow:0 0 10px rgba(0, 0, 0, .15);\n" +
-                            "        font-size:16px;\n" +
-                            "        line-height:24px;\n" +
-                            "        font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\n" +
-                            "        color:#555;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table{\n" +
-                            "        width:100%;\n" +
-                            "        line-height:inherit;\n" +
-                            "        text-align:left;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table td{\n" +
-                            "        padding:5px;\n" +
-                            "        vertical-align:top;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr td:nth-child(2){\n" +
-                            "        text-align:right;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr.top table td{\n" +
-                            "        padding-bottom:20px;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr.top table td.title{\n" +
-                            "        font-size:30px;\n" +
-                            "        line-height:45px;\n" +
-                            "        color:#333;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr.information table td{\n" +
-                            "        padding-bottom:40px;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr.heading td{\n" +
-                            "        background:#eee;\n" +
-                            "        border-bottom:1px solid #ddd;\n" +
-                            "        font-weight:bold;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr.details td{\n" +
-                            "        padding-bottom:20px;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr.item td{\n" +
-                            "        border-bottom:1px solid #eee;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr.item.last td{\n" +
-                            "        border-bottom:none;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    .invoice-box table tr.total td:nth-child(2){\n" +
-                            "        border-top:2px solid #eee;\n" +
-                            "        font-weight:bold;\n" +
-                            "    }\n" +
-                            "    \n" +
-                            "    @media only screen and (max-width: 600px) {\n" +
-                            "        .invoice-box table tr.top table td{\n" +
-                            "            width:100%;\n" +
-                            "            display:block;\n" +
-                            "            text-align:center;\n" +
-                            "        }\n" +
-                            "        \n" +
-                            "        .invoice-box table tr.information table td{\n" +
-                            "            width:100%;\n" +
-                            "            display:block;\n" +
-                            "            text-align:center;\n" +
-                            "        }\n" +
-                            "    }\n" +
-                            "    </style>\n" +
-                            "</head>\n" +
-                            "\n" +
-                            "<body>\n" +
-                            "    <div class=\"invoice-box\">\n" +
-                            "        <table cellpadding=\"0\" cellspacing=\"0\">\n" +
-                            "            <tr class=\"top\">\n" +
-                            "                <td colspan=\"2\">\n" +
-                            "                    <table>\n" +
-                            "                        <tr>\n" +
-                            "                            <td class=\"title\">\n" +
-                            "                              Cerere de Oferta\n" +
-                            "                            </td>\n" +
-                            "                            \n" +
-                            "                            <td>\n" +
-                            "                                Numar Document #: 123<br>\n" +
-                            "                                Data: January 1, 2015<br>\n" +
-                            "                                Termen Raspuns: February 1, 2015<br>\n" +
-                            "                              \tData Estimativa Livrare: February 1, 2015\n" +
-                            "                            </td>\n" +
-                            "                        </tr>\n" +
-                            "                    </table>\n" +
-                            "                </td>\n" +
-                            "            </tr>\n" +
-                            "            \n" +
-                            "            <tr class=\"information\">\n" +
-                            "                <td colspan=\"2\">\n" +
-                            "                    <table>\n" +
-                            "                        <tr>\n" +
-                            "                            <td>\n" +
-                            "                               Furnizor<br>\n" +
-                            "                                Next Step Webs, Inc.<br>\n" +
-                            "                                12345 Sunny Road<br>\n" +
-                            "                                Sunnyville, TX 12345\n" +
-                            "                            </td>\n" +
-                            "                            \n" +
-                            "                            <td>\n" +
-                            "                               Companie<br>\n" +
-                            "                                Acme Corp.<br>\n" +
-                            "                                John Doe<br>\n" +
-                            "                                john@example.com\n" +
-                            "                            </td>\n" +
-                            "                        </tr>\n" +
-                            "                    </table>\n" +
-                            "                </td>\n" +
-                            "            </tr>\n" +
-                            "          \n" +
-                            "            \n" +
-                            "            <tr class=\"heading\">\n" +
-                            "                <td>\n" +
-                            "                    Material\n" +
-                            "                </td>\n" +
-                            "                \n" +
-                            "                <td>\n" +
-                            "                    Pret\n" +
-                            "                </td>\n" +
-                            "            </tr>\n" +
-                            "            \n" +
-                            "            <tr class=\"item\">\n" +
-                            "                <td>\n" +
-                            "                    Website design\n" +
-                            "                </td>\n" +
-                            "                \n" +
-                            "                <td>\n" +
-                            "                    $300.00\n" +
-                            "                </td>\n" +
-                            "            </tr>\n" +
-                            "            \n" +
-                            "           \n" +
-                            "            \n" +
-                            "            \n" +
-                            "            <tr class=\"total\">\n" +
-                            "                <td></td>\n" +
-                            "                \n" +
-                            "                <td>\n" +
-                            "                   Total: $385.00\n" +
-                            "                </td>\n" +
-                            "            </tr>\n" +
-                            "        </table>\n" +
-                            "    </div>\n" +
-                            "</body>\n" +
-                            "</html>";
+                    String textCerereOferta = "";
+
 
                     Log.i("Send email", "");
                     String[] TO = {"busuioc.roxana@gmail.com"};
@@ -341,11 +177,20 @@ public class CerereOfertaActivity extends AppCompatActivity {
                     Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
                     emailIntent.setData(Uri.parse("mailto:"));
-                    emailIntent.setType("text/plain");
+                    emailIntent.setType("text/html");
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
                     emailIntent.putExtra(Intent.EXTRA_CC, CC);
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Cerere de Oferta");
-                    emailIntent.putExtra(Intent.EXTRA_TEXT, "" + "\n" +Html.fromHtml(textCerereOferta));
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, "" + "\n" +Html.fromHtml("<p>Companie: Denumire</p>\n" +
+                            "<p>Nr. Inreg. Registrul Comertului: J44/40/12.12.2016</p>\n" +
+                            "<p>Doc. Nr. #123</p>\n" +
+                            "<p>Data: 01.01.2017</p>\n" +
+                            "<p>Material: Apa plata</p>\n" +
+                            "<p>Cantitate: "+etCantitate.getText().toString()+"</p>\n" +
+                            "<p>Pret: "+etPret.getText().toString()+" LEI</p>\n" +
+                            "<p>Valoare: "+tvValoare.getText().toString()+"LEI<p/>\n" +
+                            "<p>Termen de Raspuns: "+tvTermenRaspuns.getText().toString()+"</p>\n" +
+                            "<p>Data Estimativa Livrare: "+tvDataLivrare.getText().toString()+"</p>"));
 
                     try {
                         startActivity(Intent.createChooser(emailIntent, "Trimite emal..."));
