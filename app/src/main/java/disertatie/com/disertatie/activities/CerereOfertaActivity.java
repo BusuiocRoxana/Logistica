@@ -1,10 +1,15 @@
 package disertatie.com.disertatie.activities;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +26,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -57,6 +66,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
     private ArrayList<Furnizor> listaFurnizori = new ArrayList<>();
 
     private boolean isConfirmed = false;
+    private static String TAG = "log-async";
 
 
     @Override
@@ -171,7 +181,11 @@ public class CerereOfertaActivity extends AppCompatActivity {
         btnTrimiteCerere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    String textCerereOferta = "";
+                if(isStoragePermissionGranted()) {
+                    new AsyncFileMaker().execute("fisier.html");
+                }
+
+                   /* String textCerereOferta = "";
 
 
                     Log.i("Send email", "");
@@ -184,26 +198,137 @@ public class CerereOfertaActivity extends AppCompatActivity {
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
                     emailIntent.putExtra(Intent.EXTRA_CC, CC);
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Cerere de Oferta");
-                    emailIntent.putExtra(Intent.EXTRA_TEXT, "" + "\n" +Html.fromHtml("<p>Companie: Denumire</p>\n" +
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("<html><body><p>Companie: Denumire</p>\n" +
                             "<p>Nr. Inreg. Registrul Comertului: J44/40/12.12.2016</p>\n" +
                             "<p>Doc. Nr. #123</p>\n" +"<span></span>"+"bla"+
                             "<p>Data: 01.01.2017</p>\n" +
-                            "<p>Material: Apa plata</p>\n" +
-                            "<p>Cantitate: "+etCantitate.getText().toString()+"</p>\n" +
-                            "<p>Pret: "+etPret.getText().toString()+" LEI</p>\n" +
-                            "<p>Valoare: "+tvValoare.getText().toString()+"LEI<p/>\n" +
+                            "<table>\n"+
+                            "<tr><th>Material</th><th>Cantitate</th><th>Pret</th><th>Valoare</th></tr>\n"+
+                            "<tr>\n"+
+                            "<td>Apa plata</td>\n"+
+                            "<td>"+etCantitate.getText().toString()+"</td>\n"+
+                            "<td>"+etPret.getText().toString()+" LEI</td>\n"+
+                            "<td>"+tvValoare.getText().toString()+"LEI</td>\n"+
+                            "</tr>\n"+
+                            "</table>\n"+
                             "<p>Termen de Raspuns: "+tvTermenRaspuns.getText().toString()+"</p>\n" +
-                            "<p>Data Estimativa Livrare: "+tvDataLivrare.getText().toString()+"</p>"));
+                            "<p>Data Estimativa Livrare: "+tvDataLivrare.getText().toString()+"</p></body></html>"));
 
                     try {
-                        startActivity(Intent.createChooser(emailIntent, "Trimite emal..."));
+                        startActivity(Intent.createChooser(emailIntent, "Trimite email..."));
                         finish();
                         Log.i("Finished sending email", "");
                     } catch (android.content.ActivityNotFoundException ex) {
                         Toast.makeText(CerereOfertaActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                 }
 
         });
+    }
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
+        }
+    }
+
+    private class AsyncFileMaker extends AsyncTask<String,Void,Void>
+    {
+        String fileName;
+        File f;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            fileName=params[0];
+            Log.e(TAG,"Creating file");
+            try {
+                f = new File(getExternalFilesDir(null), fileName);
+                FileOutputStream os = new FileOutputStream(f);
+                String text = "<!DOCTYPE html>" +
+                        "<html> " +
+                        "<head> " +
+                        "<style> " +
+                        "table, th, td { " +
+                        "    border: 1px solid black; " +
+                        "} " +
+                        "</style> " +
+                        "</head> " +
+                        "<body> " +
+                        " " +
+                        "<table> " +
+                        "  <tr> " +
+                        "    <th>Month</th> " +
+                        "    <th>Savings</th> " +
+                        "  </tr> " +
+                        "  <tr> " +
+                        "    <td>January</td> " +
+                        "    <td>$100</td> " +
+                        "  </tr> " +
+                        "  <tr> " +
+                        "    <td>February</td> " +
+                        "    <td>$80</td> " +
+                        "  </tr> " +
+                        "</table> " +
+                        " " +
+                        "</body> " +
+                        "</html> ";
+                os.write(text.getBytes());
+                os.close();
+            }catch (FileNotFoundException e){
+                Log.e(TAG,"Could not find file : "+f.getAbsolutePath());
+                cancel(false);
+                return null;
+            }catch (IOException e){
+                Log.e(TAG,"Could not write file : "+f.getAbsolutePath());
+                cancel(false);
+                return null;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Log.e(TAG,"Sending email");
+            Log.i("Send email", "");
+            String[] TO = {"busuioc.roxana@gmail.com"};
+            String[] CC = {""};
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+            emailIntent.setData(Uri.parse("mailto:"));
+            emailIntent.setType("text/html");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+            emailIntent.putExtra(Intent.EXTRA_CC, CC);
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Cerere de Oferta");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("<p><b>Companie:</b> Denumire</p>\n" +
+                    "<p><b>Nr. Inreg. Registrul Comertului:</b> J44/40/12.12.2016</p>\n" +
+                    "<p><b>Doc. Nr.</b> #123</p>\n" +
+                    "<p><b>Data:</b> 01.01.2017</p>\n" +
+                    "<p><b>Material:</b> Apa plata</p>\n" +
+                    "<p><b>Cantitate: 123</p>\n" +
+                    "<p><b>Pret:</b> 123 LEI</p>\n" +
+                    "<p><b>Valoare:</b> 123 LEI<p/>\n" +
+                    "<p><b>Termen de Raspuns:</b> 1</p>\n" +
+                    "<p><b>Data Estimativa Livrare:</b> 1.1.2017</p>"
+            ));
+            emailIntent.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(f));
+            startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+        }
     }
 }
