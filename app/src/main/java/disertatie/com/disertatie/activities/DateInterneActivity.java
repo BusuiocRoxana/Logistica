@@ -105,11 +105,27 @@ public class DateInterneActivity extends AppCompatActivity {
             etLocalitate.setEnabled(false);
             etJudetSector.setEnabled(false);
             etTara.setEnabled(false);
+
+            btnSalveaza.setVisibility(View.GONE);
+            btnModifica.setVisibility(View.VISIBLE);
+        }else{
+            btnSalveaza.setVisibility(View.VISIBLE);
+            btnModifica.setVisibility(View.GONE);
+            etDenumireCompanie.setEnabled(true);
+            etNrInregRC.setEnabled(true);
+            etTelefonCompanie.setEnabled(true);
+            etEmailCompanie.setEnabled(true);
+            etCodAdresaCompanie.setEnabled(true);
+            etTelefonCompanie.setEnabled(true);
+            etNumar.setEnabled(true);
+            etStrada.setEnabled(true);
+            etLocalitate.setEnabled(true);
+            etJudetSector.setEnabled(true);
+            etTara.setEnabled(true);
         }
 
 
-        btnSalveaza.setVisibility(View.GONE);
-        btnModifica.setVisibility(View.VISIBLE);
+
 
         btnSalveaza.setOnClickListener(new View.OnClickListener() {
             @Override
