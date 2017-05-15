@@ -79,30 +79,33 @@ public class DateInterneActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-        Companie companie  = databaseHelper.getCompany();
-        cod_companie = companie.getCod_companie();
-        cod_adresa = companie.getAdresa().getCod_adresa();
-        etDenumireCompanie.setText(companie.getDenumire_companie());
-        etNrInregRC.setText(companie.getNr_inreg_RC());
-        etTelefonCompanie.setText(companie.getTelefon());
-        etEmailCompanie.setText(companie.getEmail());
-        etNumar.setText(companie.getAdresa().getNumar()+"");
-        etStrada.setText(companie.getAdresa().getStrada());
-        etLocalitate.setText(companie.getAdresa().getLocalitate());
-        etJudetSector.setText(companie.getAdresa().getJudet_sector());
-        etTara.setText(companie.getAdresa().getTara());
+
+        if(databaseHelper.numberOfRowsCompanie() != 0) {
+            Companie companie = databaseHelper.getCompany();
+            cod_companie = companie.getCod_companie();
+            cod_adresa = companie.getAdresa().getCod_adresa();
+            etDenumireCompanie.setText(companie.getDenumire_companie());
+            etNrInregRC.setText(companie.getNr_inreg_RC());
+            etTelefonCompanie.setText(companie.getTelefon());
+            etEmailCompanie.setText(companie.getEmail());
+            etNumar.setText(companie.getAdresa().getNumar() + "");
+            etStrada.setText(companie.getAdresa().getStrada());
+            etLocalitate.setText(companie.getAdresa().getLocalitate());
+            etJudetSector.setText(companie.getAdresa().getJudet_sector());
+            etTara.setText(companie.getAdresa().getTara());
 
 
-        etDenumireCompanie.setEnabled(false);
-        etNrInregRC.setEnabled(false);
-        etEmailCompanie.setEnabled(false);
-        etCodAdresaCompanie.setEnabled(false);
-        etTelefonCompanie.setEnabled(false);
-        etNumar.setEnabled(false);
-        etStrada.setEnabled(false);
-        etLocalitate.setEnabled(false);
-        etJudetSector.setEnabled(false);
-        etTara.setEnabled(false);
+            etDenumireCompanie.setEnabled(false);
+            etNrInregRC.setEnabled(false);
+            etEmailCompanie.setEnabled(false);
+            etCodAdresaCompanie.setEnabled(false);
+            etTelefonCompanie.setEnabled(false);
+            etNumar.setEnabled(false);
+            etStrada.setEnabled(false);
+            etLocalitate.setEnabled(false);
+            etJudetSector.setEnabled(false);
+            etTara.setEnabled(false);
+        }
 
 
         btnSalveaza.setVisibility(View.GONE);

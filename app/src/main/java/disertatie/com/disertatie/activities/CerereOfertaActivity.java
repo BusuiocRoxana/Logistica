@@ -58,10 +58,13 @@ public class CerereOfertaActivity extends AppCompatActivity {
 
     private boolean isConfirmed = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cerere_oferta);
+
+        context = this;
 
         context = this;
         databaseHelper = new DatabaseHelper(context);
@@ -183,7 +186,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Cerere de Oferta");
                     emailIntent.putExtra(Intent.EXTRA_TEXT, "" + "\n" +Html.fromHtml("<p>Companie: Denumire</p>\n" +
                             "<p>Nr. Inreg. Registrul Comertului: J44/40/12.12.2016</p>\n" +
-                            "<p>Doc. Nr. #123</p>\n" +
+                            "<p>Doc. Nr. #123</p>\n" +"<span></span>"+"bla"+
                             "<p>Data: 01.01.2017</p>\n" +
                             "<p>Material: Apa plata</p>\n" +
                             "<p>Cantitate: "+etCantitate.getText().toString()+"</p>\n" +

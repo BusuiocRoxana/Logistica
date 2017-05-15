@@ -231,9 +231,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int numberOfRowsMaterials(){
+    public int numberOfRowsCompanie(){
         SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_MATERIALE);
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_COMPANIE);
         return numRows;
     }
 
