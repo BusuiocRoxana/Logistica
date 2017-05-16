@@ -1,15 +1,17 @@
 package disertatie.com.disertatie.activities;
 
 import android.content.Intent;
-import android.content.pm.LabeledIntent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private ArrayList<Material> materialList = new ArrayList<>();
     private ArrayList<String> materialNames;
+
+    private static final String TAG = "Logistica";
+    private Button btnLogRegistrationId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         series.setValuesOnTopColor(Color.RED);
 //series.setValuesOnTopSize(50);
 
+        btnLogRegistrationId = (Button)findViewById(R.id.btnLogRegistrationId);
+        btnLogRegistrationId.setOnClickListener(clickListener);
     }
 
     View.OnClickListener clickListener=new View.OnClickListener() {
@@ -133,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.llCerereOferta:
                     i = new Intent(MainActivity.this, CerereOfertaActivity.class);
                     startActivity(i);
+                    break;
+                case R.id.btnLogRegistrationId:
+                    Log.i(TAG,"Registration ID = "+ FirebaseInstanceId.getInstance().getToken());
                     break;
             }
         }
