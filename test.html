@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to trigger a function that will output "Hello World" in a p element with id="demo".</p>
+
+<button onclick="foo()">Click me</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    document.getElementById("demo").innerHTML = "Hello World";
+}
+function foo(){
+document.getElementById("demo").innerHTML = "Start";
+var request = new XMLHttpRequest();
+request.open('POST', "https://fcm.googleapis.com/fcm/send", true);
+request.setRequestHeader('Content-Type', 'application/json');
+request.setRequestHeader('Authorization', 'key=AAAAVNU4yx8:APA91bFPqjAAqw9GEEb_RAnDsujxTR-sE-cQ8zxFQAU1t13Z3XNrR8NwK8gIBoSreVVte5nShz13qW21pt4PqCh__YZmG64Y9kE0iRWoc7aFr9eaW6IFlKoR4UVup2nOvPba7NCJXXGH');
+
+document.getElementById("demo").innerHTML = "Start 2";
+request.onreadystatechange = function () {
+    if (request.readyState === 4) {
+       alert(request.responseText);
+    }
+    document.getElementById("demo").innerHTML = "Callback finished";
+}
+request.send('{'+
+  '"to" : "eMij0-fSQpY:APA91bHUp0p8zfkYtZf98Y2LmjGSc32YTRXGAg53g6CxHKKktYXGgQWT5_t593Lj1iUIgTplA7LQXNusLQqPWJgI34j3J0CUJrUz2K9qVlLxv5jd9HyY_fsLFeCUnBb86Kzo2QPfZ7YG",'+
+  '"notification" : { "title" : "From HTML" , "body" : "123456" }'+
+'}');
+
+document.getElementById("demo").innerHTML = "Attempting send";
+}
+</script>
+
+</body>
+</html>
+
