@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cerere de Oferta</title>
+
+    <style>
+    .invoice-box{
+        max-width:800px;
+        margin:auto;
+        padding:30px;
+        border:1px solid #eee;
+        box-shadow:0 0 10px rgba(0, 0, 0, .15);
+        font-size:16px;
+        line-height:24px;
+        font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color:#555;
+    }
+
+    .invoice-box table{
+        width:100%;
+        line-height:inherit;
+        text-align:left;
+    }
+
+    .invoice-box table td{
+        padding:5px;
+        vertical-align:top;
+    }
+
+    .invoice-box table tr td:nth-child(2){
+        text-align:right;
+    }
+    .invoice-box table tr td:nth-child(3){
+        text-align:right;
+    }
+    .invoice-box table tr td:nth-child(4){
+        text-align:right;
+    }
+
+    .invoice-box table tr.top table td{
+        padding-bottom:20px;
+        text-align:left;
+    }
+
+    .invoice-box table tr.top table td:nth-child(2){
+        padding-bottom:20px;
+        text-align:right;
+    }
+
+    .invoice-box table tr.top table td.title{
+        font-size:35px;
+        line-height:35px;
+        color:#333;
+        text-align: left
+    }
+
+    .invoice-box table tr.information table td{
+
+    }
+    .invoice-box table tr.information table td:nth-child(2){
+        padding-bottom:40px;
+        text-align:right;
+    }
+
+    .invoice-box table tr.heading td{
+        background:#eee;
+        border-bottom:1px solid #ddd;
+        font-weight:bold;
+        width: 309px;
+
+    }
+
+    .invoice-box table tr.details td{
+        padding-bottom:20px;
+    }
+
+    .invoice-box table tr.item td{
+        border-bottom:1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td{
+        border-bottom:1px solid #eee;
+    }
+
+    .invoice-box table tr.total td:nth-child(4){
+        border-top:2px solid #eee;
+        font-weight:bold;
+    }
+
+
+        .invoice-box table tr.information table td{
+            width:100%;
+            display:block;
+            text-align:left;
+        }
+
+    }
+
+
+    </style>
+</head>
+
+<body>
+<div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+            <td colspan="4">
+                <table>
+                    <tr>
+
+                        <td class="title">
+                            Cerere de Oferta
+                        </td>
+
+                        <td>
+                            Numar Document #: 123<br>
+                            Data: January 1, 2015<br>
+                            Termen Raspuns: February 1, 2015
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </table>
+
+        <tr class="information">
+            <table cellpadding="0" cellspacing="0">
+            <td colspan="4">
+
+                <table>
+                    <tr>
+
+                        <td>
+                            Next Step Webs, Inc.<br>
+                            12345 Sunny Road<br>
+                            Sunnyville, TX 12345
+                        </td>
+
+                        <td>
+                            Acme Corp.<br>
+                            John Doe<br>
+                            john@example.com
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+
+        <tr class="heading">
+            <td>
+                Material
+            </td>
+
+            <td>
+                Cantitate
+            </td>
+
+            <td>
+                Pret
+            </td>
+            <td>
+                Data Livrare
+            </td>
+        </tr>
+
+        <tr class="item">
+            <td>
+                Coca-Cola
+            </td>
+
+            <td>
+                10.00
+            </td>
+
+            <td>
+                $300.00
+            </td>
+
+            <td>
+                01.05.2017
+            </td>
+
+        </tr>
+
+        <tr>
+            <td contenteditable='true'>
+                ...
+            </td>
+
+            <td contenteditable='true'>
+                ...
+            </td>
+
+            <td contenteditable='true'>
+                ...
+            </td>
+
+            <td contenteditable='true'>
+                ...
+            </td>
+        </tr>
+
+
+        <tr class="total">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                Total: $385.00
+            </td>
+        </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="checkbox" name="confirma" value="confirma"> Confirma<br>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button onclick="foo()">Trimite</button>
+                    </td>
+                </tr>
+    </table>
+            <form class="form_checkbox">
+
+            </form>
+
+</div>
+<script>
+function myFunction() {
+    document.getElementById("demo").innerHTML = "Hello World";
+}
+function foo(){
+document.getElementById("demo").innerHTML = "Start";
+var request = new XMLHttpRequest();
+request.open('POST', "https://fcm.googleapis.com/fcm/send", true);
+request.setRequestHeader('Content-Type', 'application/json');
+request.setRequestHeader('Authorization', 'key=AAAAVNU4yx8:APA91bFPqjAAqw9GEEb_RAnDsujxTR-sE-cQ8zxFQAU1t13Z3XNrR8NwK8gIBoSreVVte5nShz13qW21pt4PqCh__YZmG64Y9kE0iRWoc7aFr9eaW6IFlKoR4UVup2nOvPba7NCJXXGH');
+
+document.getElementById("demo").innerHTML = "Start 2";
+request.onreadystatechange = function () {
+    if (request.readyState === 4) {
+       alert(request.responseText);
+    }
+    document.getElementById("demo").innerHTML = "Callback finished";
+}
+request.send('{'+
+  '"to" : "eFGq6m0IBpw:APA91bHTsc6eARAzFJ1jILaGJybiN0ifp--koTj3MaL1KaJJhCgkY3pcVtGCbywe5ctPwmx7VrO41YavcLzW0kPk04pVdO6GtCTnlzSxf785q6v94QDo6DS3PrWyh6IgwEnTxSa94Cj3",'+
+  '"notification" : { "title" : "From HTML" , "body" : "123456" }'+
+'}');
+
+document.getElementById("demo").innerHTML = "Attempting send";
+}
+</script>
+</body>
+</html>

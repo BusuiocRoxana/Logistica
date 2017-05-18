@@ -35,6 +35,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import disertatie.com.disertatie.Constants.HtmlClass;
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.DateConvertor;
@@ -291,7 +292,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
                         " " +
                         "</body> " +
                         "</html> ";*/
-               String text = "<!DOCTYPE html>\n" +
+               /*String text = "<!DOCTYPE html>\n" +
                        "<html>\n" +
                        "<body>\n" +
                        "\n" +
@@ -330,7 +331,9 @@ public class CerereOfertaActivity extends AppCompatActivity {
                        "\n" +
                        "</body>\n" +
                        "</html>\n" +
-                       "\n";
+                       "\n";*/
+
+                String text = HtmlClass.invoice;
                 os.write(text.getBytes());
                 os.close();
             }catch (FileNotFoundException e){
@@ -373,5 +376,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
             emailIntent.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(f));
             startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
         }
+
+
     }
 }
