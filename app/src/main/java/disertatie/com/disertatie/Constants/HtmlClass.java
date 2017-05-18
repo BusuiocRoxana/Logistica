@@ -262,7 +262,7 @@ public class HtmlClass {
             "    document.getElementById(\"demo\").innerHTML = \"Callback finished\";\n" +
             "}\n" +
             "request.send('{'+\n" +
-            "  '\"to\" : \"eFGq6m0IBpw:APA91bHTsc6eARAzFJ1jILaGJybiN0ifp--koTj3MaL1KaJJhCgkY3pcVtGCbywe5ctPwmx7VrO41YavcLzW0kPk04pVdO6GtCTnlzSxf785q6v94QDo6DS3PrWyh6IgwEnTxSa94Cj3\",'+\n" +
+            "  '\"to\" : \"caufoH_goAY:APA91bGpegNs0mhFSJEsqtwFufsOq9s3fBfU2zaQK-1GRJ0pF_0niP63Tz5-4Lo7FIrtTXqHXzNvPf26P25lz7NkNLyPyB8ivABZCy2YHf_f2wqe8KCo5p8Ie7DwdGEVuHZ7KH6iXhc9\",'+\n" +
             "  '\"notification\" : { \"title\" : \"From HTML\" , \"body\" : \"123456\" }'+\n" +
             "'}');\n" +
             "\n" +

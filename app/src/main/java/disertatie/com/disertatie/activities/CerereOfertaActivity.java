@@ -171,10 +171,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
         btnVerificaCerere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cerereOferta = new CerereOferta((Material)spinnerMaterial.getSelectedItem(), Double.parseDouble(etCantitate.getText().toString()),
-                        DateConvertor.textToDate(tvTermenRaspuns.getText().toString()),
-                        (Furnizor)spinnerFurnizor.getSelectedItem(), isConfirmed, Double.parseDouble(etPret.getText().toString()),
-                        DateConvertor.textToDate(tvDataLivrare.getText().toString()));
+                cerereOferta = getCerereOfertaInput();
                 double valoare = cerereOferta.calculeazaValoare(cerereOferta.getPret(),cerereOferta.getCantitate());
                 tvValoare.setText(valoare+"");
             }
@@ -264,75 +261,6 @@ public class CerereOfertaActivity extends AppCompatActivity {
             try {
                 f = new File(getExternalFilesDir(null), fileName);
                 FileOutputStream os = new FileOutputStream(f);
-               /* String text = "<!DOCTYPE html>" +
-                        "<html> " +
-                        "<head> " +
-                        "<style> " +
-                        "table, th, td { " +
-                        "    border: 1px solid black; " +
-                        "} " +
-                        "</style> " +
-                        "</head> " +
-                        "<body> " +
-                        " " +
-                        "<table> " +
-                        "  <tr> " +
-                        "    <th>Month</th> " +
-                        "    <th>Savings</th> " +
-                        "  </tr> " +
-                        "  <tr> " +
-                        "    <td>January</td> " +
-                        "    <td>$100</td> " +
-                        "  </tr> " +
-                        "  <tr> " +
-                        "    <td>February</td> " +
-                        "    <td>$80</td> " +
-                        "  </tr> " +
-                        "</table> " +
-                        " " +
-                        "</body> " +
-                        "</html> ";*/
-               /*String text = "<!DOCTYPE html>\n" +
-                       "<html>\n" +
-                       "<body>\n" +
-                       "\n" +
-                       "<p>Click the button to trigger a function that will output \"Hello World\" in a p element with id=\"demo\".</p>\n" +
-                       "\n" +
-                       "<button onclick=\"foo()\">Click me</button>\n" +
-                       "\n" +
-                       "<p id=\"demo\"></p>\n" +
-                       "\n" +
-                       "<script>\n" +
-                       "function myFunction() {\n" +
-                       "    document.getElementById(\"demo\").innerHTML = \"Hello World\";\n" +
-                       "}\n" +
-                       "function foo(){\n" +
-                       "document.getElementById(\"demo\").innerHTML = \"Start\";\n" +
-                       "var request = new XMLHttpRequest();\n" +
-                       "request.open('POST', \"https://fcm.googleapis.com/fcm/send\", true);\n" +
-                       "request.setRequestHeader('Content-Type', 'application/json');\n" +
-                       "request.setRequestHeader('Authorization', 'key=AAAAVNU4yx8:APA91bFPqjAAqw9GEEb_RAnDsujxTR-sE-cQ8zxFQAU1t13Z3XNrR8NwK8gIBoSreVVte5nShz13qW21pt4PqCh__YZmG64Y9kE0iRWoc7aFr9eaW6IFlKoR4UVup2nOvPba7NCJXXGH');\n" +
-                       "\n" +
-                       "document.getElementById(\"demo\").innerHTML = \"Start 2\";\n" +
-                       "request.onreadystatechange = function () {\n" +
-                       "    if (request.readyState === 4) {\n" +
-                       "       alert(request.responseText);\n" +
-                       "    }\n" +
-                       "    document.getElementById(\"demo\").innerHTML = \"Callback finished\";\n" +
-                       "}\n" +
-                       "request.send('{'+\n" +
-                       "  '\"to\" : \"eFGq6m0IBpw:APA91bHTsc6eARAzFJ1jILaGJybiN0ifp--koTj3MaL1KaJJhCgkY3pcVtGCbywe5ctPwmx7VrO41YavcLzW0kPk04pVdO6GtCTnlzSxf785q6v94QDo6DS3PrWyh6IgwEnTxSa94Cj3\",'+\n" +
-                       "  '\"notification\" : { \"title\" : \"From HTML\" , \"body\" : \"123456\" }'+\n" +
-                       "'}');\n" +
-                       "\n" +
-                       "document.getElementById(\"demo\").innerHTML = \"Attempting send\";\n" +
-                       "}\n" +
-                       "</script>\n" +
-                       "\n" +
-                       "</body>\n" +
-                       "</html>\n" +
-                       "\n";*/
-
                 String text = HtmlClass.invoice;
                 os.write(text.getBytes());
                 os.close();
@@ -362,21 +290,42 @@ public class CerereOfertaActivity extends AppCompatActivity {
             emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
             emailIntent.putExtra(Intent.EXTRA_CC, CC);
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Cerere de Oferta");
-           /* emailIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("<p><b>Companie:</b> Denumire</p>\n" +
-                    "<p><b>Nr. Inreg. Registrul Comertului:</b> J44/40/12.12.2016</p>\n" +
-                    "<p><b>Doc. Nr.</b> #123</p>\n" +
-                    "<p><b>Data:</b> 01.01.2017</p>\n" +
-                    "<p><b>Material:</b> Apa plata</p>\n" +
-                    "<p><b>Cantitate: 123</p>\n" +
-                    "<p><b>Pret:</b> 123 LEI</p>\n" +
-                    "<p><b>Valoare:</b> 123 LEI<p/>\n" +
-                    "<p><b>Termen de Raspuns:</b> 1</p>\n" +
-                    "<p><b>Data Estimativa Livrare:</b> 1.1.2017</p>"
-            ));*/
             emailIntent.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(f));
             startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
         }
 
 
+        }
+
+
+
+
+    private CerereOferta getCerereOfertaInput() {
+        CerereOferta cerereOf = new CerereOferta();
+        if(spinnerMaterial.isSelected()){
+            cerereOf.setMaterial((Material)spinnerMaterial.getSelectedItem());
+        }else{
+            Toast.makeText(context, "Selecteaza material",Toast.LENGTH_SHORT);
+        }
+        if(spinnerFurnizor.isSelected()) {
+            cerereOf.setFurnizor((Furnizor) spinnerFurnizor.getSelectedItem());
+        }else{
+            Toast.makeText(context, "Selecteaza furnizor",Toast.LENGTH_SHORT);
+        }
+        cerereOf.setData_livrare(DateConvertor.textToDate(tvDataLivrare.getText().toString()));
+        cerereOf.setTermen_limita_raspuns(DateConvertor.textToDate(tvTermenRaspuns.getText().toString()));
+        if(etCantitate.getText().length()>0) {
+            cerereOf.setCantitate(Double.parseDouble(etCantitate.getText().toString()));
+        }else{
+            Toast.makeText(context, "Introdu cantitate",Toast.LENGTH_SHORT);
+        }
+        if(etPret.getText().length()>0) {
+            cerereOf.setPret(Double.parseDouble(etPret.getText().toString()));
+        }else{
+            Toast.makeText(context, "Introdu pret",Toast.LENGTH_SHORT);
+        }
+        cerereOf.setStatus(isConfirmed);
+
+        return cerereOf;
     }
 }
