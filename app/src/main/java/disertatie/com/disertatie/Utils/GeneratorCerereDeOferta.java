@@ -208,21 +208,12 @@ public class GeneratorCerereDeOferta {
                 "        </tr>\n" +
                 "\n" +
                 "        <tr>\n" +
-                "            <td contenteditable='true'>\n" +
-                "                ...\n" +
+                "            <td>\n" +
                 "            </td>\n" +
                 "\n" +
-                "            <td contenteditable='true'>\n" +
-                "                ...\n" +
-                "            </td>\n" +
-                "\n" +
-                "            <td contenteditable='true'>\n" +
-                "                ...\n" +
-                "            </td>\n" +
-                "\n" +
-                "            <td contenteditable='true'>\n" +
-                "                ...\n" +
-                "            </td>\n" +
+                "            <td id='tdCantitate' contenteditable='true'>...</td>\n" +
+                "            <td id='tdPret' contenteditable='true'>...</td>\n" +
+                "            <td id='tdData' contenteditable='true'>...</td>\n" +
                 "        </tr>\n" +
                 "\n" +
                 "\n" +
@@ -276,21 +267,28 @@ public class GeneratorCerereDeOferta {
                 "}\n" +
                 "function sendChange(){\n" +
                 "var request = new XMLHttpRequest();\n" +
-                "request.open('POST', \"https://fcm.googleapis.com/fcm/send\", true);\n" +
+                "request.open('POST', 'https://fcm.googleapis.com/fcm/send', true);\n" +
                 "request.setRequestHeader('Content-Type', 'application/json');\n" +
                 "request.setRequestHeader('Authorization', 'key=AAAAVNU4yx8:APA91bFPqjAAqw9GEEb_RAnDsujxTR-sE-cQ8zxFQAU1t13Z3XNrR8NwK8gIBoSreVVte5nShz13qW21pt4PqCh__YZmG64Y9kE0iRWoc7aFr9eaW6IFlKoR4UVup2nOvPba7NCJXXGH');\n" +
                 "\n" +
+                "var sCantitate = document.getElementById('tdCantitate').textContent;\n" +
+                "var sPret = document.getElementById('tdPret').textContent;\n" +
+                "var sDataLivrare = document.getElementById('tdData').textContent;\n" +
+                "var j = '{'+\n" +
+                "  '\"to\" : \""+firebaseCloudMessagingId+"\",'+\n" +
+                "  '\"notification\" : { \"title\" : \""+furnizor.getDenumire_furnizor()+" a schimbat oferta\"},'+\n" +
+                "  '\"data\" : {'+\n"+
+                "     '\"cantitate\" : \"' + sCantitate + '\",'+\n"+
+                "     '\"pret\" : \"' + sPret + '\",'+\n"+
+                "     '\"dataLivrare\" : \"' + sDataLivrare + '\"'+\n"+
+                "  '}'+\n" +
+                "'}';\n"+
                 "request.onreadystatechange = function () {\n" +
                 "    if (request.readyState === 4) {\n" +
-                "       alert('Actualizarea a fost trimisa cu succes');\n" +
-                "    }else{\n" +
-                "       alert('Nu s-a putut trimite actualizarea');\n" +
-                "    }" +
+                "       alert('Actualizarea a fost trimisa cu succes : '+j);\n" +
+                "    }\n" +
                 "}\n" +
-                "request.send('{'+\n" +
-                "  '\"to\" : \""+firebaseCloudMessagingId+"\",'+\n" +
-                "  '\"notification\" : { \"title\" : \""+furnizor.getDenumire_furnizor()+" a schimbat oferta"+"\"}'+\n" +
-                "'}');\n" +
+                "request.send(j);\n" +
                 "}\n" +
                 "</script>\n" +
                 "</body>\n" +

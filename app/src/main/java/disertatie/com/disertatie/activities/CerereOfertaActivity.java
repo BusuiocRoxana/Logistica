@@ -26,19 +26,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import disertatie.com.disertatie.Constants.HtmlClass;
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.DateConvertor;
+import disertatie.com.disertatie.Utils.GeneratorCerereDeOferta;
 import disertatie.com.disertatie.entities.CerereOferta;
 import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
@@ -172,8 +175,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cerereOferta = getCerereOfertaInput();
-                double valoare = cerereOferta.calculeazaValoare(cerereOferta.getPret(),cerereOferta.getCantitate());
-                tvValoare.setText(valoare+"");
+
             }
         });
         btnTrimiteCerere.setOnClickListener(new View.OnClickListener() {
@@ -249,9 +251,15 @@ public class CerereOfertaActivity extends AppCompatActivity {
     {
         String fileName;
         File f;
+        String tokenId;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            tokenId = FirebaseInstanceId.getInstance().getToken();
+            if(tokenId==null || tokenId.length()==0)
+            {
+                tokenId = "CouldNotGetTokenId";
+            }
         }
 
         @Override
@@ -261,7 +269,8 @@ public class CerereOfertaActivity extends AppCompatActivity {
             try {
                 f = new File(getExternalFilesDir(null), fileName);
                 FileOutputStream os = new FileOutputStream(f);
-                String text = HtmlClass.invoice;
+                String text = GeneratorCerereDeOferta.generate(1, new Date(),cerereOferta.getFurnizor(), cerereOferta.getMaterial(),
+                        12.22, 10.22, new Date(), tokenId);
                 os.write(text.getBytes());
                 os.close();
             }catch (FileNotFoundException e){
@@ -301,31 +310,41 @@ public class CerereOfertaActivity extends AppCompatActivity {
 
 
     private CerereOferta getCerereOfertaInput() {
+        String collectedErrors = "";
         CerereOferta cerereOf = new CerereOferta();
-        if(spinnerMaterial.isSelected()){
+        if(spinnerMaterial.getSelectedItem() != null){
             cerereOf.setMaterial((Material)spinnerMaterial.getSelectedItem());
         }else{
-            Toast.makeText(context, "Selecteaza material",Toast.LENGTH_SHORT);
+            collectedErrors += "Selectati material\n";
         }
-        if(spinnerFurnizor.isSelected()) {
+        if(spinnerFurnizor.getSelectedItem() != null) {
             cerereOf.setFurnizor((Furnizor) spinnerFurnizor.getSelectedItem());
         }else{
-            Toast.makeText(context, "Selecteaza furnizor",Toast.LENGTH_SHORT);
+            collectedErrors += "Selectati furnizor\n";
+
         }
         cerereOf.setData_livrare(DateConvertor.textToDate(tvDataLivrare.getText().toString()));
         cerereOf.setTermen_limita_raspuns(DateConvertor.textToDate(tvTermenRaspuns.getText().toString()));
         if(etCantitate.getText().length()>0) {
             cerereOf.setCantitate(Double.parseDouble(etCantitate.getText().toString()));
         }else{
-            Toast.makeText(context, "Introdu cantitate",Toast.LENGTH_SHORT);
+            collectedErrors += "Introduceti cantitatea\n";
         }
         if(etPret.getText().length()>0) {
             cerereOf.setPret(Double.parseDouble(etPret.getText().toString()));
         }else{
-            Toast.makeText(context, "Introdu pret",Toast.LENGTH_SHORT);
+            collectedErrors += "Introduceti pretul\n";
+
         }
         cerereOf.setStatus(isConfirmed);
-
+        collectedErrors =  collectedErrors.trim();
+        if(collectedErrors.length() > 0){
+            Toast.makeText(context, collectedErrors,Toast.LENGTH_SHORT).show();
+        }else {
+            double valoare = cerereOf.calculeazaValoare(cerereOf.getPret(),cerereOf.getCantitate());
+            tvValoare.setText(valoare+"");
+            Toast.makeText(context, "Document complet",Toast.LENGTH_SHORT).show();
+        }
         return cerereOf;
     }
 }
