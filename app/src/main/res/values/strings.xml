@@ -5,6 +5,9 @@
     <string name="pagina_principala">Pagina Principala</string>
     <string name="pagina_date_interne">Detalii Companie</string>
 
+    <string name="informatii">Informatii Date Stocate</string>
+    <string name="activitati">Activitati</string>
+
     <string name="denumire_material">Material</string>
     <string name="stoc_minim">Stoc Minim</string>
     <string name="stoc_curent">Stoc Curent</string>
@@ -45,6 +48,9 @@
     <string name="verifica_doc">Verifica Document</string>
     <string name="trimite_doc">Trimite Document</string>
 
+    <string name="material">Material</string>
+    <string name="furnizor">Furnizor</string>
+    <string name="status">Status</string>
 
 
 </resources>

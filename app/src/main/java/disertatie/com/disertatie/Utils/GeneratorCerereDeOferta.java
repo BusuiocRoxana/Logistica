@@ -7,7 +7,7 @@ import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
 
 /**
- * Created by george on 18.05.2017.
+ * Created by roxana on 18.05.2017.
  */
 
 public class GeneratorCerereDeOferta {

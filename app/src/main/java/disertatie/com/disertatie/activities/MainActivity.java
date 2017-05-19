@@ -28,10 +28,10 @@ import disertatie.com.disertatie.entities.Material;
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout llDateInterne;
-    private LinearLayout llActivitati;
     private LinearLayout llMateriale;
     private LinearLayout llFurnizori;
     private LinearLayout llCerereOferta;
+    private LinearLayout llComenzi;
 
     private Toolbar toolbar;
 
@@ -59,16 +59,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         llDateInterne=(LinearLayout)findViewById(R.id.llDateInterne);
-        llActivitati=(LinearLayout)findViewById(R.id.llActivitati);
         llMateriale = (LinearLayout)findViewById(R.id.llMateriale);
         llFurnizori = (LinearLayout)findViewById(R.id.llFurnizori);
         llCerereOferta = (LinearLayout)findViewById(R.id.llCerereOferta);
+        llComenzi = (LinearLayout)findViewById(R.id.llComenzi);
 
         llDateInterne.setOnClickListener(clickListener);
-        llActivitati.setOnClickListener(clickListener);
         llMateriale.setOnClickListener(clickListener);
         llFurnizori.setOnClickListener(clickListener);
         llCerereOferta.setOnClickListener(clickListener);
+        llComenzi.setOnClickListener(clickListener);
 
         materialList = new ArrayList<Material>();
         databaseHelper = new DatabaseHelper(this);
@@ -127,7 +127,9 @@ public class MainActivity extends AppCompatActivity {
                     i=new Intent(MainActivity.this,DateInterneActivity.class);
                     startActivity(i);
                     break;
-                case R.id.llActivitati:
+                case R.id.llComenzi:
+                    i=new Intent(MainActivity.this,ListaCereriOfertaActivity.class);
+                    startActivity(i);
                     break;
                 case R.id.llMateriale:
                     i = new Intent(MainActivity.this, MaterialsActivity.class);

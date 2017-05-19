@@ -13,181 +13,223 @@
         layout="@layout/toolbar" />
 
     <LinearLayout
-        android:id="@+id/llMaterial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:gravity="center_vertical"
-            android:text="@string/alege_material" />
-
-        <Spinner
-            android:id="@+id/spinnerMaterial"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.8" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/llMaterial"
-        android:orientation="horizontal"
-        android:id="@+id/llFurnizor">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:text="@string/alege_furnizor" />
-
-        <Spinner
-            android:id="@+id/spinnerFurnizor"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.8" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llDataLivrare"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/llCantitatePret"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/data_estimativa_livrare" />
-
-        <TextView
-            android:id="@+id/tvDataLivrare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="11.12.2015" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llTermenRaspuns"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/llDataLivrare"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/termen_limita_raspuns" />
-
-        <TextView
-            android:id="@+id/tvTermenRaspuns"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="11.12.2015" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llCantitatePret"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/llFurnizor"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/etCantitate"
-            android:layout_width="124dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/llFurnizor"
-            android:ems="10"
-            android:hint="@string/cantitate"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/etPret"
-            android:layout_width="136dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/llFurnizor"
-            android:ems="10"
-            android:hint="@string/pret"
-            android:inputType="numberDecimal" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/valoare" />
-
-        <TextView
-            android:id="@+id/tvValoare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="0.00" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="RON" />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnVerificaCerere"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/toolbar"
+            android:layout_weight="0.2"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical"
+                android:text="@string/alege_material"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/spinnerMaterial"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.8"
+                android:gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llFurnizor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/llMaterial"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical"
+                android:text="@string/alege_furnizor"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/spinnerFurnizor"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.8"
+                android:gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCantitatePret"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/llFurnizor"
+            android:layout_weight="0.2"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etCantitate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/llFurnizor"
+                android:ems="10"
+                android:hint="@string/cantitate"
+                android:inputType="numberDecimal"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etPret"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/llFurnizor"
+                android:ems="10"
+                android:hint="@string/pret"
+                android:inputType="numberDecimal"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTermenRaspuns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/llDataLivrare"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/termen_limita_raspuns"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvTermenRaspuns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="11.12.2015"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llDataLivrare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llCantitatePret"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/data_estimativa_livrare"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvDataLivrare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="11.12.2015"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="5dp"
+                android:text="@string/valoare"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:gravity="center_vertical|center"
+                android:text="RON"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvValoare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="0.00"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/verifica_doc" />
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnTrimiteCerere"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/trimite_doc" />
+            <Button
+                android:id="@+id/btnVerificaCerere"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/verifica_doc" />
+
+            <Button
+                android:id="@+id/btnTrimiteCerere"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/trimite_doc" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

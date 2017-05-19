@@ -10,9 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import javax.xml.parsers.SAXParser;
-
+import disertatie.com.disertatie.Constants.Constants;
 import disertatie.com.disertatie.entities.Adresa;
+import disertatie.com.disertatie.entities.CerereOferta;
 import disertatie.com.disertatie.entities.Companie;
 import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_MATERIALE = "MATERIALE";
     public static final String TABLE_FURNIZORI = "FURNIZORI";
     public static final String TABLE_ADRESE = "ADRESE";
+    public static final String TABLE_CERERI_OFERTA = "CERERI_OFERTA";
 
     public static final String COLUMN_COD_COMPANIE = "COD_COMPANIE";
     public static final String COLUMN_DENUMIRE_COMPANIE = "DENUMIRE_COMPANIE";
@@ -55,6 +56,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LOCALITATE = "LOCALITATE";
     public static final String COLUMN_JUDET_SECTOR = "JUDET_SECTOR";
     public static final String COLUMN_TARA = "TARA";
+
+
+    public static final String COLUMN_COD_CERERE_OFERTA = "COD_CERERE_OFERTA";
+    //public static final String COLUMN_COD_FURNIZOR = "COD_FURNIZOR";
+   // public static final String COLUMN_COD_MATERIAL = "COD_MATERIAL";
+    public static final String COLUMN_STATUS = "STATUS_CERERE_OFERTA";
+    public static final String COLUMN_PRET = "PRET";
+    public static final String COLUMN_CANTITATE = "CANTITATE";
+    public static final String COLUMN_DATA_LIVRARE = "DATA_LIVRARE";
+    public static final String COLUMN_DATA_DOCUMENT= "DATA_DOCUMENT";
+    public static final String COLUMN_TERMEN_RASPUNS= "TERMEN_RASPUNS";
 
 
 
@@ -104,6 +116,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +COLUMN_LOCALITATE+SPACE+"text,"
                 +COLUMN_JUDET_SECTOR+SPACE+"text,"
                 +COLUMN_TARA+SPACE+"text)");
+
+        db.execSQL("create table"+SPACE+TABLE_CERERI_OFERTA+"("
+                +COLUMN_COD_CERERE_OFERTA+SPACE+"integer primary key AUTOINCREMENT not null,"
+                +COLUMN_COD_FURNIZOR+SPACE+"integer,"
+                +COLUMN_COD_MATERIAL+SPACE+"integer,"
+                +COLUMN_STATUS+SPACE+"text CHECK("+SPACE+COLUMN_STATUS+SPACE+" IN ('"+ Constants.NEDEFINIT+
+                                                                                "','"+ Constants.ACCEPTAT+
+                                                                                "','" + Constants.MODIFICAT+
+                                                                                 "','"+Constants.RESPINS+"')) NOT NULL DEFAULT '"+Constants.NEDEFINIT+"',"
+                +COLUMN_PRET+SPACE+"real,"
+                +COLUMN_CANTITATE+SPACE+"real,"
+                +COLUMN_DATA_LIVRARE+SPACE+"text,"
+                //+COLUMN_DATA_DOCUMENT+SPACE+"date DEFAULT datetime('now', 'localtime'),"
+                +COLUMN_DATA_DOCUMENT+SPACE+"text,"
+                +COLUMN_TERMEN_RASPUNS+SPACE+"text,"+SPACE
+                +" FOREIGN KEY ("+COLUMN_COD_FURNIZOR+") REFERENCES "+TABLE_FURNIZORI+"("+COLUMN_COD_FURNIZOR+"),"
+                +" FOREIGN KEY ("+COLUMN_COD_MATERIAL+") REFERENCES "+TABLE_MATERIALE+"("+COLUMN_COD_MATERIAL+"))"
+        );
     }
 
     @Override
@@ -112,6 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_MATERIALE);
         db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_FURNIZORI);
         db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_ADRESE);
+        db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_CERERI_OFERTA);
         onCreate(db);
     }
 
@@ -158,6 +189,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_JUDET_SECTOR, judet_sector);
         contentValues.put(COLUMN_TARA, tara);
         db.insert(TABLE_ADRESE, null, contentValues);
+        return true;
+    }
+
+    public boolean insertCerereOferta(Furnizor furnizor, Material material, String status, double pret, double cantitate, String termen_raspuns, String data_livrare) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_COD_FURNIZOR, furnizor.getCod_furnizor());
+        contentValues.put(COLUMN_COD_MATERIAL, material.getCod_material());
+        contentValues.put(COLUMN_STATUS, status);
+        contentValues.put(COLUMN_PRET, pret);
+        contentValues.put(COLUMN_CANTITATE, cantitate);
+        contentValues.put(COLUMN_DATA_DOCUMENT, "datetime('now','localtime')");
+        contentValues.put(COLUMN_TERMEN_RASPUNS, termen_raspuns);
+        contentValues.put(COLUMN_DATA_LIVRARE, data_livrare);
+        db.insert(TABLE_CERERI_OFERTA, null, contentValues);
         return true;
     }
 
@@ -300,6 +346,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return materialList;
     }
 
+    public Material selectMaterial(int cod_material) throws ParseException {
+        Material mat = new Material();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT "+COLUMN_COD_MATERIAL+","
+                +COLUMN_DENUMIRE_MATERIAL+","
+                +COLUMN_STOC_CURENT+","
+                +COLUMN_STOC_MINIM+SPACE+
+                " FROM " + TABLE_MATERIALE+SPACE+"WHERE"+SPACE+COLUMN_COD_MATERIAL+"="+cod_material;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                mat.setCod_material(cursor.getInt(0));
+                mat.setDenumire_material(cursor.getString(1));
+                mat.setStoc_curent(cursor.getDouble(2));
+                mat.setStoc_minim(cursor.getDouble(3));
+            }
+            while (cursor.moveToNext());
+        }
+        return mat;
+    }
+
     public boolean updateFurnizor(int cod_furnizor, String denumire_furnizor, String nr_inreg_Rc,
                                 Adresa adresa, int rating, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -377,4 +445,84 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return furnizorList;
     }
+
+    public Furnizor selectFurnizor(int cod_furnizor){
+        Furnizor furnizor = new Furnizor();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT "
+                +TABLE_FURNIZORI+"."+COLUMN_COD_FURNIZOR+","
+                +TABLE_FURNIZORI+"."+COLUMN_DENUMIRE_FURNIZOR+","
+                +TABLE_FURNIZORI+"."+COLUMN_NR_INREG_RC_FURNIZORI+","
+                +TABLE_FURNIZORI+"."+COLUMN_COD_ADRESA+SPACE+","
+                +TABLE_FURNIZORI+"."+COLUMN_RATING+SPACE+","
+                +TABLE_FURNIZORI+"."+COLUMN_EMAIL_FURNIZOR+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_COD_ADRESA+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_NUMAR+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_STRADA+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_LOCALITATE+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_JUDET_SECTOR+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_TARA+SPACE+
+                " FROM " + TABLE_FURNIZORI+","+TABLE_ADRESE+SPACE+
+                "WHERE "+TABLE_FURNIZORI+"."+COLUMN_COD_ADRESA+"="+TABLE_ADRESE+"."+COLUMN_COD_ADRESA+SPACE+
+                "AND "+SPACE+TABLE_FURNIZORI+"."+COLUMN_COD_FURNIZOR+"="+cod_furnizor;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                furnizor.setCod_furnizor(cursor.getInt(0));
+                furnizor.setDenumire_furnizor(cursor.getString(1));
+                furnizor.setNr_inregistrare_RC(cursor.getString(2));
+                furnizor.setCod_adresa(cursor.getInt(3));
+                furnizor.setRating(cursor.getInt(4));
+                furnizor.setEmail(cursor.getString(5));
+                Adresa adresa = new Adresa();
+                adresa.setCod_adresa(cursor.getInt(6));
+                adresa.setNumar(cursor.getInt(7));
+                adresa.setStrada(cursor.getString(8));
+                adresa.setLocalitate(cursor.getString(9));
+                adresa.setJudet_sector(cursor.getString(10));
+                adresa.setTara(cursor.getString(11));
+                furnizor.setAdresa(adresa);
+            }
+            while (cursor.moveToNext());
+        }
+        return furnizor;
+    }
+
+    public ArrayList<CerereOferta> selectCereriOferta() throws ParseException {
+        ArrayList<CerereOferta> listaCereriOferta = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query =  "SELECT "
+                +TABLE_FURNIZORI+"."+COLUMN_COD_FURNIZOR+","
+                +TABLE_MATERIALE+"."+COLUMN_COD_MATERIAL+","
+                +TABLE_CERERI_OFERTA+"."+COLUMN_PRET+","
+                +TABLE_CERERI_OFERTA+"."+COLUMN_CANTITATE+SPACE+","
+                +TABLE_CERERI_OFERTA+"."+COLUMN_TERMEN_RASPUNS+SPACE+","
+                +TABLE_CERERI_OFERTA+"."+COLUMN_STATUS+SPACE+
+                " FROM " + TABLE_FURNIZORI+","+TABLE_MATERIALE+","+TABLE_CERERI_OFERTA+SPACE+
+                "WHERE "+TABLE_FURNIZORI+"."+COLUMN_COD_FURNIZOR+"="+TABLE_CERERI_OFERTA+"."+COLUMN_COD_FURNIZOR+SPACE+
+                "AND "+TABLE_MATERIALE+"."+COLUMN_COD_MATERIAL+"="+TABLE_CERERI_OFERTA+"."+COLUMN_COD_MATERIAL+SPACE
+                +"ORDER BY "+TABLE_CERERI_OFERTA+"."+COLUMN_COD_CERERE_OFERTA;
+        Cursor cursor = db.rawQuery(query, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                CerereOferta cerereOferta = new CerereOferta();
+                cerereOferta.setFurnizor(selectFurnizor(Integer.parseInt(cursor.getString(0))));
+                cerereOferta.setMaterial(selectMaterial(Integer.parseInt(cursor.getString(1))));
+                cerereOferta.setPret(cursor.getDouble(2));
+                cerereOferta.setCantitate(cursor.getDouble(3));
+                cerereOferta.setTermen_limita_raspuns(cursor.getString(4));
+                cerereOferta.setStatus(CerereOferta.Status.valueOf(cursor.getString(5).toUpperCase()));
+
+                listaCereriOferta.add(cerereOferta);
+            }
+            while (cursor.moveToNext());
+        }
+        return listaCereriOferta;
+    }
+
+
 }

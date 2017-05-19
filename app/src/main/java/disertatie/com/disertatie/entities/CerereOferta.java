@@ -1,6 +1,6 @@
 package disertatie.com.disertatie.entities;
 
-import java.util.Date;
+import disertatie.com.disertatie.Constants.Constants;
 
 /**
  * Created by Roxana on 5/13/2017.
@@ -11,13 +11,35 @@ public class CerereOferta {
     private int cod_cerere_oferta;
     private Material material;
     private double cantitate;
-    private Date termen_limita_raspuns;
+    private String termen_limita_raspuns;
     private Furnizor furnizor;
-    private boolean status;
+    private Status status;
     private double pret;
-    private Date data_livrare;
+    private String data_livrare;
 
-    public CerereOferta(int cod_cerere_oferta, Material material, double cantitate, Date termen_limita_raspuns, Furnizor furnizor, boolean status, double pret, Date data_livrare) {
+    public enum Status {
+        NEDEFINIT(Constants.NEDEFINIT),
+        ACCEPTAT(Constants.ACCEPTAT),
+        MODIFICAT(Constants.MODIFICAT),
+        RESPINS(Constants.RESPINS);
+
+        private final String status;
+
+
+        Status(String status) {
+            this.status = status;
+        }
+
+
+        @Override
+        public String toString() {
+            return status;
+        }
+    }
+
+
+    public CerereOferta(int cod_cerere_oferta, Material material, double cantitate, String termen_limita_raspuns,
+                        Furnizor furnizor, Status status, double pret, String data_livrare) {
         this.cod_cerere_oferta = cod_cerere_oferta;
         this.material = material;
         this.cantitate = cantitate;
@@ -28,8 +50,8 @@ public class CerereOferta {
         this.data_livrare = data_livrare;
     }
 
-    public CerereOferta(Material material, double cantitate, Date termen_limita_raspuns, Furnizor furnizor,
-                        boolean status, double pret, Date data_livrare) {
+    public CerereOferta(Material material, double cantitate, String termen_limita_raspuns, Furnizor furnizor,
+                        Status status, double pret, String data_livrare) {
         this.cod_cerere_oferta = cod_cerere_oferta;
         this.material = material;
         this.cantitate = cantitate;
@@ -67,11 +89,11 @@ public class CerereOferta {
         this.cantitate = cantitate;
     }
 
-    public Date getTermen_limita_raspuns() {
+    public String getTermen_limita_raspuns() {
         return termen_limita_raspuns;
     }
 
-    public void setTermen_limita_raspuns(Date termen_limita_raspuns) {
+    public void setTermen_limita_raspuns(String termen_limita_raspuns) {
         this.termen_limita_raspuns = termen_limita_raspuns;
     }
 
@@ -83,11 +105,11 @@ public class CerereOferta {
         this.furnizor = furnizor;
     }
 
-    public boolean isStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -99,11 +121,11 @@ public class CerereOferta {
         this.pret = pret;
     }
 
-    public Date getData_livrare() {
+    public String getData_livrare() {
         return data_livrare;
     }
 
-    public void setData_livrare(Date data_livrare) {
+    public void setData_livrare(String data_livrare) {
         this.data_livrare = data_livrare;
     }
 
