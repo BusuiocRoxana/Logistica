@@ -125,10 +125,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="241dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/toolbar"
-            android:background="@color/white_22">
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:background="@color/white_22"
+            android:foregroundGravity="center_vertical|center_horizontal"
+            android:gravity="bottom|center_horizontal">
 
             <Button
                 android:id="@+id/btnSalveazaModificari"
@@ -152,14 +156,26 @@
                 android:id="@+id/btnSalveaza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="125dp"
-                android:layout_marginStart="125dp"
-                android:layout_marginTop="23dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/btnSalveazaModificari"
+                android:foregroundGravity="center_horizontal"
                 android:text="@string/salveaza"
                 android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnDefinireTaxe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/btnSalveaza"
+                android:layout_alignBottom="@+id/btnSalveaza"
+                android:layout_marginLeft="21dp"
+                android:layout_marginStart="21dp"
+                android:layout_toEndOf="@+id/btnSalveaza"
+                android:layout_toRightOf="@+id/btnSalveaza"
+                android:foregroundGravity="center_horizontal"
+                android:text="Definire Taxe" />
+
         </RelativeLayout>
 
     </LinearLayout>

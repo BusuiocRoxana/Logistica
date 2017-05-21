@@ -53,6 +53,6 @@ public class Material implements Serializable {
 
     @Override
     public String toString() {
-        return denumire_material;
+        return  denumire_material;
     }
 }

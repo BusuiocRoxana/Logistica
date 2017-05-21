@@ -10,12 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import disertatie.com.disertatie.R;
+import disertatie.com.disertatie.activities.AddFurnizorActivity;
 import disertatie.com.disertatie.activities.AddMaterialActivity;
+import disertatie.com.disertatie.activities.CerereOfertaActivity;
 import disertatie.com.disertatie.entities.CerereOferta;
 import disertatie.com.disertatie.entities.Material;
 
@@ -24,7 +27,7 @@ import disertatie.com.disertatie.entities.Material;
  */
 
 public class CerereOfertaAdapter extends RecyclerView.Adapter<CerereOfertaAdapter.MyViewHolder> {
-    private ArrayList<CerereOferta> listaCereriOferta;
+    private ArrayList<CerereOferta> listaCereriOferta = new ArrayList<>();
     private Context context;
     private static String CERERE_OFERTA = "CERERE_OFERTA";
     private CerereOfertaAdapter.ViewHolderCallbacks callbacks;
@@ -36,6 +39,7 @@ public class CerereOfertaAdapter extends RecyclerView.Adapter<CerereOfertaAdapte
         public TextView tvTermenLimita;
         private TextView tvPret;
         private TextView tvStatus;
+        private LinearLayout llView;
 
 
         public MyViewHolder(View view) {
@@ -46,7 +50,7 @@ public class CerereOfertaAdapter extends RecyclerView.Adapter<CerereOfertaAdapte
             tvTermenLimita = (TextView) view.findViewById(R.id.tvTermenLimita);
             tvPret = (TextView) view.findViewById(R.id.tvPret);
             tvStatus = (TextView) view.findViewById(R.id.tvStatus);
-
+            llView = (LinearLayout) view.findViewById(R.id.llView);
 
         }
     }
@@ -76,6 +80,19 @@ public class CerereOfertaAdapter extends RecyclerView.Adapter<CerereOfertaAdapte
         holder.tvTermenLimita.setText(cerereOferta.getTermen_limita_raspuns());
         holder.tvStatus.setText(cerereOferta.getStatus().toString());
 
+
+        holder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =  new Intent(context, CerereOfertaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(CERERE_OFERTA, listaCereriOferta.get(position));
+                bundle.putString("CO_VIEW","VIEW");
+                //i.putExtra("CO_VIEW","VIEW";
+                i.putExtras(bundle);
+                context.startActivity(i);
+            }
+        });
 
 
 

@@ -1,5 +1,6 @@
 package disertatie.com.disertatie.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class DateInterneActivity extends AppCompatActivity {
     private Button btnSalveaza;
     private Button btnModifica;
     private Button btnSalveazaModificari;
+    private Button btnTaxe;
 
     private RelativeLayout rlAdresa;
     private EditText etNumar;
@@ -68,7 +70,8 @@ public class DateInterneActivity extends AppCompatActivity {
         etCodAdresaCompanie = (EditText) findViewById(R.id.etAdresaCompanie);
         btnSalveaza = (Button) findViewById(R.id.btnSalveaza);
         btnModifica = (Button)findViewById(R.id.btnModifica) ;
-        btnSalveazaModificari = (Button)findViewById(R.id.btnSalveazaModificari) ;
+        btnSalveazaModificari = (Button)findViewById(R.id.btnSalveazaModificari);
+        btnTaxe = (Button) findViewById(R.id.btnDefinireTaxe);
 
         rlAdresa = (RelativeLayout)findViewById(R.id.adresaFurnizor);
         etNumar = (EditText) rlAdresa.findViewById(R.id.etNumar);
@@ -207,6 +210,14 @@ public class DateInterneActivity extends AppCompatActivity {
                 databaseHelper.updateCompanie(cod_companie,etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
                         etEmailCompanie.getText().toString(),
                         adresa, etTelefonCompanie.getText().toString());
+            }
+        });
+
+        btnTaxe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DateInterneActivity.this, TaxeActivity.class);
+                startActivity(i);
             }
         });
 

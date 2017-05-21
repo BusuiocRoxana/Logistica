@@ -1,13 +1,18 @@
 package disertatie.com.disertatie.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +39,7 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
 
     private static int REQUEST_CODE = -1;
 
+    private static final String TAG = "Logistica";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,10 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
 
         listaCereriOferta = new ArrayList<CerereOferta>();
         databaseHelper = new DatabaseHelper(this);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, new IntentFilter("updateCerereOferta"));
+
         try {
             listaCereriOferta = databaseHelper.selectCereriOferta();
 
@@ -125,4 +135,23 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
 
 
     }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            int codDocument = intent.getIntExtra("codDocument",-1);
+            double cantitate = intent.getDoubleExtra("cantitate",-1);
+            double pret = intent.getDoubleExtra("pret",-1);
+            String dataLivrare = intent.getStringExtra("dataLivrare");
+            CerereOferta.Status status = CerereOferta.Status.valueOf(intent.getStringExtra("status").toString());
+
+            Log.d(TAG,"mMessageReceiver-bam-worked");
+
+            databaseHelper.updateCerereOferta(codDocument, cantitate, pret, dataLivrare, status);
+
+            //tvStatus.setText(message);
+            // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        }
+    };
 }

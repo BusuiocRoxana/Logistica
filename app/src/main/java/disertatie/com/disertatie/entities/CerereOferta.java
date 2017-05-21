@@ -1,12 +1,14 @@
 package disertatie.com.disertatie.entities;
 
+import java.io.Serializable;
+
 import disertatie.com.disertatie.Constants.Constants;
 
 /**
  * Created by Roxana on 5/13/2017.
  */
 
-public class CerereOferta {
+public class CerereOferta implements Serializable{
 
     private int cod_cerere_oferta;
     private Material material;
@@ -132,5 +134,24 @@ public class CerereOferta {
     public double calculeazaValoare(double pret, double cantitate){
         double valoare = pret*cantitate;
         return valoare;
+    }
+    public double calculeazaValoare(){
+        double valoare = pret*cantitate;
+        return valoare;
+    }
+
+
+    @Override
+    public String toString() {
+        return "CerereOferta{" +
+                "cod_cerere_oferta=" + cod_cerere_oferta +
+                ", material=" + material +
+                ", cantitate=" + cantitate +
+                ", termen_limita_raspuns='" + termen_limita_raspuns + '\'' +
+                ", furnizor=" + furnizor +
+                ", status=" + status +
+                ", pret=" + pret +
+                ", data_livrare='" + data_livrare + '\'' +
+                '}';
     }
 }

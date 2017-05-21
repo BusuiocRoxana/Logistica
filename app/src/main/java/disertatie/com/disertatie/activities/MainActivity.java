@@ -1,7 +1,11 @@
 package disertatie.com.disertatie.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +28,7 @@ import java.util.ArrayList;
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.StaticLabelsFormatter;
+import disertatie.com.disertatie.entities.CerereOferta;
 import disertatie.com.disertatie.entities.Material;
 
 public class MainActivity extends AppCompatActivity {
@@ -115,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogRegistrationId = (Button)findViewById(R.id.btnLogRegistrationId);
         btnLogRegistrationId.setOnClickListener(clickListener);
+
     }
 
     View.OnClickListener clickListener=new View.OnClickListener() {
@@ -141,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.llCerereOferta:
                     i = new Intent(MainActivity.this, CerereOfertaActivity.class);
+                    i.putExtra("CO_VIEW","CREATE");
                     startActivity(i);
                     break;
                 case R.id.btnLogRegistrationId:
@@ -149,4 +156,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
 }

@@ -25,6 +25,7 @@
     <string name="modifica">Modifica</string>
     <string name="adauga_material">Adauga Material</string>
     <string name="adauga_furnizor">Adauga Furnizor</string>
+    <string name="adauga_taxa">Adauga Taxa</string>
     <string name="email_furnizor">Email</string>
 
     <string name="da">Da</string>
@@ -42,8 +43,9 @@
     <string name="cantitate">Cantitate</string>
     <string name="alege_furnizor">Alege Furnizor</string>
     <string name="pret">Pret</string>
-    <string name="termen_limita_raspuns">Termen Limita Raspuns</string>
+    <string name="termen_limita_raspuns">Termen Raspuns</string>
     <string name="data_estimativa_livrare">Data Estimativa Livrare</string>
+    <string name="data_livrare">Data Livrare</string>
     <string name="valoare">Valoare</string>
     <string name="verifica_doc">Verifica Document</string>
     <string name="trimite_doc">Trimite Document</string>
@@ -51,6 +53,13 @@
     <string name="material">Material</string>
     <string name="furnizor">Furnizor</string>
     <string name="status">Status</string>
+
+    <string name="denumire_taxa">Denumire Taxa</string>
+    <string name="procent_taxa">Procent</string>
+    <string name="taxa">Taxa</string>
+
+    <string name="trimite_comanda">Trimite Comanda</string>
+    <string name="referinta">Referinta Cerere Oferta Nr.</string>
 
 
 </resources>

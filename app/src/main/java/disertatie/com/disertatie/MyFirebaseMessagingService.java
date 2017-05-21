@@ -1,23 +1,18 @@
 package disertatie.com.disertatie;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
+import android.location.Location;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import java.util.Map;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-import disertatie.com.disertatie.activities.CerereOfertaActivity;
-
-import static android.R.attr.id;
+import disertatie.com.disertatie.entities.CerereOferta;
 
 /**
  * Created by roxana on 16.05.2017.
@@ -25,80 +20,64 @@ import static android.R.attr.id;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG="Logistica";
+
+    public int codDocument;
+    public double cantitate;
+    public double pret;
+    public String dataLivrare;
+    public Context context = getApplication();
+    CerereOferta.Status status;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         Log.i(TAG,"Message received : "+remoteMessage.toString());
+    // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-        String cantitate = "";
-        Object obj = remoteMessage.getData().get("cantitate");
-        if (obj != null) {
-            try {
-                cantitate = obj.toString();
-            } catch (Exception e) {
-                cantitate = "";
-                e.printStackTrace();
+            Map data = remoteMessage.getData();
+            codDocument =Integer.parseInt(data.get("codDocument").toString());
+            cantitate =Double.parseDouble(data.get("cantitate").toString());
+            pret =Double.parseDouble(data.get("pret").toString());
+            dataLivrare =String.valueOf(data.get("dataLivrare"));
+            status = CerereOferta.Status.MODIFICAT;
+
+            Log.d(TAG,"Cerere Oferta -" +
+                    " codDocument="+codDocument+", cantitate="+cantitate+", pret="+pret+", dataLivrare="+dataLivrare
+            +"status="+status);
+
+            sendMessageToActivity(this, codDocument, cantitate, pret, dataLivrare, status);
+
+            if (/* Check if data needs to be processed by long running job */ true) {
+                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
+                //scheduleJob();
+            } else {
+                // Handle message within 10 seconds
+               // handleNow();
             }
+
         }
 
-        String pret = "";
-        obj = remoteMessage.getData().get("pret");
-        if (obj != null) {
-            try {
-                pret = (String) obj;
-            } catch (Exception e) {
-                pret = "";
-                e.printStackTrace();
-            }
-        }
-        String data_livrare = "";
-        obj = remoteMessage.getData().get("dataLivrare");
-        if (obj != null) {
-            try {
-                data_livrare = (String) obj;
-            } catch (Exception e) {
-                data_livrare = "";
-                e.printStackTrace();
-            }
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-        Intent intent = new Intent();
-        PendingIntent pendingIntent;
-        if (pret.equals("")) { // Simply run your activity
-            intent = new Intent(this, CerereOfertaActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        } else { // open a link
-            String url = "";
-            if (!pret.equals("")) {
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(pret));
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            }
-        }
-        pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        // Also if you intend on generating your own notifications as a result of a received FCM
+        // message, here is where that should be initiated. See sendNotification method below.
 
-
-        NotificationCompat.Builder notificationBuilder = null;
-
-        try {
-            notificationBuilder =  new NotificationCompat.Builder(this)
-                   // .setSmallIcon(R.drawable.activities)          // don't need to pass icon with your message if it's already in your app !
-                    .setContentTitle(URLDecoder.decode(getString(R.string.app_name), "UTF-8"))
-                    .setContentText(URLDecoder.decode(cantitate, "UTF-8"))
-                    .setAutoCancel(true)
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setContentIntent(pendingIntent);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-
-        if (notificationBuilder != null) {
-            NotificationManager notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(id, notificationBuilder.build());
-        } else {
-            Log.d(TAG, "error NotificationManager");
-        }
-    }
   }
+
+    private static void sendMessageToActivity(Context context, int codDocument, double cantitate,
+                                              double pret, String dataLivrare, CerereOferta.Status status) {
+        Intent intent = new Intent("updateCerereOferta");
+        intent.putExtra("codDocument", codDocument);
+        intent.putExtra("cantitate", cantitate);
+        intent.putExtra("pret", pret);
+        intent.putExtra("dataLivrare", dataLivrare);
+        intent.putExtra("status",status);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        Log.d(TAG,"sendMessageToActivity-bam-worked");
+    }
 }

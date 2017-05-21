@@ -2,17 +2,23 @@ package disertatie.com.disertatie.activities;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,6 +42,7 @@ import java.util.Date;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
+import disertatie.com.disertatie.Utils.DateConvertor;
 import disertatie.com.disertatie.Utils.GeneratorCerereDeOferta;
 import disertatie.com.disertatie.entities.CerereOferta;
 import disertatie.com.disertatie.entities.Furnizor;
@@ -43,12 +50,14 @@ import disertatie.com.disertatie.entities.Material;
 
 public class CerereOfertaActivity extends AppCompatActivity {
 
+    private static final String CERERE_OFERTA = "CERERE_OFERTA";
     private Toolbar toolbar;
     private LinearLayout llTermenRaspuns;
     private LinearLayout llDataLivrare;
     private TextView tvTermenRaspuns;
     private TextView tvDataLivrare;
     private TextView tvValoare;
+    private TextView tvStatus;
     private Calendar calendar;
     private EditText etCantitate;
     private EditText etPret;
@@ -56,6 +65,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
     private Spinner spinnerFurnizor;
     private Button btnVerificaCerere;
     private Button btnTrimiteCerere;
+    private FloatingActionButton flAdaugaComanda;
 
     private int year, month, day;
     private Context context;
@@ -91,7 +101,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
             }
             TextView tv = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -104,14 +114,15 @@ public class CerereOfertaActivity extends AppCompatActivity {
         tvTermenRaspuns = (TextView) findViewById(R.id.tvTermenRaspuns);
         tvDataLivrare = (TextView)findViewById(R.id.tvDataLivrare);
         tvValoare = (TextView) findViewById(R.id.tvValoare);
+        tvStatus = (TextView) findViewById(R.id.tvStatus);
         etCantitate = (EditText) findViewById(R.id.etCantitate);
         etPret = (EditText) findViewById(R.id.etPret);
         spinnerFurnizor = (Spinner)findViewById(R.id.spinnerFurnizor);
         spinnerMaterial = (Spinner)findViewById(R.id.spinnerMaterial);
         btnVerificaCerere = (Button) findViewById(R.id.btnVerificaCerere);
         btnTrimiteCerere = (Button) findViewById(R.id.btnTrimiteCerere);
-
-
+        flAdaugaComanda = (FloatingActionButton) findViewById(R.id.flAdaugaComanda);
+        //flAdaugaComanda.setVisibility(View.GONE);
 
 
         ArrayAdapter<Material> spinnerMaterialeArrayAdapter = new ArrayAdapter<Material>(context,
@@ -176,6 +187,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
                         cerereOferta.getStatus().toString(),cerereOferta.getPret(), cerereOferta.getCantitate(), cerereOferta.getTermen_limita_raspuns(),
                         cerereOferta.getData_livrare());
 
+
             }
         });
         btnTrimiteCerere.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +200,22 @@ public class CerereOfertaActivity extends AppCompatActivity {
                 }
 
         });
+        checkView();
+
+        flAdaugaComanda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CerereOfertaActivity.this, ComandaActivity.class);
+                Bundle bundle = new Bundle();
+                Log.d(TAG, cerereOferta.toString());
+                bundle.putSerializable(CERERE_OFERTA, cerereOferta);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
+
+
+
     }
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -232,8 +260,8 @@ public class CerereOfertaActivity extends AppCompatActivity {
             try {
                 f = new File(getExternalFilesDir(null), fileName);
                 FileOutputStream os = new FileOutputStream(f);
-                String text = GeneratorCerereDeOferta.generate(1, new Date(),cerereOferta.getFurnizor(), cerereOferta.getMaterial(),
-                        12.22, 10.22, new Date(), tokenId);
+                String text = GeneratorCerereDeOferta.generate(databaseHelper.getMaxIdCerereOferta(),cerereOferta.getTermen_limita_raspuns(),cerereOferta.getFurnizor(), cerereOferta.getMaterial(),
+                        cerereOferta.getCantitate(), cerereOferta.getPret(),cerereOferta.getData_livrare(), tokenId);
                 os.write(text.getBytes());
                 os.close();
             }catch (FileNotFoundException e){
@@ -317,5 +345,90 @@ public class CerereOfertaActivity extends AppCompatActivity {
         return cerereOf;
     }
 
+
+    public void checkView(){
+        if(getIntent().getExtras()!=null) {
+            String param = getIntent().getExtras().getString("CO_VIEW");
+            switch (param) {
+                case "CREATE":
+                    spinnerFurnizor.setEnabled(true);
+                    spinnerMaterial.setEnabled(true);
+                    etPret.setEnabled(true);
+                    etCantitate.setEnabled(true);
+                    tvTermenRaspuns.setEnabled(true);
+                    tvDataLivrare.setEnabled(true);
+                    btnTrimiteCerere.setEnabled(true);
+                    btnVerificaCerere.setEnabled(true);
+                    tvStatus.setEnabled(true);
+
+                    etPret.setText("");
+                    etCantitate.setText("");
+                    tvValoare.setText("0.00");
+                    tvDataLivrare.setText(DateConvertor.dateToString(new Date()));
+                    tvTermenRaspuns.setText(DateConvertor.dateToString(new Date()));
+                    tvStatus.setText("NEDEFINIT");
+
+                    break;
+                case "EDIT":
+                   cerereOferta = (CerereOferta) getIntent().getExtras().getSerializable("CERERE_OFERTA") ;
+
+                    spinnerFurnizor.setSelection(cerereOferta.getFurnizor().getCod_furnizor()-1);
+                    spinnerMaterial.setSelection(cerereOferta.getMaterial().getCod_material()-1);
+                    etPret.setText(cerereOferta.getPret()+"");
+                    etCantitate.setText(cerereOferta.getCantitate()+"");
+                    tvValoare.setText(cerereOferta.calculeazaValoare(cerereOferta.getPret(),cerereOferta.getCantitate())+"");
+                    tvDataLivrare.setText(cerereOferta.getData_livrare());
+                    tvTermenRaspuns.setText(cerereOferta.getTermen_limita_raspuns());
+
+                    spinnerFurnizor.setEnabled(true);
+                    spinnerMaterial.setEnabled(true);
+                    etPret.setEnabled(true);
+                    etCantitate.setEnabled(true);
+                    tvTermenRaspuns.setEnabled(true);
+                    tvDataLivrare.setEnabled(true);
+                    btnTrimiteCerere.setEnabled(true);
+                    btnVerificaCerere.setEnabled(true);
+                    tvStatus.setEnabled(true);
+
+                    break;
+                case "VIEW":
+                    cerereOferta = (CerereOferta) getIntent().getExtras().getSerializable(CERERE_OFERTA) ;
+                   /* if(cof.getStatus().toString().equals(CerereOferta.Status.ACCEPTAT) ||
+                            cof.getStatus().toString().equals(CerereOferta.Status.MODIFICAT)){
+                        flAdaugaComanda.setVisibility(View.VISIBLE);
+                    }*/
+                    spinnerFurnizor.setSelection(cerereOferta.getFurnizor().getCod_furnizor()-1);
+                    spinnerMaterial.setSelection(cerereOferta.getMaterial().getCod_material()-1);
+                    etPret.setText(cerereOferta.getPret()+"");
+                    etCantitate.setText(cerereOferta.getCantitate()+"");
+                    tvValoare.setText(cerereOferta.calculeazaValoare(cerereOferta.getPret(),cerereOferta.getCantitate())+"");
+                    tvDataLivrare.setText(cerereOferta.getData_livrare());
+                    tvTermenRaspuns.setText(cerereOferta.getTermen_limita_raspuns());
+                    tvStatus.setText(cerereOferta.getStatus()+"");
+
+                    spinnerFurnizor.setEnabled(false);
+                    spinnerMaterial.setEnabled(false);
+                    etPret.setEnabled(false);
+                    etCantitate.setEnabled(false);
+                    tvTermenRaspuns.setEnabled(false);
+                    tvDataLivrare.setEnabled(false);
+                    btnTrimiteCerere.setEnabled(false);
+                    btnVerificaCerere.setEnabled(false);
+                    tvStatus.setEnabled(false);
+                    break;
+            }
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 
 }

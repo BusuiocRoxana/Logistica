@@ -1,5 +1,7 @@
 package disertatie.com.disertatie.Utils;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -106,15 +108,20 @@ public class GeneratorCerereDeOferta {
             "\n" +
             "\n" +
             "    </style>\n";
-    public static String generate(int codDocument, Date termenRaspuns, Furnizor furnizor, Material material, double cantitatePropusaMaterial, double costMaterial, Date termenLivrare, String firebaseCloudMessagingId)
+    private static final String TAG = "Logistica";
+
+    public static String generate(int codDocument, String termenRaspuns, Furnizor furnizor, Material material,
+                                  double cantitatePropusaMaterial, double pretMaterial,
+                                  String termenLivrare, String firebaseCloudMessagingId)
     {
         SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
         String currentDate = dateformat.format(new Date());
-        String termenRaspunsString = dateformat.format(termenRaspuns);
+       // String termenRaspunsString = dateformat.format(termenRaspuns);
 
         String adresaFurnizorString = furnizor.getAdresa().toString();
+        Log.d(TAG,adresaFurnizorString.toString());
 
-        String termenLivrareString = dateformat.format(termenLivrare);
+       // String termenLivrareString = dateformat.format(termenLivrare);
 
         String invoice = "<!doctype html>\n" +
                 "<html>\n" +
@@ -138,9 +145,9 @@ public class GeneratorCerereDeOferta {
                 "                        </td>\n" +
                 "\n" +
                 "                        <td>\n" +
-                "                            Numar Document #: "+codDocument+"<br>\n" +
-                "                            Data: "+currentDate+"<br>\n" +
-                "                            Termen Raspuns: "+termenRaspunsString+"\n" +
+                "                           <div <span>Numar Document #: </span><span  id='divCodDocument'>"+codDocument+"</span></div>\n" +
+                "                           <div>Data: "+currentDate+"</div>\n" +
+                "                           <div>Termen Raspuns: "+termenRaspuns+"</div>\n" +
                 "                        </td>\n" +
                 "\n" +
                 "                    </tr>\n" +
@@ -157,7 +164,7 @@ public class GeneratorCerereDeOferta {
                 "                    <tr>\n" +
                 "\n" +
                 "                        <td>\n" +
-                                            adresaFurnizorString +
+                                            adresaFurnizorString.replace("\n","<br>") +
                 "                        </td>\n" +
                 "\n" +
                 "                        <td>\n" +
@@ -198,11 +205,11 @@ public class GeneratorCerereDeOferta {
                 "            </td>\n" +
                 "\n" +
                 "            <td>\n" +
-                                costMaterial+ "\n" +
+                                pretMaterial+ "\n" +
                 "            </td>\n" +
                 "\n" +
                 "            <td>\n" +
-                                termenLivrareString + "\n" +
+                                termenLivrare + "\n" +
                 "            </td>\n" +
                 "\n" +
                 "        </tr>\n" +
@@ -222,7 +229,7 @@ public class GeneratorCerereDeOferta {
                 "            <td></td>\n" +
                 "            <td></td>\n" +
                 "            <td>\n" +
-                                "Total: $"+cantitatePropusaMaterial*costMaterial + "\n" +
+                                "Total: $"+cantitatePropusaMaterial*pretMaterial + "\n" +
                 "            </td>\n" +
                 "        </tr>\n" +
                 "                <tr>\n" +
@@ -253,6 +260,7 @@ public class GeneratorCerereDeOferta {
                 "request.setRequestHeader('Content-Type', 'application/json');\n" +
                 "request.setRequestHeader('Authorization', 'key=AAAAVNU4yx8:APA91bFPqjAAqw9GEEb_RAnDsujxTR-sE-cQ8zxFQAU1t13Z3XNrR8NwK8gIBoSreVVte5nShz13qW21pt4PqCh__YZmG64Y9kE0iRWoc7aFr9eaW6IFlKoR4UVup2nOvPba7NCJXXGH');\n" +
                 "\n" +
+                "var sCodDocument = document.getElementById('divCodDocument').textContent;\n" +
                 "var sCantitate = document.getElementById('tdCantitate').textContent;\n" +
                 "var sPret = document.getElementById('tdPret').textContent;\n" +
                 "var sDataLivrare = document.getElementById('tdData').textContent;\n" +
@@ -260,6 +268,7 @@ public class GeneratorCerereDeOferta {
                 "  '\"to\" : \""+firebaseCloudMessagingId+"\",'+\n" +
                 "  '\"notification\" : { \"title\" : \""+furnizor.getDenumire_furnizor()+" a acceptat oferta\"},'+\n" +
                 "  '\"data\" : {'+\n"+
+                "     '\"codDocument\" : \"' + sCodDocument + '\",'+\n"+
                 "     '\"cantitate\" : \"' + sCantitate + '\",'+\n"+
                 "     '\"pret\" : \"' + sPret + '\",'+\n"+
                 "     '\"dataLivrare\" : \"' + sDataLivrare + '\"'+\n"+
@@ -278,6 +287,7 @@ public class GeneratorCerereDeOferta {
                 "request.setRequestHeader('Content-Type', 'application/json');\n" +
                 "request.setRequestHeader('Authorization', 'key=AAAAVNU4yx8:APA91bFPqjAAqw9GEEb_RAnDsujxTR-sE-cQ8zxFQAU1t13Z3XNrR8NwK8gIBoSreVVte5nShz13qW21pt4PqCh__YZmG64Y9kE0iRWoc7aFr9eaW6IFlKoR4UVup2nOvPba7NCJXXGH');\n" +
                 "\n" +
+                "var sCodDocument = document.getElementById('divCodDocument').textContent;\n" +
                 "var sCantitate = document.getElementById('tdCantitate').textContent;\n" +
                 "var sPret = document.getElementById('tdPret').textContent;\n" +
                 "var sDataLivrare = document.getElementById('tdData').textContent;\n" +
@@ -285,6 +295,7 @@ public class GeneratorCerereDeOferta {
                 "  '\"to\" : \""+firebaseCloudMessagingId+"\",'+\n" +
                 "  '\"notification\" : { \"title\" : \""+furnizor.getDenumire_furnizor()+" a schimbat oferta\"},'+\n" +
                 "  '\"data\" : {'+\n"+
+                "     '\"codDocument\" : \"' + sCodDocument + '\",'+\n"+
                 "     '\"cantitate\" : \"' + sCantitate + '\",'+\n"+
                 "     '\"pret\" : \"' + sPret + '\",'+\n"+
                 "     '\"dataLivrare\" : \"' + sDataLivrare + '\"'+\n"+
