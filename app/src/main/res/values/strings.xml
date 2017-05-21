@@ -60,6 +60,16 @@
 
     <string name="trimite_comanda">Trimite Comanda</string>
     <string name="referinta">Referinta Cerere Oferta Nr.</string>
+    <string name="comanda">Comanda</string>
+    <string name="comenzi">Comenzi</string>
+    <string name="valoare_totala">Valoare Totala</string>
+    <string name="refererinta_receptie">Adauga Referinta Comanda Nr.#</string>
+    <string name="cantitate_receptionata">Cantitate Receptionata</string>
+    <string name="cantitate_comandata">Cantitate Comandata</string>
+    <string name="diferenta">Diferenta</string>
+    <string name="data_receptie">Data Receptie</string>
+    <string name="receptie_material">Receptie Material</string>
+
 
 
 </resources>

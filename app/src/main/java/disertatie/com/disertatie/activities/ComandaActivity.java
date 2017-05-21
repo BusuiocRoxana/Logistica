@@ -1,6 +1,8 @@
 package disertatie.com.disertatie.activities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -46,6 +48,7 @@ public class ComandaActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     Context context;
     double valoareTotala;
+    double valoareTaxa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,7 @@ public class ComandaActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
             }
             TextView tv = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            tv.setText(R.string.cerere_oferta);
+            tv.setText(R.string.comanda);
         }
 
         tvCodCerereOferta = (TextView) findViewById(R.id.tvCodCerereOferta);
@@ -107,8 +110,8 @@ public class ComandaActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 comanda.setTaxa(listaTaxe.get(position));
                 tvProcentTaxa.setText(comanda.getTaxa().getProcent_taxa()+"");
-                valoareTotala = comanda.getCerereOferta().calculeazaValoare()*comanda.getTaxa().getProcent_taxa()+
-                        comanda.getCerereOferta().calculeazaValoare();
+                valoareTaxa =  comanda.getCerereOferta().calculeazaValoare()*comanda.getTaxa().getProcent_taxa();
+                valoareTotala =valoareTaxa+comanda.getCerereOferta().calculeazaValoare();
                 tvValoare.setText(valoareTotala+"");
             }
 
@@ -117,7 +120,42 @@ public class ComandaActivity extends AppCompatActivity {
 
             }
         });
-        
+
+        btnTrimiteComanda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             boolean checkInsert =  databaseHelper.insertComanda(comanda);
+               if(checkInsert) {
+
+                    Log.e(TAG, "Sending email");
+                    Log.i("Send email", "");
+                    String[] TO = {comanda.getCerereOferta().getFurnizor().getEmail()};
+                    String[] CC = {""};
+                    String textComanda = "Comanda cu referinta la Cererea de Oferta Nr.#" + comanda.getCerereOferta().getCod_cerere_oferta() + "\n\n"
+                            + "Material " + comanda.getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
+                            + "Cantitate\t" + comanda.getCerereOferta().getCantitate() + "bucati\n"
+                            + "Pret\t" + comanda.getCerereOferta().getPret() + " LEI\n"
+                            + "Taxa\t" + comanda.getTaxa().getDenumire_taxa().toUpperCase()
+                            + "\nProcent Taxa\t" + comanda.getTaxa().getProcent_taxa()
+                            + " = " + valoareTaxa + " LEI\n"
+                            + "-------------------------------------------------------\n"
+                            + "Valoare Totala\t" + valoareTotala + " LEI\n"
+                            + "Data Livrare\t" + comanda.getCerereOferta().getData_livrare() + "";
+                    // +"Adresa Livrare\t"+"+"";
+
+                    //de luat adresa companie si introdus la livrare
+
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setData(Uri.parse("mailto:"));
+                    emailIntent.setType("text/plain");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                    emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Comanda Nr.#" + comanda.getCod_comanda());
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, textComanda);
+                    startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                }
+            }
+        });
 
     }
 

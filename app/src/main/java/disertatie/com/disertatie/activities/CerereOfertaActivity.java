@@ -280,8 +280,6 @@ public class CerereOfertaActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-
-
             Log.e(TAG,"Sending email");
             Log.i("Send email", "");
             String[] TO = {"busuioc.roxana@gmail.com"};

@@ -43,4 +43,13 @@ public class Comanda implements Serializable {
     public void setTaxa(Taxa taxa) {
         this.taxa = taxa;
     }
+
+    @Override
+    public String toString() {
+        return "Comanda{" +
+                "cod_comanda=" + cod_comanda +
+                ", cerereOferta=" + cerereOferta +
+                ", taxa=" + taxa +
+                '}';
+    }
 }

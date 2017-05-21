@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llFurnizori;
     private LinearLayout llCerereOferta;
     private LinearLayout llComenzi;
+    private LinearLayout llListaComenzi;
+    private LinearLayout llReceptie;
 
     private Toolbar toolbar;
 
@@ -68,12 +70,16 @@ public class MainActivity extends AppCompatActivity {
         llFurnizori = (LinearLayout)findViewById(R.id.llFurnizori);
         llCerereOferta = (LinearLayout)findViewById(R.id.llCerereOferta);
         llComenzi = (LinearLayout)findViewById(R.id.llComenzi);
+        llListaComenzi = (LinearLayout)findViewById(R.id.llListaComenzi);
+        llReceptie = (LinearLayout)findViewById(R.id.llReceptie);
 
         llDateInterne.setOnClickListener(clickListener);
         llMateriale.setOnClickListener(clickListener);
         llFurnizori.setOnClickListener(clickListener);
         llCerereOferta.setOnClickListener(clickListener);
         llComenzi.setOnClickListener(clickListener);
+        llListaComenzi.setOnClickListener(clickListener);
+        llReceptie.setOnClickListener(clickListener);
 
         materialList = new ArrayList<Material>();
         databaseHelper = new DatabaseHelper(this);
@@ -152,6 +158,14 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.btnLogRegistrationId:
                     Log.i(TAG,"Registration ID = "+ FirebaseInstanceId.getInstance().getToken());
+                    break;
+                case R.id.llListaComenzi:
+                    i = new Intent(MainActivity.this, ListaComenziActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.llReceptie:
+                    i = new Intent(MainActivity.this, ReceptieActivity.class);
+                    startActivity(i);
                     break;
             }
         }
