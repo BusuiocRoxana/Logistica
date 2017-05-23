@@ -1,82 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvMaterial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/material" />
+        android:text="@string/material"
+        android:textColor="@android:color/black" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_gravity="right"
         android:layout_toRightOf="@+id/tvMaterial"
-        android:layout_alignParentRight="true"
-        android:gravity="right">
+        android:gravity="right"
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
             android:id="@+id/ivEditMaterial"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="10dp"
-             android:src="@drawable/edit"/>
+            android:src="@drawable/edit" />
 
 
         <ImageView
+            android:id="@+id/ivDeleteMaterial"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/ivDeleteMaterial"
             android:layout_margin="10dp"
-           android:src="@drawable/delete"/>
+            android:src="@drawable/delete" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvMaterial">
+        android:layout_below="@+id/tvMaterial"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingRight="30dp"
                 android:text="@string/stoc_curent"
-                android:paddingRight="30dp" />
+                android:textColor="@android:color/black" />
 
             <TextView
+                android:id="@+id/tvStocCurent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/tvStocCurent" />
+                android:textColor="@android:color/black" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingRight="30dp"
                 android:text="@string/stoc_minim"
-                android:paddingRight="30dp" />
+                android:textColor="@android:color/black" />
 
             <TextView
+                android:id="@+id/tvStocMinim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/tvStocMinim" />
+                android:textColor="@android:color/black" />
         </LinearLayout>
     </LinearLayout>
 
