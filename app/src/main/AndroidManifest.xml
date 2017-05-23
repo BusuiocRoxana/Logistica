@@ -39,9 +39,10 @@
 
         <activity android:name=".activities.ListaCereriOfertaActivity" />
         <activity android:name=".activities.ComandaActivity" />
-        <activity android:name=".activities.TaxeActivity" />
+        <activity android:name=".activities.AdaugaTaxeActivity" />
         <activity android:name=".activities.ListaComenziActivity" />
-        <activity android:name=".activities.ReceptieActivity"></activity>
+        <activity android:name=".activities.ReceptieActivity" />
+        <activity android:name=".activities.TaxeActivity"></activity>
     </application>
 
 </manifest>

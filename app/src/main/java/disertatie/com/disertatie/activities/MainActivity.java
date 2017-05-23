@@ -1,11 +1,7 @@
 package disertatie.com.disertatie.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -28,7 +24,6 @@ import java.util.ArrayList;
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.StaticLabelsFormatter;
-import disertatie.com.disertatie.entities.CerereOferta;
 import disertatie.com.disertatie.entities.Material;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llComenzi;
     private LinearLayout llListaComenzi;
     private LinearLayout llReceptie;
+    private LinearLayout llTaxe;
 
     private Toolbar toolbar;
 
@@ -72,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         llComenzi = (LinearLayout)findViewById(R.id.llComenzi);
         llListaComenzi = (LinearLayout)findViewById(R.id.llListaComenzi);
         llReceptie = (LinearLayout)findViewById(R.id.llReceptie);
+        llTaxe = (LinearLayout)findViewById(R.id.llTaxe);
 
         llDateInterne.setOnClickListener(clickListener);
         llMateriale.setOnClickListener(clickListener);
@@ -80,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         llComenzi.setOnClickListener(clickListener);
         llListaComenzi.setOnClickListener(clickListener);
         llReceptie.setOnClickListener(clickListener);
+        llTaxe.setOnClickListener(clickListener);
 
         materialList = new ArrayList<Material>();
         databaseHelper = new DatabaseHelper(this);
@@ -141,6 +139,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.llComenzi:
                     i=new Intent(MainActivity.this,ListaCereriOfertaActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.llTaxe:
+                    i=new Intent(MainActivity.this, TaxeActivity.class);
                     startActivity(i);
                     break;
                 case R.id.llMateriale:

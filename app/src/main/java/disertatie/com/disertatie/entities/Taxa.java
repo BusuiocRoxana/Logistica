@@ -1,10 +1,12 @@
 package disertatie.com.disertatie.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Roxana on 5/21/2017.
  */
 
-public class Taxa {
+public class Taxa implements Serializable {
     int cod_taxa;
     String denumire_taxa;
     double procent_taxa;

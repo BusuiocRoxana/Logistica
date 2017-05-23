@@ -41,7 +41,8 @@ public class MaterialsActivity extends AppCompatActivity implements  MaterialsAd
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);setContentView(R.layout.activity_materials);
+
+        super.onCreate(savedInstanceState);setContentView(R.layout.activity_taxe);
         // toolbar setup
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {

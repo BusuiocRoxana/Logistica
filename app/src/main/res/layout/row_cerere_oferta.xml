@@ -105,7 +105,8 @@
 
     <include
         android:id="@+id/divider"
-        layout="@layout/divider" />
+        layout="@layout/divider"
+        />
 
 
 </LinearLayout>

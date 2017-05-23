@@ -4,9 +4,11 @@
 
     <string name="pagina_principala">Pagina Principala</string>
     <string name="pagina_date_interne">Detalii Companie</string>
+    <string name="date_interne">Date Interne Companie</string>
 
     <string name="informatii">Informatii Date Stocate</string>
     <string name="activitati">Activitati</string>
+    <string name="taxe">Taxe</string>
 
     <string name="denumire_material">Material</string>
     <string name="stoc_minim">Stoc Minim</string>
@@ -69,7 +71,6 @@
     <string name="diferenta">Diferenta</string>
     <string name="data_receptie">Data Receptie</string>
     <string name="receptie_material">Receptie Material</string>
-
 
 
 </resources>

@@ -1,7 +1,6 @@
 package disertatie.com.disertatie.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -216,7 +215,7 @@ public class DateInterneActivity extends AppCompatActivity {
         btnTaxe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DateInterneActivity.this, TaxeActivity.class);
+                Intent i = new Intent(DateInterneActivity.this, AdaugaTaxeActivity.class);
                 startActivity(i);
             }
         });
