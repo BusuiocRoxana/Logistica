@@ -9,6 +9,7 @@
     <string name="informatii">Informatii Date Stocate</string>
     <string name="activitati">Activitati</string>
     <string name="taxe">Taxe</string>
+    <string name="situatie_stocuri">Situatie Stocuri</string>
 
     <string name="denumire_material">Material</string>
     <string name="stoc_minim">Stoc Minim</string>
@@ -36,9 +37,10 @@
     <string name="numar">Numar</string>
     <string name="strada">Strada</string>
     <string name="localitate">Localitate</string>
-    <string name="judet">Judet</string>
+    <string name="judet">Judet/Sector</string>
     <string name="sector">Sector</string>
     <string name="tara">Tara</string>
+    <string name="telefon">Telefon</string>
 
     <string name="cerere_oferta">Cerere Oferta</string>
     <string name="alege_material">Alege Material</string>
@@ -71,6 +73,8 @@
     <string name="diferenta">Diferenta</string>
     <string name="data_receptie">Data Receptie</string>
     <string name="receptie_material">Receptie Material</string>
+    <string name="factura">Factura</string>
+    <string name="plata">Plata</string>
 
 
 </resources>

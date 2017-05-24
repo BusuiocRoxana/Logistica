@@ -47,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NR_INREG_RC = "NR_INREG_RC";
     public static final String COLUMN_EMAIL_COMPANIE = "EMAIL_COMPANIE";
     public static final String COLUMN_COD_ADRESA = "COD_ADRESA";
-    public static final String COLUMN_TELEFON_COMPANIE = "TELEFON_COMPANIE";
+  //  public static final String COLUMN_TELEFON_COMPANIE = "TELEFON_COMPANIE";
 
     public static final String COLUMN_COD_MATERIAL = "COD_MATERIAL";
     public static final String COLUMN_DENUMIRE_MATERIAL = "DENUMIRE_MATERIAL";
@@ -67,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LOCALITATE = "LOCALITATE";
     public static final String COLUMN_JUDET_SECTOR = "JUDET_SECTOR";
     public static final String COLUMN_TARA = "TARA";
+    public static final String COLUMN_TELEFON = "TELEFON";
 
 
     public static final String COLUMN_COD_CERERE_OFERTA = "COD_CERERE_OFERTA";
@@ -112,9 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EMAIL_COMPANIE + SPACE +
                 "text," +
                 COLUMN_COD_ADRESA + SPACE +
-                "integer," +
-                COLUMN_TELEFON_COMPANIE + SPACE +
-                "text)");
+                "integer)");
 
         db.execSQL("create table"+SPACE+TABLE_MATERIALE+"("+COLUMN_COD_MATERIAL+SPACE+"integer primary key AUTOINCREMENT NOT NULL,"
                 +COLUMN_DENUMIRE_MATERIAL+SPACE+"text,"
@@ -135,6 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +COLUMN_STRADA+SPACE+"text,"
                 +COLUMN_LOCALITATE+SPACE+"text,"
                 +COLUMN_JUDET_SECTOR+SPACE+"text,"
+                +COLUMN_TELEFON+SPACE+"text,"
                 +COLUMN_TARA+SPACE+"text)");
 
         db.execSQL("create table"+SPACE+TABLE_CERERI_OFERTA+"("
@@ -186,14 +186,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertCompanie(String denumire_companie, String nr_inreg_rc, String email, int cod_adresa,String telefon) {
+    public boolean insertCompanie(String denumire_companie, String nr_inreg_rc, String email, int cod_adresa) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DENUMIRE_COMPANIE, denumire_companie);
         contentValues.put(COLUMN_NR_INREG_RC, nr_inreg_rc);
         contentValues.put(COLUMN_EMAIL_COMPANIE, email);
         contentValues.put(COLUMN_COD_ADRESA, cod_adresa);
-        contentValues.put(COLUMN_TELEFON_COMPANIE, telefon);
         db.insert(TABLE_COMPANIE, null, contentValues);
         db.close();
         return true;
@@ -223,7 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean insertAdresa(int numar, String strada, String localitate, String judet_sector, String tara) {
+    public boolean insertAdresa(int numar, String strada, String localitate, String judet_sector, String tara, String telefon) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NUMAR, numar);
@@ -231,6 +230,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_LOCALITATE, localitate);
         contentValues.put(COLUMN_JUDET_SECTOR, judet_sector);
         contentValues.put(COLUMN_TARA, tara);
+        contentValues.put(COLUMN_TELEFON, telefon);
         db.insert(TABLE_ADRESE, null, contentValues);
         db.close();
         return true;
@@ -321,6 +321,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cod_adresa;
     }
 
+    public int getMaxIdAdresa(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT "+COLUMN_COD_ADRESA+" FROM "+TABLE_ADRESE+
+                " ORDER BY "+COLUMN_COD_ADRESA +" DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(query, null);
+        int cod_adresa = -1;
+        if(cursor.moveToFirst()){
+            do{
+                cod_adresa = cursor.getInt(cursor.getColumnIndex(COLUMN_COD_ADRESA));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return cod_adresa;
+    }
+
     public Companie getCompany() {
         SQLiteDatabase db = this.getReadableDatabase();
         Companie companie = new Companie();
@@ -329,12 +344,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +TABLE_COMPANIE+"."+COLUMN_DENUMIRE_COMPANIE+","
                 +TABLE_COMPANIE+"."+COLUMN_NR_INREG_RC+","
                 +TABLE_COMPANIE+"."+COLUMN_EMAIL_COMPANIE+SPACE+","
-                +TABLE_COMPANIE+"."+COLUMN_TELEFON_COMPANIE+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_COD_ADRESA+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_NUMAR+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_STRADA+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_LOCALITATE+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_JUDET_SECTOR+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_TELEFON+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_TARA+SPACE+
                 " FROM " + TABLE_COMPANIE+","+TABLE_ADRESE+SPACE+
                 "WHERE "+TABLE_COMPANIE+"."+COLUMN_COD_ADRESA+"="+TABLE_ADRESE+"."+COLUMN_COD_ADRESA+SPACE;
@@ -347,13 +362,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 companie.setDenumire_companie(cursor.getString(1));
                 companie.setNr_inreg_RC(cursor.getString(2));
                 companie.setEmail(cursor.getString(3));
-                companie.setTelefon(cursor.getString(4));
                 Adresa adresa = new Adresa();
-                adresa.setCod_adresa(cursor.getInt(5));
-                adresa.setNumar(cursor.getInt(6));
-                adresa.setStrada(cursor.getString(7));
-                adresa.setLocalitate(cursor.getString(8));
-                adresa.setJudet_sector(cursor.getString(9));
+                adresa.setCod_adresa(cursor.getInt(4));
+                adresa.setNumar(cursor.getInt(5));
+                adresa.setStrada(cursor.getString(6));
+                adresa.setLocalitate(cursor.getString(7));
+                adresa.setJudet_sector(cursor.getString(8));
+                adresa.setTelefon(cursor.getString(9));
                 adresa.setTara(cursor.getString(10));
                 companie.setAdresa(adresa);
             }
@@ -381,19 +396,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public boolean updateCompanie (int cod_companie, String denumire_companie, String nr_inreg_rc, String email, Adresa adresa,String telefon) {
+    public boolean updateCompanie (int cod_companie, String denumire_companie, String nr_inreg_rc, String email, Adresa adresa) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DENUMIRE_COMPANIE, denumire_companie);
         contentValues.put(COLUMN_NR_INREG_RC, nr_inreg_rc);
         contentValues.put(COLUMN_EMAIL_COMPANIE, email);
         //contentValues.put(COLUMN_COD_ADRESA, cod_adresa);
-        contentValues.put(COLUMN_TELEFON_COMPANIE, telefon);
         ContentValues contentValuesAdresa = new ContentValues();
         contentValuesAdresa.put(COLUMN_STRADA, adresa.getStrada());
         contentValuesAdresa.put(COLUMN_NUMAR, adresa.getNumar());
         contentValuesAdresa.put(COLUMN_LOCALITATE, adresa.getLocalitate());
         contentValuesAdresa.put(COLUMN_JUDET_SECTOR, adresa.getJudet_sector());
+        contentValuesAdresa.put(COLUMN_TELEFON, adresa.getTelefon());
         contentValuesAdresa.put(COLUMN_TARA, adresa.getTara());
 
         db.update(TABLE_COMPANIE, contentValues,COLUMN_COD_COMPANIE+"= ? ", new String[]{Integer.toString(cod_companie)});
@@ -487,6 +502,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValuesAdresa.put(COLUMN_NUMAR, adresa.getNumar());
         contentValuesAdresa.put(COLUMN_LOCALITATE, adresa.getLocalitate());
         contentValuesAdresa.put(COLUMN_JUDET_SECTOR, adresa.getJudet_sector());
+        contentValuesAdresa.put(COLUMN_TELEFON, adresa.getTelefon());
         contentValuesAdresa.put(COLUMN_TARA, adresa.getTara());
 
         db.update(TABLE_FURNIZORI, contentValues,
@@ -521,6 +537,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +TABLE_ADRESE+"."+COLUMN_STRADA+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_LOCALITATE+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_JUDET_SECTOR+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_TELEFON+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_TARA+SPACE+
         " FROM " + TABLE_FURNIZORI+","+TABLE_ADRESE+SPACE+
                 "WHERE "+TABLE_FURNIZORI+"."+COLUMN_COD_ADRESA+"="+TABLE_ADRESE+"."+COLUMN_COD_ADRESA+SPACE
@@ -542,7 +559,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 adresa.setStrada(cursor.getString(8));
                 adresa.setLocalitate(cursor.getString(9));
                 adresa.setJudet_sector(cursor.getString(10));
-                adresa.setTara(cursor.getString(11));
+                adresa.setTelefon(cursor.getString(11));
+                adresa.setTara(cursor.getString(12));
                 furnizor.setAdresa(adresa);
                 furnizorList.add(furnizor);
             }
@@ -567,6 +585,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +TABLE_ADRESE+"."+COLUMN_STRADA+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_LOCALITATE+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_JUDET_SECTOR+SPACE+","
+                +TABLE_ADRESE+"."+COLUMN_TELEFON+SPACE+","
                 +TABLE_ADRESE+"."+COLUMN_TARA+SPACE+
                 " FROM " + TABLE_FURNIZORI+","+TABLE_ADRESE+SPACE+
                 "WHERE "+TABLE_FURNIZORI+"."+COLUMN_COD_ADRESA+"="+TABLE_ADRESE+"."+COLUMN_COD_ADRESA+SPACE+
@@ -588,7 +607,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 adresa.setStrada(cursor.getString(8));
                 adresa.setLocalitate(cursor.getString(9));
                 adresa.setJudet_sector(cursor.getString(10));
-                adresa.setTara(cursor.getString(11));
+                adresa.setTelefon(cursor.getString(11));
+                adresa.setTara(cursor.getString(12));
                 furnizor.setAdresa(adresa);
             }
             while (cursor.moveToNext());

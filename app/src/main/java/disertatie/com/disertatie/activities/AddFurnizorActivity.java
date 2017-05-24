@@ -38,6 +38,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
     private EditText etLocalitate;
     private EditText etJudetSector;
     private EditText etTara;
+    private EditText etTelefon;
 
     DatabaseHelper databaseHelper;
     private static String FURNIZOR = "FURNIZOR";
@@ -78,6 +79,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
         etJudetSector = (EditText) rlAdresa.findViewById(R.id.etJudetSector);
         etLocalitate = (EditText) rlAdresa.findViewById(R.id.etLocalitate);
         etTara = (EditText) rlAdresa.findViewById(R.id.etTara);
+        etTelefon = (EditText) rlAdresa.findViewById(R.id.etTelefonCompanie);
 
 
 
@@ -92,10 +94,11 @@ public class AddFurnizorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                boolean isAddressInserted = databaseHelper.insertAdresa(Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
-                        etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString());
+                        etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString(), etTelefon.getText().toString());
 
                 if(isAddressInserted) {
-                    int cod_adresa = databaseHelper.printAutoIncrements();
+                   // int cod_adresa = databaseHelper.printAutoIncrements();
+                    int cod_adresa = databaseHelper.getMaxIdAdresa();
                     Log.d("TEST_ADRESA", "cod_adresa=" + cod_adresa);
                     databaseHelper.insertFurnizor(etDenumireFurnizor.getText().toString(),
                             etNrInregRC.getText().toString(),
@@ -140,7 +143,8 @@ public class AddFurnizorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Adresa adresa = new Adresa(cod_adresa,Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
-                        etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString());
+                        etLocalitate.getText().toString(), etJudetSector.getText().toString(),
+                        etTara.getText().toString(),etTelefon.getText().toString());
                 databaseHelper.updateFurnizor(cod_furnizor, etDenumireFurnizor.getText().toString(),
                         etNrInregRC.getText().toString(),adresa,
                         Integer.parseInt(spinnerRating.getSelectedItem().toString()),

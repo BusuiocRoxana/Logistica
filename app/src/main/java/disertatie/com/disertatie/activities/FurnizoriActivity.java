@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import disertatie.com.disertatie.entities.Material;
 
 public class FurnizoriActivity extends AppCompatActivity implements  FurnizorAdapter.ViewHolderCallbacks{
 
+    private static final String TAG = "Logistica";
     private Toolbar toolbar;
     private ArrayList<Furnizor> furnizoriList;
     private RecyclerView recyclerView;
@@ -55,9 +57,15 @@ public class FurnizoriActivity extends AppCompatActivity implements  FurnizorAda
         try {
             furnizoriList = databaseHelper.getAllFurnizori();
 
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        for(int i=0;i<furnizoriList.size();i++){
+            Log.d(TAG, "FURNIZORI="+furnizoriList.get(i).getDenumire_furnizor()+"-"+furnizoriList.get(i).getCod_adresa());
+
+        }
+
         fabAdaugaFurnizor = (FloatingActionButton) findViewById(R.id.flAdaugaFurnizor);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_furnizori);
@@ -107,7 +115,14 @@ public class FurnizoriActivity extends AppCompatActivity implements  FurnizorAda
         if(mAdapter != null) {
             mAdapter.updateViewFurnizori(furnizoriList);
         }
-
-
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
 }

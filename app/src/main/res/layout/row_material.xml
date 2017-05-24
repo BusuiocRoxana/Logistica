@@ -16,24 +16,25 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_gravity="right"
-        android:layout_toRightOf="@+id/tvMaterial"
         android:gravity="right"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
         <ImageView
             android:id="@+id/ivEditMaterial"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_margin="10dp"
             android:src="@drawable/edit" />
 
 
         <ImageView
             android:id="@+id/ivDeleteMaterial"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_margin="10dp"
             android:src="@drawable/delete" />
     </LinearLayout>
@@ -48,12 +49,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.2"
                 android:paddingRight="30dp"
                 android:text="@string/stoc_curent"
                 android:textColor="@android:color/black" />
@@ -62,6 +65,7 @@
                 android:id="@+id/tvStocCurent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.8"
                 android:text="New Text"
                 android:textColor="@android:color/black" />
         </LinearLayout>
@@ -70,22 +74,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.2"
                 android:paddingRight="30dp"
                 android:text="@string/stoc_minim"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+              />
 
             <TextView
                 android:id="@+id/tvStocMinim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.8"
                 android:text="New Text"
                 android:textColor="@android:color/black" />
         </LinearLayout>
+        <include
+            android:id="@+id/divider"
+            layout="@layout/divider_without_margin" />
     </LinearLayout>
 
 </RelativeLayout>

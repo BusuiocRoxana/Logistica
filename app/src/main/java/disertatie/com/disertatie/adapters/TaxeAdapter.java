@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import disertatie.com.disertatie.R;
+import disertatie.com.disertatie.activities.AdaugaTaxeActivity;
 import disertatie.com.disertatie.activities.AddMaterialActivity;
 import disertatie.com.disertatie.entities.Material;
 import disertatie.com.disertatie.entities.Taxa;
@@ -71,7 +72,7 @@ public class TaxeAdapter extends RecyclerView.Adapter<TaxeAdapter.MyViewHolder> 
         holder.ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(context, AddMaterialActivity.class);
+                Intent i =  new Intent(context, AdaugaTaxeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(TAXA,listaTaxe.get(position));
                 i.putExtras(bundle);

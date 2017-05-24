@@ -8,24 +8,21 @@ public class Companie {
     private String denumire_companie;
     private String nr_inreg_RC;
     private Adresa adresa;
-    private String telefon;
     private String email;
 
-    public Companie(int cod_companie, String denumire_companie, String nr_inreg_RC, Adresa adresa, String telefon, String email) {
+    public Companie(int cod_companie, String denumire_companie, String nr_inreg_RC, Adresa adresa, String email) {
         this.cod_companie = cod_companie;
         this.denumire_companie = denumire_companie;
         this.nr_inreg_RC = nr_inreg_RC;
         this.adresa = adresa;
-        this.telefon = telefon;
         this.email = email;
     }
 
-    public Companie(String denumire_companie, String nr_inreg_RC, Adresa adresa, String telefon, String email) {
+    public Companie(String denumire_companie, String nr_inreg_RC, Adresa adresa, String email) {
         this.cod_companie = cod_companie;
         this.denumire_companie = denumire_companie;
         this.nr_inreg_RC = nr_inreg_RC;
         this.adresa = adresa;
-        this.telefon = telefon;
         this.email = email;
     }
 
@@ -38,14 +35,6 @@ public class Companie {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getTelefon() {
-        return telefon;
-    }
-
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
     }
 
     public int getCod_companie() {
@@ -78,5 +67,16 @@ public class Companie {
 
     public void setAdresa(Adresa adresa) {
         this.adresa = adresa;
+    }
+
+    @Override
+    public String toString() {
+        return "Companie{" +
+                "cod_companie=" + cod_companie +
+                ", denumire_companie='" + denumire_companie + '\'' +
+                ", nr_inreg_RC='" + nr_inreg_RC + '\'' +
+                ", adresa=" + adresa +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
