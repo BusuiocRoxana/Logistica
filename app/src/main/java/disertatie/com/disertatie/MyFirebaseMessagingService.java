@@ -32,23 +32,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         Log.i(TAG,"Message received : "+remoteMessage.toString());
-    // Check if message contains a data payload.
+       // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
             Map data = remoteMessage.getData();
             codDocument =Integer.parseInt(data.get("codDocument").toString());
             cantitate =Double.parseDouble(data.get("cantitate").toString());
             pret =Double.parseDouble(data.get("pret").toString());
             dataLivrare =String.valueOf(data.get("dataLivrare"));
             status = CerereOferta.Status.MODIFICAT;
-
             Log.d(TAG,"Cerere Oferta -" +
                     " codDocument="+codDocument+", cantitate="+cantitate+", pret="+pret+", dataLivrare="+dataLivrare
             +"status="+status);
-
             sendMessageToActivity(this, codDocument, cantitate, pret, dataLivrare, status);
-
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
                 //scheduleJob();
@@ -56,17 +52,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // Handle message within 10 seconds
                // handleNow();
             }
-
         }
-
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
-
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-
   }
 
     private static void sendMessageToActivity(Context context, int codDocument, double cantitate,

@@ -94,7 +94,6 @@ public class Adresa implements Serializable {
     public String toString() {
 
         return "Adresa"+
-                "\t\t\t\tCOD_ADRESA " + cod_adresa +
                 "\t\t\t\tNumar " + numar +
                 ",\tStrada " + strada +
                 ",\tLocalitate " + localitate +
