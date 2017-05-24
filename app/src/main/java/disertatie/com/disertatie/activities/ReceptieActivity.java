@@ -2,9 +2,13 @@ package disertatie.com.disertatie.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +20,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
@@ -29,7 +34,6 @@ import disertatie.com.disertatie.entities.Receptie;
 public class ReceptieActivity extends AppCompatActivity {
 
     private Button btnSalveazaReceptie;
-    private Button btnVerificaReceptie;
     private TextView tvDataReceptie;
     private TextView tvDiferenta;
     private EditText etMaterial;
@@ -45,10 +49,27 @@ public class ReceptieActivity extends AppCompatActivity {
     private int idComandaSelectata = -1;
     private Receptie receptie =  new Receptie();
     private static String TAG = "Logistica";
+    private Calendar calendar;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receptie);
+
+        // toolbar setup
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            // use toolbar as actionbar
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+            TextView tv = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            tv.setText(R.string.receptie_material);
+        }
+
 
         context = this;
         tvDataReceptie = (TextView) findViewById(R.id.tvDataReceptie);
@@ -56,13 +77,10 @@ public class ReceptieActivity extends AppCompatActivity {
         tvDataReceptie.setText(DateConvertor.dateToString(new Date()));
 
         spinnerComenzi = (Spinner) findViewById(R.id.spinnerReferintaReceptie);
-        etMaterial = (EditText) findViewById(R.id.etDenumireMaterial);
+        etMaterial = (EditText) findViewById(R.id.etDenumireMat);
         etCantitateComandata = (EditText) findViewById(R.id.etCantComandata);
         etCantitateReceptionata = (EditText) findViewById(R.id.etCantReceptionata);
         btnSalveazaReceptie = (Button)findViewById(R.id.btnSalveazaReceptie);
-        btnVerificaReceptie = (Button)findViewById(R.id.btnVerificaReceptie);
-        btnSalveazaReceptie.setVisibility(View.GONE);
-        btnVerificaReceptie.setVisibility(View.VISIBLE);
 
 
         databaseHelper = new DatabaseHelper(context);
@@ -81,6 +99,12 @@ public class ReceptieActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item, listaReferinteComenzi);
 
         spinnerComenzi.setAdapter(spinnerComenziArrayAdapter);
+
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
 
         tvDataReceptie.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,10 +130,12 @@ public class ReceptieActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 idComandaSelectata = listaReferinteComenzi.get(position);
-                selectComanda(idComandaSelectata, listaComenzi);
-                if(comanda!=null) {
-                 //   etMaterial.setText(comanda.getCerereOferta().getMaterial() + "");
-                   // etCantitateComandata.setText(comanda.getCerereOferta().getCantitate() + "");
+                comanda =  selectComanda(idComandaSelectata, listaComenzi);
+                Log.d(TAG, "test comanda="+comanda.toString());
+                if(comanda != null) {
+                    etCantitateReceptionata.setText("");
+                    etMaterial.setText(comanda.getCerereOferta().getMaterial() + "");
+                    etCantitateComandata.setText(comanda.getCerereOferta().getCantitate() + "");
 
                 }
             }
@@ -119,33 +145,79 @@ public class ReceptieActivity extends AppCompatActivity {
 
             }
         });
-        btnVerificaReceptie.setOnClickListener(new View.OnClickListener() {
+
+        etCantitateReceptionata.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    double diferenta = Double.parseDouble(etCantitateComandata.getText().toString()) -
+                            Double.parseDouble(etCantitateReceptionata.getText().toString());
+                    tvDiferenta.setText(diferenta + "");
+                }
+            }
+        });
+
+
+        btnSalveazaReceptie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double cantReceptionata = Double.parseDouble(etCantitateReceptionata.getText().toString());
                 tvDiferenta.setText(comanda.getCerereOferta().getCantitate()-cantReceptionata+"");
-                btnVerificaReceptie.setVisibility(View.GONE);
-                btnSalveazaReceptie.setVisibility(View.VISIBLE);
-
                 receptie.setCantitate_receptionata(cantReceptionata);
                 receptie.setData_receptie(tvDataReceptie.getText().toString());
                 receptie.setComanda(comanda);
-            }
-        });
-        btnSalveazaReceptie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
                 databaseHelper.insertReceptie(receptie);
+                Log.d(TAG,"test-receptie"+receptie.toString());
+
+                Log.e(TAG, "Sending email");
+                Log.i("Send email", "");
+                String[] TO = {receptie.getComanda().getCerereOferta().getFurnizor().getEmail()};
+                String[] CC = {""};
+                String textReceptie = "Receptie cu referinta la Comanda Nr.#" + receptie.getComanda().getCerereOferta().getCod_cerere_oferta() + "\n\n"
+                        + "Data Receptie\t" + receptie.getData_receptie() + "\n"
+                        + "Material " + receptie.getComanda().getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
+                        + "Cantitate comandata\t" + receptie.getComanda().getCerereOferta().getCantitate() + "\tbucati\n"
+                        + "Cantitate receptionata\t" + receptie.getCantitate_receptionata()+"\n"
+                        + "Diferenta \t" +tvDiferenta.getText();
+
+                // +"Adresa Livrare\t"+"+"";
+
+                //de luat adresa companie si introdus la livrare
+
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Receptie Nr.#" + receptie.getCod_receptie());
+                emailIntent.putExtra(Intent.EXTRA_TEXT, textReceptie);
+                startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
             }
         });
     }
 
-    public void selectComanda(int id, ArrayList<Comanda> comenzi) {
+    public Comanda selectComanda(int id, ArrayList<Comanda> comenzi) {
+        Comanda com = new Comanda();
         for (int i = 0; i < comenzi.size(); i++) {
-            if (comenzi.get(i).equals(id)) {
-                comanda = comenzi.get(i);
-            }
-
+         try {
+             if (comenzi.get(i).getCod_comanda() == id) {
+                 com = comenzi.get(i);
+             }
+         }catch (Exception ex){
+         }
         }
+        return com;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }

@@ -56,7 +56,8 @@ public class CerereOfertaAdapter extends RecyclerView.Adapter<CerereOfertaAdapte
     }
 
 
-    public CerereOfertaAdapter(ArrayList<CerereOferta> listaCereriOferta, Context context, CerereOfertaAdapter.ViewHolderCallbacks callbacks) {
+    public CerereOfertaAdapter(ArrayList<CerereOferta> listaCereriOferta, Context context,
+                               CerereOfertaAdapter.ViewHolderCallbacks callbacks) {
         this.listaCereriOferta = listaCereriOferta;
         this.context =  context;
         this.callbacks = callbacks;

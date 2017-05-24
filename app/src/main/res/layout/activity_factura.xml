@@ -33,10 +33,10 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:gravity="left|center_vertical"
-                android:text="@string/refererinta_receptie" />
+                android:text="@string/refererinta_factura" />
 
             <Spinner
-                android:id="@+id/spinnerReferintaReceptie"
+                android:id="@+id/spinnerReferintaFactura"
                 android:layout_width="74dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -44,7 +44,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llDataLivrare"
+            android:id="@+id/llDataFacturare"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -55,10 +55,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="@string/data_receptie" />
+                android:text="@string/data_factura" />
 
             <TextView
-                android:id="@+id/tvDataReceptie"
+                android:id="@+id/tvDataFactura"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -112,9 +112,32 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:enabled="false"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
 
+            <TextView
+                android:layout_width="85dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:text="@string/pret" />
+
+            <EditText
+                android:id="@+id/etPret"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,10 +150,33 @@
                 android:layout_width="85dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:text="@string/cantitate_comandata" />
+                android:text="@string/cantitate_facturata" />
 
             <EditText
-                android:id="@+id/etCantComandata"
+                android:id="@+id/etCantFacturata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:enabled="true"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <TextView
+                android:layout_width="85dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:text="@string/taxa" />
+
+            <EditText
+                android:id="@+id/etTaxa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -140,21 +186,43 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView16"
                 android:layout_width="77dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="0.02"
-                android:text="@string/diferenta" />
+                android:text="@string/furnizor" />
 
             <TextView
-                android:id="@+id/tvDiferenta"
+                android:id="@+id/tvFurnizor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0.79"
+                android:gravity="center_vertical"
+                android:text="Furnizor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0.02"
+                android:text="@string/valoare_totala" />
+
+            <TextView
+                android:id="@+id/tvValoareFactura"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -170,16 +238,9 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <Button
-                android:id="@+id/btnVerificaReceptie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/verifica_doc"
-                android:visibility="gone" />
 
             <Button
-                android:id="@+id/btnSalveazaReceptie"
+                android:id="@+id/btnSalveazaFactura"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

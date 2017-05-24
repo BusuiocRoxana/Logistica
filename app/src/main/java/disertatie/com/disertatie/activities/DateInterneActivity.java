@@ -247,4 +247,4 @@ public class DateInterneActivity extends AppCompatActivity {
         }
 
     }
-        }
+}

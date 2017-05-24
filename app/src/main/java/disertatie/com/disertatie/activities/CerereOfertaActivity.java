@@ -58,7 +58,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
     private TextView tvDataLivrare;
     private TextView tvValoare;
     private TextView tvStatus;
-    private Calendar calendar;
+
     private EditText etCantitate;
     private EditText etPret;
     private Spinner spinnerMaterial;
@@ -66,7 +66,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
     private Button btnVerificaCerere;
     private Button btnTrimiteCerere;
     private FloatingActionButton flAdaugaComanda;
-
+    private Calendar calendar;
     private int year, month, day;
     private Context context;
     private CerereOferta cerereOferta = new CerereOferta();
@@ -78,6 +78,9 @@ public class CerereOfertaActivity extends AppCompatActivity {
     private static String TAG = "log-async";
 
     private String STATUS_NEDEFINIT = "NEDEFINIT";
+
+    private int indexFurnizor =-1;
+    private int indexMaterial = -1;
 
 
     @Override
@@ -368,10 +371,11 @@ public class CerereOfertaActivity extends AppCompatActivity {
 
                     break;
                 case "EDIT":
-                   cerereOferta = (CerereOferta) getIntent().getExtras().getSerializable("CERERE_OFERTA") ;
-
-                    spinnerFurnizor.setSelection(cerereOferta.getFurnizor().getCod_furnizor()-1);
-                    spinnerMaterial.setSelection(cerereOferta.getMaterial().getCod_material()-1);
+                    cerereOferta = (CerereOferta) getIntent().getExtras().getSerializable("CERERE_OFERTA") ;
+                    indexFurnizor = findIndexByCode(listaFurnizori, cerereOferta);
+                    spinnerFurnizor.setSelection(indexFurnizor);
+                    indexMaterial = findIndexByCodeMaterial(listaMateriale, cerereOferta);
+                    spinnerMaterial.setSelection(indexMaterial);
                     etPret.setText(cerereOferta.getPret()+"");
                     etCantitate.setText(cerereOferta.getCantitate()+"");
                     tvValoare.setText(cerereOferta.calculeazaValoare(cerereOferta.getPret(),cerereOferta.getCantitate())+"");
@@ -395,8 +399,11 @@ public class CerereOfertaActivity extends AppCompatActivity {
                             cof.getStatus().toString().equals(CerereOferta.Status.MODIFICAT)){
                         flAdaugaComanda.setVisibility(View.VISIBLE);
                     }*/
-                    spinnerFurnizor.setSelection(cerereOferta.getFurnizor().getCod_furnizor()-1);
-                    spinnerMaterial.setSelection(cerereOferta.getMaterial().getCod_material()-1);
+
+                    indexFurnizor = findIndexByCode(listaFurnizori, cerereOferta);
+                    spinnerFurnizor.setSelection(indexFurnizor);
+                    indexMaterial = findIndexByCodeMaterial(listaMateriale, cerereOferta);
+                    spinnerMaterial.setSelection(indexMaterial);
                     etPret.setText(cerereOferta.getPret()+"");
                     etCantitate.setText(cerereOferta.getCantitate()+"");
                     tvValoare.setText(cerereOferta.calculeazaValoare(cerereOferta.getPret(),cerereOferta.getCantitate())+"");
@@ -429,4 +436,22 @@ public class CerereOfertaActivity extends AppCompatActivity {
 
     }
 
+    public int findIndexByCode(ArrayList<Furnizor> furnizori, CerereOferta cerereOferta){
+        int index = -1;
+        for(int i=0;i<listaFurnizori.size();i++){
+            if((listaFurnizori.get(i).getCod_furnizor())==cerereOferta.getFurnizor().getCod_furnizor()){
+                index = i;
+            }
+        }
+        return index;
+    }
+    public int findIndexByCodeMaterial(ArrayList<Material> materiale, CerereOferta cerereOferta){
+        int index = -1;
+        for(int i=0;i<listaMateriale.size();i++){
+            if((listaMateriale.get(i).getCod_material())==cerereOferta.getMaterial().getCod_material()){
+                index = i;
+            }
+        }
+        return index;
+    }
 }

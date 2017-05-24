@@ -16,8 +16,10 @@ import disertatie.com.disertatie.entities.Adresa;
 import disertatie.com.disertatie.entities.CerereOferta;
 import disertatie.com.disertatie.entities.Comanda;
 import disertatie.com.disertatie.entities.Companie;
+import disertatie.com.disertatie.entities.Factura;
 import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
+import disertatie.com.disertatie.entities.Plata;
 import disertatie.com.disertatie.entities.Receptie;
 import disertatie.com.disertatie.entities.Taxa;
 
@@ -39,8 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_COMENZI= "COMENZI";
     public static final String TABLE_TAXE = "TAXE";
     public static final String TABLE_RECEPTII = "RECEPTII";
-
-
+    public static final String TABLE_FACTURI = "FACTURI";
+    public static final String TABLE_PLATI = "PLATI";
 
     public static final String COLUMN_COD_COMPANIE = "COD_COMPANIE";
     public static final String COLUMN_DENUMIRE_COMPANIE = "DENUMIRE_COMPANIE";
@@ -93,6 +95,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //COD_COMANDA
     public static final String COLUMN_CANTITATE_RECEPTIONATA= "CANTITATE_RECEPTIONATA";
     public static final String COLUMN_DATA_RECEPTIE =  "DATA_RECEPTIE";
+
+    public static final String COLUMN_COD_FACTURA = "COD_FACTURA";
+  //  public static final String COLUMN_COD_RECEPTIE = "COD_RECEPTIE";
+    public static final String COLUMN_CANTITATE_FACTURATA= "CANTITATE_FACTURATA";
+    public static final String COLUMN_DATA_FACTURA = "DATA_FACTURA";
+
+
+    public static final String COLUMN_COD_PLATA = "COD_PLATA";
+   // public static final String COLUMN_COD_FACTURA = "COD_FACTURA";
+    public static final String COLUMN_SUMA_PLATITA = "SUMA_PLATITA";
+    public static final String COLUMN_DATA_PLATA = "DATA_PLATA";
+
 
 
     public DatabaseHelper(Context context) {
@@ -159,7 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +COLUMN_PROCENT_TAXA+SPACE+"real)"
         );
 
-        db.execSQL("create table"+SPACE+TABLE_COMENZI+"("+COLUMN_COD_COMANDA+SPACE+"integer primary key AUTOINCREMENT NOT NULL,"
+        db.execSQL("create table"+SPACE+TABLE_COMENZI+"("+COLUMN_COD_COMANDA+SPACE+" INTEGER PRIMARY KEY AUTOINCREMENT,"
                 +COLUMN_COD_CERERE_OFERTA+SPACE+"integer,"
                 +COLUMN_COD_TAXA+SPACE+"integer,"
                 +" FOREIGN KEY ("+COLUMN_COD_CERERE_OFERTA+") REFERENCES "+TABLE_CERERI_OFERTA+"("+COLUMN_COD_CERERE_OFERTA+"),"
@@ -170,6 +184,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +COLUMN_CANTITATE_RECEPTIONATA+SPACE+"real,"
                 +COLUMN_DATA_RECEPTIE+SPACE+"text,"
                 +" FOREIGN KEY ("+COLUMN_COD_COMANDA+") REFERENCES "+TABLE_COMENZI+"("+COLUMN_COD_COMANDA+"))"
+        );
+        db.execSQL("create table"+SPACE+TABLE_FACTURI+"("+COLUMN_COD_FACTURA+SPACE+"integer primary key AUTOINCREMENT NOT NULL,"
+                +COLUMN_COD_RECEPTIE+SPACE+"integer,"
+                +COLUMN_CANTITATE_FACTURATA+SPACE+"real,"
+                +COLUMN_DATA_FACTURA+SPACE+"text,"
+                +" FOREIGN KEY ("+COLUMN_COD_RECEPTIE+") REFERENCES "+TABLE_RECEPTII+"("+COLUMN_COD_RECEPTIE+"))"
+        );
+        db.execSQL("create table"+SPACE+TABLE_PLATI+"("+COLUMN_COD_PLATA+SPACE+"integer primary key AUTOINCREMENT NOT NULL,"
+                +COLUMN_COD_FACTURA+SPACE+"integer,"
+                +COLUMN_SUMA_PLATITA+SPACE+"real,"
+                +COLUMN_DATA_PLATA+SPACE+"text,"
+                +" FOREIGN KEY ("+COLUMN_COD_FACTURA+") REFERENCES "+TABLE_FACTURI+"("+COLUMN_COD_FACTURA+"))"
         );
     }
 
@@ -183,6 +209,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_TAXE);
         db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_COMENZI);
         db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_RECEPTII);
+        db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_FACTURI);
+        db.execSQL("DROP TABLE IF EXISTS"+SPACE+TABLE_PLATI);
         onCreate(db);
     }
 
@@ -236,7 +264,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean insertCerereOferta(Furnizor furnizor, Material material, String status, double pret, double cantitate, String termen_raspuns, String data_livrare) {
+    public boolean insertCerereOferta(Furnizor furnizor, Material material, String status, double pret,
+                                      double cantitate, String termen_raspuns, String data_livrare) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_COD_FURNIZOR, furnizor.getCod_furnizor());
@@ -274,6 +303,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.e(TAG, "cod_receptie="+receptie.getCod_receptie());
         return true;
     }
+    public boolean insertFactura(Factura factura) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_COD_FACTURA, factura.getCod_factura());
+        contentValues.put(COLUMN_COD_RECEPTIE, factura.getReceptie().getCod_receptie());
+        contentValues.put(COLUMN_COD_RECEPTIE, factura.getReceptie().getCod_receptie());
+        contentValues.put(COLUMN_DATA_FACTURA, factura.getData_factura());
+        db.insert(TABLE_FACTURI, null, contentValues);
+        db.close();
+
+        return true;
+    }
+
+    public boolean insertPlata(Plata plata) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_COD_PLATA, plata.getCod_plata());
+        contentValues.put(COLUMN_COD_FACTURA, plata.getFactura().getCod_factura());
+        contentValues.put(COLUMN_DATA_FACTURA, plata.getData_plata());
+        contentValues.put(COLUMN_SUMA_PLATITA, plata.getSuma_platita());
+        db.insert(TABLE_PLATI, null, contentValues);
+        db.close();
+        return true;
+    }
+
 
     public int getMaxIdCerereOferta(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -783,6 +837,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Comanda comanda = new Comanda();
                 comanda.setCerereOferta(selectCerereOferta(cursor.getInt(0)));
                 comanda.setTaxa(selectTaxa(cursor.getInt(1)));
+                comanda.setCod_comanda(cursor.getInt(2));
 
                 listaComenzi.add(comanda);
             }
@@ -792,7 +847,86 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return listaComenzi;
     }
+    public Comanda selectComanda(int cod_comanda) throws ParseException {
+        Comanda comanda = new Comanda();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT "
+                +TABLE_COMENZI+"."+COLUMN_COD_COMANDA+","
+                +TABLE_COMENZI+"."+COLUMN_COD_CERERE_OFERTA+","
+                +TABLE_COMENZI+"."+COLUMN_COD_TAXA+SPACE+
+                " FROM " + TABLE_COMENZI+SPACE+
+                "WHERE "+TABLE_COMENZI+"."+COLUMN_COD_COMANDA+"="+cod_comanda;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                comanda.setCod_comanda(cursor.getInt(0));
+                comanda.setCerereOferta(selectCerereOferta(cursor.getInt(1)));
+                comanda.setTaxa(selectTaxa(cursor.getInt(2)));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return comanda;
+    }
 
 
+    public ArrayList<Receptie> selectReceptii() throws ParseException {
+        ArrayList<Receptie> listaReceptii = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query =  "SELECT "
+                +COLUMN_COD_RECEPTIE+SPACE+","
+                +COLUMN_COD_COMANDA+SPACE+","
+                +COLUMN_DATA_RECEPTIE+SPACE+","
+                +COLUMN_CANTITATE_RECEPTIONATA+SPACE+""+
+                " FROM " + TABLE_RECEPTII+SPACE+
+                "ORDER BY "+COLUMN_COD_RECEPTIE;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Receptie receptie = new Receptie();
+                receptie.setCod_receptie(cursor.getInt(0));
+                receptie.setComanda(selectComanda(cursor.getInt(1)));
+                receptie.setData_receptie(cursor.getString(2));
+                receptie.setCantitate_receptionata(cursor.getDouble(3));
+
+                listaReceptii.add(receptie);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return listaReceptii;
+    }
+
+    public Receptie selectReceptie(int cod_receptie) throws ParseException {
+        Receptie receptie = new Receptie();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT "
+                +TABLE_RECEPTII+"."+COLUMN_COD_RECEPTIE+","
+                +TABLE_RECEPTII+"."+COLUMN_COD_COMANDA+","
+                +TABLE_RECEPTII+"."+COLUMN_DATA_RECEPTIE+","
+                +TABLE_RECEPTII+"."+COLUMN_CANTITATE_RECEPTIONATA+SPACE+
+                " FROM " + TABLE_RECEPTII+SPACE+
+                "WHERE "+TABLE_RECEPTII+"."+COLUMN_COD_RECEPTIE+"="+cod_receptie;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                receptie.setCod_receptie(cursor.getInt(0));
+                receptie.setComanda(selectComanda(cursor.getInt(1)));
+                receptie.setData_receptie(cursor.getString(2));
+                receptie.setCantitate_receptionata(cursor.getDouble(3));
+
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return receptie;
+    }
 
 }

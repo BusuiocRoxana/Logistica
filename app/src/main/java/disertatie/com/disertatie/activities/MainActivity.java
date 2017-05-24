@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llListaComenzi;
     private LinearLayout llReceptie;
     private LinearLayout llTaxe;
+    private LinearLayout llFactura;
 
     private Toolbar toolbar;
 
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         llListaComenzi = (LinearLayout)findViewById(R.id.llListaComenzi);
         llReceptie = (LinearLayout)findViewById(R.id.llReceptie);
         llTaxe = (LinearLayout)findViewById(R.id.llTaxe);
+        llFactura = (LinearLayout)findViewById(R.id.llFacturare);
 
         llDateInterne.setOnClickListener(clickListener);
         llMateriale.setOnClickListener(clickListener);
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         llListaComenzi.setOnClickListener(clickListener);
         llReceptie.setOnClickListener(clickListener);
         llTaxe.setOnClickListener(clickListener);
+        llFactura.setOnClickListener(clickListener);
 
         materialList = new ArrayList<Material>();
         databaseHelper = new DatabaseHelper(this);
@@ -167,6 +170,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.llReceptie:
                     i = new Intent(MainActivity.this, ReceptieActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.llFacturare:
+                    i = new Intent(MainActivity.this, FacturaActivity.class);
                     startActivity(i);
                     break;
             }
