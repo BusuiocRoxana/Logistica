@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llReceptie;
     private LinearLayout llTaxe;
     private LinearLayout llFactura;
+    private LinearLayout llPlata;
 
     private Toolbar toolbar;
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         llReceptie = (LinearLayout)findViewById(R.id.llReceptie);
         llTaxe = (LinearLayout)findViewById(R.id.llTaxe);
         llFactura = (LinearLayout)findViewById(R.id.llFacturare);
+        llPlata = (LinearLayout)findViewById(R.id.llPlata);
 
         llDateInterne.setOnClickListener(clickListener);
         llMateriale.setOnClickListener(clickListener);
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         llReceptie.setOnClickListener(clickListener);
         llTaxe.setOnClickListener(clickListener);
         llFactura.setOnClickListener(clickListener);
+        llPlata.setOnClickListener(clickListener);
 
         materialList = new ArrayList<Material>();
         databaseHelper = new DatabaseHelper(this);
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             materialNames.add(materialList.get(i).getDenumire_material());
         }*/
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+       /* GraphView graph = (GraphView) findViewById(R.id.graph);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, -1),
                 new DataPoint(1, 5),
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 // draw values on top
         series.setDrawValuesOnTop(true);
         series.setValuesOnTopColor(Color.RED);
-//series.setValuesOnTopSize(50);
+//series.setValuesOnTopSize(50);*/
 
         btnLogRegistrationId = (Button)findViewById(R.id.btnLogRegistrationId);
         btnLogRegistrationId.setOnClickListener(clickListener);
@@ -174,6 +177,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.llFacturare:
                     i = new Intent(MainActivity.this, FacturaActivity.class);
+                    startActivity(i);
+                    break;
+
+                case R.id.llPlata:
+                    i = new Intent(MainActivity.this, PlatiActivity.class);
                     startActivity(i);
                     break;
             }

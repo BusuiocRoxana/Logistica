@@ -67,8 +67,9 @@
     <string name="comanda">Comanda</string>
     <string name="comenzi">Comenzi</string>
     <string name="valoare_totala">Valoare Totala</string>
-    <string name="refererinta_receptie">Adauga Referinta Comanda Nr.#</string>
-    <string name="refererinta_factura">Adauga Referinta Receptie Nr.#</string>
+    <string name="referinta_receptie">Adauga Referinta Comanda Nr.#</string>
+    <string name="referinta_factura">Adauga Referinta Receptie Nr.#</string>
+    <string name="referinta_plata">Adauga Referinta Factura Nr.#</string>
     <string name="cantitate_receptionata">Cantitate Receptionata</string>
     <string name="cantitate_comandata">Cantitate Comandata</string>
     <string name="diferenta">Diferenta</string>
@@ -78,7 +79,13 @@
     <string name="plata">Plata</string>
 
     <string name="data_factura">Data facturarii</string>
+    <string name="data_plata">Data plata</string>
     <string name="cantitate_facturata">Cantitate Facturata</string>
+    <string name="grafic">Grafic</string>
+    <string name="raportare">Raportare</string>
+
+    <string name="suma_platita">Suma Platita</string>
+    <string name="taxa_aplicata">Taxa Aplicata</string>
 
 
 </resources>

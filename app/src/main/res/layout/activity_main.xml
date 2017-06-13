@@ -286,20 +286,42 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <TextView
+                android:id="@+id/tvGrafic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@string/situatie_stocuri"
+                android:text="@string/raportare"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/graph"
+            <LinearLayout
+                android:id="@+id/llRaport"
                 android:layout_width="match_parent"
-                android:layout_height="200dip"
-                android:layout_marginBottom="30dp"
-                android:visibility="visible" />
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/chart" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/grafic"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+</LinearLayout>
 
             <Button
                 android:id="@+id/btnLogRegistrationId"
