@@ -229,7 +229,7 @@ public class GeneratorCerereDeOferta {
                 "            <td></td>\n" +
                 "            <td></td>\n" +
                 "            <td>\n" +
-                                "Total: $"+cantitatePropusaMaterial*pretMaterial + "\n" +
+                                "Total: "+cantitatePropusaMaterial*pretMaterial + "\n" +
                 "            </td>\n" +
                 "        </tr>\n" +
                 "                <tr>\n" +
