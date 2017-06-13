@@ -33,7 +33,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:gravity="left|center_vertical"
-                android:text="@string/refererinta_factura" />
+                android:text="@string/referinta_factura" />
 
             <Spinner
                 android:id="@+id/spinnerReferintaFactura"

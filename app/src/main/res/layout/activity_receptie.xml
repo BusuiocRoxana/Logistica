@@ -33,7 +33,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:gravity="left|center_vertical"
-                android:text="@string/refererinta_receptie" />
+                android:text="@string/referinta_receptie" />
 
             <Spinner
                 android:id="@+id/spinnerReferintaReceptie"

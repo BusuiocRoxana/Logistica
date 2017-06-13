@@ -18,15 +18,12 @@ import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 
-import org.w3c.dom.Text;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.StaticLabelsFormatter;
-import disertatie.com.disertatie.charts.ChartActivity;
 import disertatie.com.disertatie.entities.Material;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llReceptie;
     private LinearLayout llTaxe;
     private LinearLayout llFactura;
+    private LinearLayout llPlata;
 
     private Toolbar toolbar;
 
@@ -48,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Logistica";
     private Button btnLogRegistrationId;
-    private TextView tvGrafic;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         llReceptie = (LinearLayout)findViewById(R.id.llReceptie);
         llTaxe = (LinearLayout)findViewById(R.id.llTaxe);
         llFactura = (LinearLayout)findViewById(R.id.llFacturare);
-        tvGrafic = (TextView)findViewById(R.id.tvGrafic);
+        llPlata = (LinearLayout)findViewById(R.id.llPlata);
 
         llDateInterne.setOnClickListener(clickListener);
         llMateriale.setOnClickListener(clickListener);
@@ -88,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         llReceptie.setOnClickListener(clickListener);
         llTaxe.setOnClickListener(clickListener);
         llFactura.setOnClickListener(clickListener);
-        tvGrafic.setOnClickListener(clickListener);
+        llPlata.setOnClickListener(clickListener);
 
         materialList = new ArrayList<Material>();
         databaseHelper = new DatabaseHelper(this);
@@ -103,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             materialNames.add(materialList.get(i).getDenumire_material());
         }*/
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+       /* GraphView graph = (GraphView) findViewById(R.id.graph);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, -1),
                 new DataPoint(1, 5),
@@ -135,8 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogRegistrationId = (Button)findViewById(R.id.btnLogRegistrationId);
         btnLogRegistrationId.setOnClickListener(clickListener);
-
-
 
     }
 
@@ -186,8 +179,9 @@ public class MainActivity extends AppCompatActivity {
                     i = new Intent(MainActivity.this, FacturaActivity.class);
                     startActivity(i);
                     break;
-                case R.id.tvGrafic:
-                    i = new Intent(MainActivity.this, ChartActivity.class);
+
+                case R.id.llPlata:
+                    i = new Intent(MainActivity.this, PlatiActivity.class);
                     startActivity(i);
                     break;
             }
