@@ -44,7 +44,8 @@
         <activity android:name=".activities.ReceptieActivity" />
         <activity android:name=".activities.TaxeActivity" />
         <activity android:name=".activities.FacturaActivity" />
-        <activity android:name=".activities.PlatiActivity"></activity>
+        <activity android:name=".activities.PlatiActivity" />
+        <activity android:name=".charts.ChartActivity"></activity>
     </application>
 
 </manifest>

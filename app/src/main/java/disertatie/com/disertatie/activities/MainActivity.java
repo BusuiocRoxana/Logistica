@@ -18,12 +18,15 @@ import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.StaticLabelsFormatter;
+import disertatie.com.disertatie.charts.ChartActivity;
 import disertatie.com.disertatie.entities.Material;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Logistica";
     private Button btnLogRegistrationId;
+    private TextView tvGrafic;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         llReceptie = (LinearLayout)findViewById(R.id.llReceptie);
         llTaxe = (LinearLayout)findViewById(R.id.llTaxe);
         llFactura = (LinearLayout)findViewById(R.id.llFacturare);
+        tvGrafic = (TextView)findViewById(R.id.tvGrafic);
 
         llDateInterne.setOnClickListener(clickListener);
         llMateriale.setOnClickListener(clickListener);
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         llReceptie.setOnClickListener(clickListener);
         llTaxe.setOnClickListener(clickListener);
         llFactura.setOnClickListener(clickListener);
+        tvGrafic.setOnClickListener(clickListener);
 
         materialList = new ArrayList<Material>();
         databaseHelper = new DatabaseHelper(this);
@@ -123,10 +131,12 @@ public class MainActivity extends AppCompatActivity {
 // draw values on top
         series.setDrawValuesOnTop(true);
         series.setValuesOnTopColor(Color.RED);
-//series.setValuesOnTopSize(50);
+//series.setValuesOnTopSize(50);*/
 
         btnLogRegistrationId = (Button)findViewById(R.id.btnLogRegistrationId);
         btnLogRegistrationId.setOnClickListener(clickListener);
+
+
 
     }
 
@@ -174,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.llFacturare:
                     i = new Intent(MainActivity.this, FacturaActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.tvGrafic:
+                    i = new Intent(MainActivity.this, ChartActivity.class);
                     startActivity(i);
                     break;
             }

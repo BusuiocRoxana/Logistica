@@ -79,6 +79,10 @@
 
     <string name="data_factura">Data facturarii</string>
     <string name="cantitate_facturata">Cantitate Facturata</string>
+    <string name="grafic">Grafic</string>
+    <string name="raportare">Raportare</string>
+
+
 
 
 </resources>

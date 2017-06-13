@@ -1,6 +1,7 @@
 package disertatie.com.disertatie.activities;
 
 import android.content.res.Resources;
+import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,9 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
@@ -39,6 +43,8 @@ public class AddFurnizorActivity extends AppCompatActivity {
     private EditText etJudetSector;
     private EditText etTara;
     private EditText etTelefon;
+    private RatingBar ratingBar;
+    private TextView tvRating;
 
     DatabaseHelper databaseHelper;
     private static String FURNIZOR = "FURNIZOR";
@@ -80,8 +86,18 @@ public class AddFurnizorActivity extends AppCompatActivity {
         etLocalitate = (EditText) rlAdresa.findViewById(R.id.etLocalitate);
         etTara = (EditText) rlAdresa.findViewById(R.id.etTara);
         etTelefon = (EditText) rlAdresa.findViewById(R.id.etTelefonCompanie);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        tvRating = (TextView)findViewById(R.id.tvRating);
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+                tvRating.setText(String.valueOf(rating));
 
 
+            }
+        });
 
 
         ArrayAdapter<Integer> spinnerRatingArrayAdapter = new ArrayAdapter<Integer>(this,
@@ -171,4 +187,8 @@ public class AddFurnizorActivity extends AppCompatActivity {
         }
 
     }
+
+
+
+
 }
