@@ -84,7 +84,7 @@ public class PlatiActivity extends AppCompatActivity {
         etValoareTotala= (EditText) findViewById(R.id.etValoare);
         etTaxaAplicata= (EditText) findViewById(R.id.etTaxaAplicata);
         etSumaPlatita =  (EditText) findViewById(R.id.etSumaPlatita);
-     //   btnSalveazaPlata = (Button)findViewById(R.id.btnSalveazaPlata);
+        btnSalveazaPlata = (Button)findViewById(R.id.btnSalveazaPlata);
 
 
         databaseHelper = new DatabaseHelper(context);
