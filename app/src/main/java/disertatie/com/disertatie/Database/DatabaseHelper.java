@@ -928,5 +928,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return receptie;
     }
+    public ArrayList<Factura> selectFacturi() throws ParseException {
+        ArrayList<Factura> listaFacturi = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query =  "SELECT "
+                +COLUMN_COD_FACTURA+SPACE+","
+                +COLUMN_CANTITATE_FACTURATA+SPACE+","
+                +COLUMN_DATA_FACTURA+SPACE+","
+                +COLUMN_COD_RECEPTIE+SPACE+""+
+                " FROM " + TABLE_FACTURI+SPACE+
+                "ORDER BY "+COLUMN_COD_FACTURA;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Factura factura =  new Factura();
+                factura.setCod_factura(cursor.getInt(0));
+                factura.setCantitate_facturata(cursor.getDouble(1));
+                factura.setData_factura(cursor.getString(2));
+                factura.setReceptie(selectReceptie(cursor.getInt(3)));
 
+                listaFacturi.add(factura);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return listaFacturi;
+    }
 }

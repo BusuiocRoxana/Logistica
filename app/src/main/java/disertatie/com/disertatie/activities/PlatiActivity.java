@@ -88,7 +88,11 @@ public class PlatiActivity extends AppCompatActivity {
 
 
         databaseHelper = new DatabaseHelper(context);
-        //listaFacturi = databaseHelper.selectFacturi();
+        try {
+            listaFacturi = databaseHelper.selectFacturi();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Log.d(TAG,"VERIFICA-ID:"+listaFacturi.toString());
         for (int i = 0; i < listaFacturi.size(); i++) {
             listaReferinteFacturi.add(listaFacturi.get(i).getCod_factura());
