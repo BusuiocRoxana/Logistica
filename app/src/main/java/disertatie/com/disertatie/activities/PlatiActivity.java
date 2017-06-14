@@ -28,6 +28,7 @@ import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.DateConvertor;
 import disertatie.com.disertatie.entities.Comanda;
 import disertatie.com.disertatie.entities.Factura;
+import disertatie.com.disertatie.entities.Plata;
 import disertatie.com.disertatie.entities.Receptie;
 
 public class PlatiActivity extends AppCompatActivity {
@@ -53,7 +54,8 @@ public class PlatiActivity extends AppCompatActivity {
     private static String TAG = "Logistica";
     private Calendar calendar;
     private Toolbar toolbar;
-
+    private Plata plata = new Plata();
+    private double sumaRamasa = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,7 @@ public class PlatiActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(context);
         try {
             listaFacturi = databaseHelper.selectFacturi();
+            Log.d(TAG, "test facturi:"+listaFacturi.toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -137,9 +140,13 @@ public class PlatiActivity extends AppCompatActivity {
                 factura =  selectFactura(idFacturaSelectata, listaFacturi);
                 Log.d(TAG, "test factura="+comanda.toString());
                 if(factura != null) {
-                    etCantitate.setText("");
+                    etCantitate.setText(factura.getCantitate_facturata()+"");
                     etMaterial.setText(factura.getReceptie().getComanda().getCerereOferta().getMaterial() + "");
                     etPret.setText(factura.getReceptie().getComanda().getCerereOferta().getCantitate() + "");
+                    etValoareTotala.setText(factura.getReceptie().getComanda().getCerereOferta().getPret()+"");
+                    etTaxaAplicata.setText(factura.getReceptie().getComanda().getTaxa().getDenumire_taxa()+" - "
+                            +factura.getReceptie().getComanda().getTaxa().getProcent_taxa());
+                    etValoareTotala.setText(factura.getValoareTotala()+"");
 
                 }
             }
@@ -165,39 +172,39 @@ public class PlatiActivity extends AppCompatActivity {
         btnSalveazaPlata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /*   double cantReceptionata = Double.parseDouble(etCantitateReceptionata.getText().toString());
-                tvDiferenta.setText(comanda.getCerereOferta().getCantitate()-cantReceptionata+"");
-                plata.setCantitate_receptionata(cantReceptionata);
-                receptie.setData_receptie(tvDataReceptie.getText().toString());
-                receptie.setComanda(comanda);
+              //  double cantReceptionata = Double.parseDouble(etCantitateReceptionata.getText().toString());
+                plata.setData_plata(tvDataPlata.getText().toString());
+                plata.setFactura(selectFactura(Integer.parseInt(spinnerFacturi.getSelectedItem().toString()), listaFacturi));
+                plata.setSuma_platita(Double.parseDouble(etSumaPlatita.getText().toString()));
+            //    sumaRamasa = Double.parseDouble(etDiferentaPlata.getText().toString());
 
-                databaseHelper.insertReceptie(receptie);
-                Log.d(TAG,"test-receptie"+receptie.toString());
+
+
+
+                databaseHelper.insertPlata(plata);
+                Log.d(TAG,"test-plata"+plata.toString());
+
 
                 Log.e(TAG, "Sending email");
                 Log.i("Send email", "");
-                String[] TO = {receptie.getComanda().getCerereOferta().getFurnizor().getEmail()};
+                String[] TO = {plata.getFactura().getReceptie().getComanda().getCerereOferta().getFurnizor().getEmail()};
                 String[] CC = {""};
-                String textReceptie = "Receptie cu referinta la Comanda Nr.#" + receptie.getComanda().getCerereOferta().getCod_cerere_oferta() + "\n\n"
-                        + "Data Receptie\t" + receptie.getData_receptie() + "\n"
-                        + "Material " + receptie.getComanda().getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
-                        + "Cantitate comandata\t" + receptie.getComanda().getCerereOferta().getCantitate() + "\tbucati\n"
-                        + "Cantitate receptionata\t" + receptie.getCantitate_receptionata()+"\n"
-                        + "Diferenta \t" +tvDiferenta.getText();
+                String textReceptie = "Plata cu referinta la Factura Nr.#" + plata.getFactura().getCod_factura() + "\n\n"
+                        + "Data Plata\t" + plata.getData_plata() + "\n"
+                        + "Suma totala " + plata.getFactura().getValoareTotala() + "\n"
+                        + "Suma platita\t" + plata.getSuma_platita() + "\tLEI\n";
+                       // + "Diferenta neplatita\t" + sumaRamasa+"\n";
 
-                // +"Adresa Livrare\t"+"+"";
-
-                //de luat adresa companie si introdus la livrare
 
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("text/plain");
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
                 emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Receptie Nr.#" + receptie.getCod_receptie());
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Plata Nr.#" + plata.getCod_plata());
                 emailIntent.putExtra(Intent.EXTRA_TEXT, textReceptie);
                 startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
-                */
+
             }
         });
     }
@@ -225,4 +232,5 @@ public class PlatiActivity extends AppCompatActivity {
         }
 
     }
+
 }

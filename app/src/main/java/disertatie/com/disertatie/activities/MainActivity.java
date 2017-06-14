@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llTaxe;
     private LinearLayout llFactura;
     private LinearLayout llPlata;
+    private LinearLayout llRaport;
 
     private Toolbar toolbar;
 
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         llTaxe = (LinearLayout)findViewById(R.id.llTaxe);
         llFactura = (LinearLayout)findViewById(R.id.llFacturare);
         llPlata = (LinearLayout)findViewById(R.id.llPlata);
+        llRaport = (LinearLayout)findViewById(R.id.llRaport);
 
         llDateInterne.setOnClickListener(clickListener);
         llMateriale.setOnClickListener(clickListener);
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         llTaxe.setOnClickListener(clickListener);
         llFactura.setOnClickListener(clickListener);
         llPlata.setOnClickListener(clickListener);
+        llRaport.setOnClickListener(clickListener);
 
         materialList = new ArrayList<Material>();
         databaseHelper = new DatabaseHelper(this);
@@ -94,39 +97,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /*for(int i=0;i<materialList.size();i++){
-            materialNames.add(materialList.get(i).getDenumire_material());
-        }*/
 
-       /* GraphView graph = (GraphView) findViewById(R.id.graph);
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, -1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
-        graph.addSeries(series);
-
-        // use static labels for horizontal and vertical labels
-        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-        staticLabelsFormatter.setHorizontalLabels(materialNames);
-        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-
-// styling
-        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
-            }
-        });
-
-        series.setSpacing(50);
-
-// draw values on top
-        series.setDrawValuesOnTop(true);
-        series.setValuesOnTopColor(Color.RED);
-//series.setValuesOnTopSize(50);*/
 
         btnLogRegistrationId = (Button)findViewById(R.id.btnLogRegistrationId);
         btnLogRegistrationId.setOnClickListener(clickListener);
@@ -179,9 +150,12 @@ public class MainActivity extends AppCompatActivity {
                     i = new Intent(MainActivity.this, FacturaActivity.class);
                     startActivity(i);
                     break;
-
                 case R.id.llPlata:
                     i = new Intent(MainActivity.this, PlatiActivity.class);
+                    startActivity(i);
+                    break;
+                case R.id.llRaport:
+                    i = new Intent(MainActivity.this, ReportActivity.class);
                     startActivity(i);
                     break;
             }

@@ -1,9 +1,15 @@
 package disertatie.com.disertatie.Utils;
 
+
+
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Roxana on 5/13/2017.
@@ -11,14 +17,16 @@ import java.util.Locale;
 
 public class DateConvertor {
 
+    private static final String TAG = "Logistica";
 
     public static Date textToDate(String dtStart) {
         //String dtStart = "2010-10-15T09:27:37Z";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         {
             Date date = null;
             try {
                 date = format.parse(dtStart);
+                Log.d(TAG, "textToDate-date="+date);
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }

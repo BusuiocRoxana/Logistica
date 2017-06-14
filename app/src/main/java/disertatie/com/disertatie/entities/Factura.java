@@ -11,7 +11,7 @@ public class Factura implements Serializable {
     private Receptie receptie;
     private double cantitate_facturata;
     private String data_factura;
-  //  private boolean isPaid;
+
 
     public Factura(){}
 
@@ -20,6 +20,7 @@ public class Factura implements Serializable {
         this.receptie = receptie;
         this.cantitate_facturata = cantitate_facturata;
         this.data_factura = data_factura;
+
 
     }
 
@@ -65,5 +66,11 @@ public class Factura implements Serializable {
                 ", cantitate_facturata=" + cantitate_facturata +
                 ", data_factura='" + data_factura + '\'' +
                 '}';
+    }
+
+    public double getValoareTotala(){
+        double valoare  = (cantitate_facturata*receptie.getComanda().getCerereOferta().getPret())*receptie.getComanda().getTaxa().getProcent_taxa()
+                +cantitate_facturata*receptie.getComanda().getCerereOferta().getPret();
+        return valoare;
     }
 }

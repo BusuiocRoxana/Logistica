@@ -100,12 +100,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   //  public static final String COLUMN_COD_RECEPTIE = "COD_RECEPTIE";
     public static final String COLUMN_CANTITATE_FACTURATA= "CANTITATE_FACTURATA";
     public static final String COLUMN_DATA_FACTURA = "DATA_FACTURA";
-
+    public static final String COLUMN_SUMA_RAMASA = "SUMA_RAMASA";
 
     public static final String COLUMN_COD_PLATA = "COD_PLATA";
    // public static final String COLUMN_COD_FACTURA = "COD_FACTURA";
     public static final String COLUMN_SUMA_PLATITA = "SUMA_PLATITA";
     public static final String COLUMN_DATA_PLATA = "DATA_PLATA";
+
 
 
 
@@ -306,9 +307,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean insertFactura(Factura factura) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_COD_FACTURA, factura.getCod_factura());
+       // contentValues.put(COLUMN_COD_FACTURA, factura.getCod_factura());
         contentValues.put(COLUMN_COD_RECEPTIE, factura.getReceptie().getCod_receptie());
-        contentValues.put(COLUMN_COD_RECEPTIE, factura.getReceptie().getCod_receptie());
+        contentValues.put(COLUMN_CANTITATE_FACTURATA, factura.getCantitate_facturata());
         contentValues.put(COLUMN_DATA_FACTURA, factura.getData_factura());
         db.insert(TABLE_FACTURI, null, contentValues);
         db.close();
@@ -319,9 +320,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean insertPlata(Plata plata) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_COD_PLATA, plata.getCod_plata());
         contentValues.put(COLUMN_COD_FACTURA, plata.getFactura().getCod_factura());
-        contentValues.put(COLUMN_DATA_FACTURA, plata.getData_plata());
+        contentValues.put(COLUMN_DATA_PLATA, plata.getData_plata());
         contentValues.put(COLUMN_SUMA_PLATITA, plata.getSuma_platita());
         db.insert(TABLE_PLATI, null, contentValues);
         db.close();
@@ -955,4 +955,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return listaFacturi;
     }
+    public Factura selectFactura(int cod_factura) throws ParseException {
+        Factura factura = new Factura();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query =  "SELECT "
+                +COLUMN_COD_FACTURA+SPACE+","
+                +COLUMN_CANTITATE_FACTURATA+SPACE+","
+                +COLUMN_DATA_FACTURA+SPACE+","
+                +COLUMN_COD_RECEPTIE+SPACE+""+
+                " FROM " + TABLE_FACTURI+SPACE+
+                "ORDER BY "+COLUMN_COD_FACTURA;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                factura.setCod_factura(cursor.getInt(0));
+                factura.setCantitate_facturata(cursor.getDouble(1));
+                factura.setData_factura(cursor.getString(2));
+                factura.setReceptie(selectReceptie(cursor.getInt(3)));
+
+
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return factura;
+    }
+
+
+    public ArrayList<Plata> selectPlati() throws ParseException {
+        ArrayList<Plata> listaPlati = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query =  "SELECT "
+                +COLUMN_COD_PLATA+SPACE+","
+                +COLUMN_SUMA_PLATITA+SPACE+","
+                +COLUMN_DATA_PLATA+SPACE+","
+                +COLUMN_COD_FACTURA+SPACE+""+
+                " FROM " + TABLE_PLATI+SPACE+
+                "ORDER BY "+COLUMN_COD_PLATA;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Plata plata = new Plata();
+                plata.setCod_plata(cursor.getInt(0));
+                plata.setSuma_platita(cursor.getDouble(1));
+                plata.setData_plata(cursor.getString(2));
+                plata.setFactura(selectFactura(cursor.getInt(3)));
+
+                listaPlati.add(plata);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return listaPlati;
+    }
+
 }

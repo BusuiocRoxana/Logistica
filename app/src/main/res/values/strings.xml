@@ -67,6 +67,7 @@
     <string name="comanda">Comanda</string>
     <string name="comenzi">Comenzi</string>
     <string name="valoare_totala">Valoare Totala</string>
+    <string name="valoare_de_platit">Valoare de Plata</string>
     <string name="referinta_receptie">Adauga Referinta Comanda Nr.#</string>
     <string name="referinta_factura">Adauga Referinta Receptie Nr.#</string>
     <string name="referinta_plata">Adauga Referinta Factura Nr.#</string>
@@ -86,6 +87,7 @@
 
     <string name="suma_platita">Suma Platita</string>
     <string name="taxa_aplicata">Taxa Aplicata</string>
-
+    <string name="raport_plati">Raport Plati</string>
+    <string name="raport_cheltuieli">Raport Cheltuieli</string>
 
 </resources>

@@ -15,257 +15,259 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
-
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:gravity="left|center_vertical"
-                android:text="@string/referinta_plata" />
-
-            <Spinner
-                android:id="@+id/spinnerReferintaPlata"
-                android:layout_width="74dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="0.42" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llDataLivrare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/data_plata" />
-
-            <TextView
-                android:id="@+id/tvDataPlata"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="11.12.2015"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="0.02"
-                android:text="@string/denumire_material" />
-
-            <EditText
-                android:id="@+id/etDenumireMat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1.05"
-                android:enabled="false"
-                android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/cantitate" />
-
-            <EditText
-                android:id="@+id/etCantitate"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="numberDecimal" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/referinta_plata" />
 
-            <TextView
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/pret" />
+                <Spinner
+                    android:id="@+id/spinnerReferintaPlata"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.42" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/etPret"
+            <LinearLayout
+                android:id="@+id/llDataLivrare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="numberDecimal" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
 
-            <TextView
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/taxa_aplicata" />
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.70"
+                    android:paddingLeft="5dp"
+                    android:text="@string/data_plata" />
 
-            <EditText
-                android:id="@+id/etTaxaAplicata"
+                <TextView
+                    android:id="@+id/tvDataPlata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.14"
+                    android:gravity="center_horizontal"
+                    android:text="11.12.2015"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="numberDecimal" />
-        </LinearLayout>
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.02"
+                    android:text="@string/denumire_material" />
 
-            <TextView
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/valoare_totala" />
+                <EditText
+                    android:id="@+id/etDenumireMat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1.05"
+                    android:enabled="false"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/etValoare"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="numberDecimal" />
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="85dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/cantitate" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+                <EditText
+                    android:id="@+id/etCantitate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/suma_platita" />
-
-            <EditText
-                android:id="@+id/etSumaPlatita"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:ems="10"
-                android:inputType="numberDecimal" />
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="85dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/pret" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+                <EditText
+                    android:id="@+id/etPret"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="0.00"
-                android:gravity="center_vertical"
-                android:text="@string/diferenta" />
-
-            <EditText
-                android:id="@+id/etDiferentaPlata"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:ems="10"
-                android:inputType="numberDecimal" />
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TextView
+                    android:layout_width="85dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/taxa_aplicata" />
+
+                <EditText
+                    android:id="@+id/etTaxaAplicata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TextView
+                    android:layout_width="85dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/valoare_totala"/>
+
+                <EditText
+                    android:id="@+id/etValoare"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="85dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/suma_platita" />
+
+                <EditText
+                    android:id="@+id/etSumaPlatita"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="85dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.00"
+                    android:gravity="center_vertical"
+                    android:text="@string/diferenta" />
+
+                <EditText
+                    android:id="@+id/etDiferentaPlata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <Button
+                    android:id="@+id/btnSalveazaPlata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:text="@string/salveaza" />
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <Button
-                android:id="@+id/btnVerificaReceptie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/verifica_doc"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btnSalveazaPlata"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:text="@string/salveaza" />
-        </LinearLayout>
-
-    </LinearLayout>
-
+    </ScrollView>
 
 </LinearLayout>
