@@ -1011,4 +1011,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return listaPlati;
     }
 
+    public ArrayList<Integer> getMonth(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT "+COLUMN_DATA_PLATA+", SUBSTR("+COLUMN_DATA_PLATA+",1,2)" +
+                " FROM "+TABLE_PLATI;
+        int month = 0;
+        ArrayList<Integer> months = new ArrayList<>();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                month = cursor.getInt(0);
+                months.add(month);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return months;
+    }
+
 }

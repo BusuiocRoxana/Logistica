@@ -20,6 +20,7 @@ import java.util.Date;
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.DateConvertor;
+import disertatie.com.disertatie.Utils.StaticLabelsFormatter;
 import disertatie.com.disertatie.entities.Plata;
 
 public class ReportActivity extends AppCompatActivity {
@@ -43,6 +44,7 @@ public class ReportActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Log.d(TAG, "lunile="+databaseHelper.getMonth());
 
         // generate Dates
         Calendar calendar = Calendar.getInstance();
@@ -72,12 +74,13 @@ public class ReportActivity extends AppCompatActivity {
 
 
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
+        //graph.getGridLabelRenderer().setLabelFormatter(new StaticLabelsFormatter(graph));
         graph.getGridLabelRenderer().setNumHorizontalLabels(plati.size());
         //graph.getViewport().setMinX(d1.getTime());
        // graph.getViewport().setMaxX(d3.getTime());
         graph.getViewport().setMinY(0);
         graph.getViewport().setMaxY(100);
-        seriesPlati.setSpacing(50);
+        seriesPlati.setSpacing(10);
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getGridLabelRenderer().setHumanRounding(false);
 
