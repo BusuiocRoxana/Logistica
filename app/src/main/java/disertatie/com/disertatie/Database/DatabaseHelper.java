@@ -1011,17 +1011,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return listaPlati;
     }
 
-    public ArrayList<Integer> getMonth(){
+    public ArrayList<Plata> getMonth(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT "+COLUMN_DATA_PLATA+", SUBSTR("+COLUMN_DATA_PLATA+",1,2)" +
-                " FROM "+TABLE_PLATI;
-        int month = 0;
-        ArrayList<Integer> months = new ArrayList<>();
+       // String query = "SELECT "+COLUMN_DATA_PLATA+", SUBSTR("+COLUMN_DATA_PLATA+",1,2)" +
+        //        " FROM "+TABLE_PLATI;
+        String query =  "SELECT "+COLUMN_DATA_PLATA+","+COLUMN_SUMA_PLATITA+", SUBSTR("+COLUMN_DATA_PLATA+",4,2) AS LUNA" +
+                " FROM "+TABLE_PLATI+" GROUP BY LUNA";
+       // int month = 0;
+        ArrayList<Plata> months = new ArrayList<>();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                month = cursor.getInt(0);
-                months.add(month);
+                Plata plata = new Plata();
+                plata.setSuma_platita(cursor.getDouble(1));
+                plata.setData_plata(cursor.getString(2));
+                months.add(plata);
+               // month = cursor.getInt(0);
+               // months.add(month);
             }
             while (cursor.moveToNext());
         }
@@ -1029,5 +1035,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return months;
     }
+
 
 }

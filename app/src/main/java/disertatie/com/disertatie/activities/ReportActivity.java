@@ -3,7 +3,10 @@ package disertatie.com.disertatie.activities;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
@@ -26,7 +29,7 @@ import disertatie.com.disertatie.entities.Plata;
 public class ReportActivity extends AppCompatActivity {
 
     private static final String TAG = "Logistica";
-
+    private Toolbar toolbar;
     DatabaseHelper databaseHelper;
     Plata plata = new Plata();
     ArrayList<Plata> plati =  new ArrayList<Plata>();
@@ -35,6 +38,19 @@ public class ReportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            // use toolbar as actionbar
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+            TextView tv = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            tv.setText(R.string.raportare);
+        }
+
 
         databaseHelper = new DatabaseHelper(this);
         try {
@@ -95,5 +111,17 @@ public class ReportActivity extends AppCompatActivity {
         }
         Log.d(TAG, "DataPoint:"+dataPointArray.toString());
         return dataPointArray;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }

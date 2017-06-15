@@ -123,8 +123,11 @@ public class PlatiActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-
-                                tvDataPlata.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                if(monthOfYear < 9) {
+                                    tvDataPlata.setText(dayOfMonth + "-0" + (monthOfYear + 1) + "-" + year);
+                                }else if(monthOfYear >= 9){
+                                    tvDataPlata.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                }
 
                             }
                         }, year, month, day);
