@@ -50,7 +50,7 @@ public class SplashScreenActivity extends Activity {
         {
             Log.i(TAG,"Google Play is available #1");
         }
-
+        /*
         if(getIntent().getExtras() != null){
             try {
                 Intent intent = getIntent();
@@ -72,7 +72,7 @@ public class SplashScreenActivity extends Activity {
             }catch (NullPointerException ex){
                 Log.e(TAG, "Message Receiver Error="+ex.getMessage());
             }
-        }
+        }*/
         handler.postDelayed(runnable, 2000);
     }
 

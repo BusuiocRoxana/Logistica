@@ -267,7 +267,7 @@ public class GeneratorCerereDeOferta {
                 "var sDataLivrare = document.getElementById('tdData').textContent;\n" +
                 "var j = '{'+\n" +
                 "  '\"to\" : \""+firebaseCloudMessagingId+"\",'+\n" +
-                "  '\"notification\" : { \"title\" : \""+furnizor.getDenumire_furnizor()+" a acceptat oferta\"},'+\n" +
+                //"  '\"notification\" : { \"title\" : \""+furnizor.getDenumire_furnizor()+" a acceptat oferta\"},'+\n" +
                 "  '\"data\" : {'+\n"+
                 "     '\"codDocument\" : \"' + sCodDocument + '\",'+\n"+
                 "     '\"cantitate\" : \"' + sCantitate + '\",'+\n"+
@@ -295,7 +295,7 @@ public class GeneratorCerereDeOferta {
                 "var sDataLivrare = document.getElementById('tdData').textContent;\n" +
                 "var j = '{'+\n" +
                 "  '\"to\" : \""+firebaseCloudMessagingId+"\",'+\n" +
-                "  '\"notification\" : { \"title\" : \""+furnizor.getDenumire_furnizor()+" a schimbat oferta\"},'+\n" +
+                //"  '\"notification\" : { \"title\" : \""+furnizor.getDenumire_furnizor()+" a schimbat oferta\"},'+\n" +
                 "  '\"data\" : {'+\n"+
                 "     '\"codDocument\" : \"' + sCodDocument + '\",'+\n"+
                 "     '\"cantitate\" : \"' + sCantitate + '\",'+\n"+
