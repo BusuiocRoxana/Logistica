@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:gravity="center_horizontal"
-            android:text="@string/raport_plati" />
+            android:text="@string/raport_plati"
+            android:visibility="gone" />
 
         <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"

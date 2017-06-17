@@ -29,6 +29,8 @@ import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
 import disertatie.com.disertatie.Utils.DateConvertor;
 import disertatie.com.disertatie.Utils.StaticLabelsFormatter;
+import disertatie.com.disertatie.charts.CustomDataPoint;
+import disertatie.com.disertatie.entities.Material;
 import disertatie.com.disertatie.entities.Plata;
 
 public class ReportActivity extends AppCompatActivity {
@@ -38,6 +40,7 @@ public class ReportActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     Plata plata = new Plata();
     ArrayList<Plata> plati =  new ArrayList<Plata>();
+    ArrayList<Material> materiale =  new ArrayList<Material>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class ReportActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         try {
             plati  = databaseHelper.selectPlati();
+            materiale =  databaseHelper.getAllMaterials();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -78,22 +82,15 @@ public class ReportActivity extends AppCompatActivity {
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         GraphView graph_barchart = (GraphView) findViewById(R.id.graph_barchart);
-       
-       DataPoint[] dataPointArray = generateDataPoint();
+
+        DataPoint[] dataPointArray = generateDataPoint();
         LineGraphSeries<DataPoint> seriesPlati = new LineGraphSeries<>(dataPointArray);
         PointsGraphSeries<DataPoint> seriesPoints = new PointsGraphSeries<>(dataPointArray);
         graph.addSeries(seriesPoints);
         seriesPoints.setShape(PointsGraphSeries.Shape.POINT);
         graph.addSeries(seriesPlati);
-        // styling
-       /* seriesPlati.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
-            }
-        });*/
 
-      //  seriesPlati.setSpacing(50);
+
 
 
        // graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
@@ -109,12 +106,33 @@ public class ReportActivity extends AppCompatActivity {
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getGridLabelRenderer().setHumanRounding(true);
 
-        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+        /*StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
         ArrayList<String> als = new ArrayList<>(Arrays.asList("old", "middle", "new"));
         staticLabelsFormatter.setHorizontalLabels(als);
         staticLabelsFormatter.setVerticalLabels(new ArrayList<String>(Arrays.asList("low", "middle", "high")));
-        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);*/
 
+        CustomDataPoint[] customDataPoints = generateMaterials();
+        BarGraphSeries<CustomDataPoint> seriesMaterials = new BarGraphSeries<>(customDataPoints);
+        graph_barchart.getGridLabelRenderer().setLabelFormatter(new CustomLabelFormatter(customDataPoints));
+        seriesMaterials.setSpacing(1);
+        graph_barchart.getGridLabelRenderer().setNumHorizontalLabels(materiale.size());
+        graph_barchart.addSeries(seriesMaterials);
+        graph_barchart.setTitle("Situatie stocuri materiale");
+        // styling
+
+        seriesMaterials.setValueDependentColor(new ValueDependentColor<CustomDataPoint>() {
+            @Override
+            public int get(CustomDataPoint data) {
+                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+            }
+        });
+        // draw values on top
+       // seriesMaterials.setDrawValuesOnTop(true);
+       // seriesMaterials.setValuesOnTopColor(Color.RED);
+
+        //graph_barchart.getViewport().setMinY(0);
+        //graph_barchart.getViewport().setMaxY(100);
     }
 
     public DataPoint[] generateDataPoint(){
@@ -132,6 +150,16 @@ public class ReportActivity extends AppCompatActivity {
         return dataPointArray;
     }
 
+    public CustomDataPoint[] generateMaterials(){
+        CustomDataPoint[] dataPointArray = new CustomDataPoint[materiale.size()];
+        for(int i=0;i<materiale.size();i++) {
+            dataPointArray[i] = new CustomDataPoint(materiale.get(i).getDenumire_material(), i, materiale.get(i).getStoc_curent());
+            Log.d(TAG, "DataPoint:"+dataPointArray[i].toString());
+        }
+
+        return dataPointArray;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -145,18 +173,24 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private class CustomLabelFormatter implements LabelFormatter {
-        private String[] names;
-        public CustomLabelFormatter(String[] names)
+        private static final int MAX_LENGTH_NAME = 8;
+        private CustomDataPoint[] points;
+        public CustomLabelFormatter(CustomDataPoint[] points)
         {
-            this.names=names;
+            this.points=points;
         }
         @Override
         public String formatLabel(double value, boolean isValueX) {
             if(isValueX)
             {
                 int i = (int)Math.round(value);
-                if(i>= 0 && i<names.length)
-                    return names[i];
+                if(i>= 0 && i<points.length)
+                {
+                    String s = points[i].getName();
+                    if(s.length()>MAX_LENGTH_NAME)
+                        s = s.substring(0,MAX_LENGTH_NAME)+"...";
+                    return s;
+                }
                 else
                     return "NULL_ERROR";
             }
