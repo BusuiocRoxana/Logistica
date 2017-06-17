@@ -67,15 +67,7 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
         listaCereriOferta = new ArrayList<CerereOferta>();
         databaseHelper = new DatabaseHelper(this);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                mMessageReceiver, new IntentFilter("updateCerereOferta"));
 
-        try {
-            listaCereriOferta = databaseHelper.selectCereriOferta();
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         mAdapter = new CerereOfertaAdapter(listaCereriOferta, this, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -133,6 +125,16 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
         }
         mAdapter.updateViewMaterials(listaCereriOferta);
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, new IntentFilter("updateCerereOferta"));
+
+        try {
+            listaCereriOferta = databaseHelper.selectCereriOferta();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -140,18 +142,43 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
-            int codDocument = intent.getIntExtra("codDocument",-1);
-            double cantitate = intent.getDoubleExtra("cantitate",-1);
-            double pret = intent.getDoubleExtra("pret",-1);
-            String dataLivrare = intent.getStringExtra("dataLivrare");
-            CerereOferta.Status status = CerereOferta.Status.valueOf(intent.getStringExtra("status").toString());
+            try {
+                int codDocument = intent.getIntExtra("codDocument", -1);
+                double cantitate = intent.getDoubleExtra("cantitate", -1);
+                double pret = intent.getDoubleExtra("pret", -1);
+                String dataLivrare = intent.getStringExtra("dataLivrare");
+                //CerereOferta.Status status = CerereOferta.Status.valueOf(intent.getStringExtra("status").toString());
+                CerereOferta.Status status = (CerereOferta.Status)intent.getExtras().get("status");
+                if(status.equals(CerereOferta.Status.ACCEPTAT)) {
+                    databaseHelper.updateCerereOferta(codDocument, status);
+                    updateAdapter();
+                }else if(status.equals(CerereOferta.Status.MODIFICAT)){
+                    databaseHelper.updateCerereOferta(codDocument, cantitate, pret, dataLivrare, status);
+                    updateAdapter();
+                }else{
+                    Log.e(TAG, "Message Receiver Error Invalid Status="+status);
+                }
+
+            }catch (NullPointerException ex){
+                Log.e(TAG, "Message Receiver Error="+ex.getMessage());
+            }
 
             Log.d(TAG,"mMessageReceiver-bam-worked");
 
-            databaseHelper.updateCerereOferta(codDocument, cantitate, pret, dataLivrare, status);
+
 
             //tvStatus.setText(message);
             // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
     };
+
+    public void updateAdapter(){
+        try {
+            listaCereriOferta = databaseHelper.selectCereriOferta();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        mAdapter.updateViewMaterials(listaCereriOferta);
+
+    }
 }

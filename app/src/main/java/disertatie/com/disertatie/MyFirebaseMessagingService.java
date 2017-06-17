@@ -12,6 +12,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
+import disertatie.com.disertatie.Constants.Constants;
 import disertatie.com.disertatie.entities.CerereOferta;
 
 /**
@@ -36,15 +37,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             Map data = remoteMessage.getData();
-            codDocument =Integer.parseInt(data.get("codDocument").toString());
-            cantitate =Double.parseDouble(data.get("cantitate").toString());
-            pret =Double.parseDouble(data.get("pret").toString());
-            dataLivrare =String.valueOf(data.get("dataLivrare"));
-            status = CerereOferta.Status.MODIFICAT;
-            Log.d(TAG,"Cerere Oferta -" +
-                    " codDocument="+codDocument+", cantitate="+cantitate+", pret="+pret+", dataLivrare="+dataLivrare
-            +"status="+status);
-            sendMessageToActivity(this, codDocument, cantitate, pret, dataLivrare, status);
+            status = CerereOferta.Status.valueOf(data.get("status").toString());
+            if(status.equals(CerereOferta.Status.MODIFICAT)) {
+                codDocument = Integer.parseInt(data.get("codDocument").toString());
+                cantitate = Double.parseDouble(data.get("cantitate").toString());
+                pret = Double.parseDouble(data.get("pret").toString());
+                dataLivrare = String.valueOf(data.get("dataLivrare"));
+                Log.d(TAG,"Cerere Oferta -" +
+                        " codDocument="+codDocument+", cantitate="+cantitate+", pret="+pret+", dataLivrare="+dataLivrare
+                        +"status="+status);
+                sendMessageToActivity(this, codDocument, cantitate, pret, dataLivrare, status);
+            }else if(status.equals(CerereOferta.Status.ACCEPTAT)) {
+                codDocument = Integer.parseInt(data.get("codDocument").toString());
+                Log.d(TAG,"Cerere Oferta -" +
+                        " codDocument="+codDocument+","+"status="+status);
+                sendMessageToActivity(this, codDocument, -1, -1, "", status);
+            }else{
+                Log.e(TAG, "Status invalid primit=->"+data);
+            }
+
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
                 //scheduleJob();

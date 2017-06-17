@@ -5,6 +5,7 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import disertatie.com.disertatie.Constants.Constants;
 import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
 
@@ -271,6 +272,7 @@ public class GeneratorCerereDeOferta {
                 "     '\"codDocument\" : \"' + sCodDocument + '\",'+\n"+
                 "     '\"cantitate\" : \"' + sCantitate + '\",'+\n"+
                 "     '\"pret\" : \"' + sPret + '\",'+\n"+
+                "     '\"status\" : \""+ Constants.ACCEPTAT + "\",'+\n"+
                 "     '\"dataLivrare\" : \"' + sDataLivrare + '\"'+\n"+
                 "  '}'+\n" +
                 "'}';\n"+
@@ -298,6 +300,7 @@ public class GeneratorCerereDeOferta {
                 "     '\"codDocument\" : \"' + sCodDocument + '\",'+\n"+
                 "     '\"cantitate\" : \"' + sCantitate + '\",'+\n"+
                 "     '\"pret\" : \"' + sPret + '\",'+\n"+
+                "     '\"status\" : \""+ Constants.MODIFICAT + "\",'+\n"+
                 "     '\"dataLivrare\" : \"' + sDataLivrare + '\"'+\n"+
                 "  '}'+\n" +
                 "'}';\n"+

@@ -353,7 +353,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_STATUS, status.toString());
 
         db.update(TABLE_CERERI_OFERTA, contentValues,COLUMN_COD_CERERE_OFERTA+"= ? ", new String[]{Integer.toString(codDocument)});
-        Log.d(TAG,"updateCerereOferta-bam-worked");
+        Log.d(TAG,"update cerere oferta - status modificat");
+        db.close();
+    }
+    public void updateCerereOferta(int codDocument, CerereOferta.Status status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_STATUS, status.toString());
+        db.update(TABLE_CERERI_OFERTA, contentValues,COLUMN_COD_CERERE_OFERTA+"= ? ",
+                new String[]{Integer.toString(codDocument)});
+        Log.d(TAG,"updated cerere oferta - status acceptat");
         db.close();
     }
 
