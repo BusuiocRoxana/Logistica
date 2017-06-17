@@ -1,18 +1,24 @@
 package disertatie.com.disertatie;
 
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
+import java.util.concurrent.RunnableFuture;
 
 import disertatie.com.disertatie.Constants.Constants;
+import disertatie.com.disertatie.Database.DatabaseHelper;
+import disertatie.com.disertatie.activities.ListaCereriOfertaActivity;
 import disertatie.com.disertatie.entities.CerereOferta;
 
 /**
@@ -46,12 +52,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Log.d(TAG,"Cerere Oferta -" +
                         " codDocument="+codDocument+", cantitate="+cantitate+", pret="+pret+", dataLivrare="+dataLivrare
                         +"status="+status);
-                sendMessageToActivity(this, codDocument, cantitate, pret, dataLivrare, status);
+                //sendMessageToActivity(this, codDocument, cantitate, pret, dataLivrare, status);
+                DatabaseHelper databaseHelper = new DatabaseHelper(this);
+                databaseHelper.updateCerereOferta(codDocument, cantitate, pret, dataLivrare, status);
+                final ListaCereriOfertaActivity i = ListaCereriOfertaActivity.getInstance();
+                if(i!=null)
+                {
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            i.updateAdapter();
+                        }
+                    });
+                }
             }else if(status.equals(CerereOferta.Status.ACCEPTAT)) {
                 codDocument = Integer.parseInt(data.get("codDocument").toString());
                 Log.d(TAG,"Cerere Oferta -" +
                         " codDocument="+codDocument+","+"status="+status);
-                sendMessageToActivity(this, codDocument, -1, -1, "", status);
+                //sendMessageToActivity(this, codDocument, -1, -1, "", status);
+                DatabaseHelper databaseHelper = new DatabaseHelper(this);
+                databaseHelper.updateCerereOferta(codDocument, status);
+                final ListaCereriOfertaActivity i = ListaCereriOfertaActivity.getInstance();
+                if(i!=null)
+                {
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            i.updateAdapter();
+                        }
+                    });
+                }
             }else{
                 Log.e(TAG, "Status invalid primit=->"+data);
             }

@@ -41,6 +41,13 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
 
     private static final String TAG = "Logistica";
 
+    private static ListaCereriOfertaActivity instance;
+    public static ListaCereriOfertaActivity getInstance()
+    {
+        return instance;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +93,7 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
             }
         });
 
-
+        instance = this;
     }
 
     @Override
@@ -124,20 +131,21 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
             e.printStackTrace();
         }
         mAdapter.updateViewMaterials(listaCereriOferta);
-
+        /*
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMessageReceiver, new IntentFilter("updateCerereOferta"));
-
+        */
+        /*
         try {
             listaCereriOferta = databaseHelper.selectCereriOferta();
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+        */
 
     }
-
+    /*
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -171,7 +179,7 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
             // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
     };
-
+    */
     public void updateAdapter(){
         try {
             listaCereriOferta = databaseHelper.selectCereriOferta();
