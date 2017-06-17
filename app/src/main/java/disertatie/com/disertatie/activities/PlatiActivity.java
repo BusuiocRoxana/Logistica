@@ -184,7 +184,7 @@ public class PlatiActivity extends AppCompatActivity {
 
 
 
-                databaseHelper.insertPlata(plata);
+            databaseHelper.insertPlata(plata);
                 Log.d(TAG,"test-plata"+plata.toString());
 
 

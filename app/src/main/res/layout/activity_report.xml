@@ -33,7 +33,18 @@
             android:layout_width="match_parent"
             android:layout_height="200dip"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            app:seriesType="line"
+            app:seriesColor="#ee0000"/>
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph_barchart"
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+           />
     </LinearLayout>
 
 </LinearLayout>

@@ -990,9 +990,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +COLUMN_COD_PLATA+SPACE+","
                 +COLUMN_SUMA_PLATITA+SPACE+","
                 +COLUMN_DATA_PLATA+SPACE+","
-                +COLUMN_COD_FACTURA+SPACE+""+
-                " FROM " + TABLE_PLATI+SPACE+
-                "ORDER BY "+COLUMN_COD_PLATA;
+                +COLUMN_COD_FACTURA+SPACE+","+
+                " SUBSTR("+COLUMN_DATA_PLATA+",4,2) AS LUNA," +
+                " SUBSTR("+COLUMN_DATA_PLATA+",7,4) AS AN," +
+                " strftime('%Y','now') AS AN_CURENT"+
+                " FROM "+TABLE_PLATI+" WHERE AN = AN_CURENT GROUP BY LUNA";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
