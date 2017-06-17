@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LabelFormatter;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -92,7 +93,6 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-
        // graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter());
         //graph.getGridLabelRenderer().setLabelFormatter(new StaticLabelsFormatter(graph));
@@ -115,6 +115,7 @@ public class ReportActivity extends AppCompatActivity {
         CustomDataPoint[] customDataPoints = generateMaterials();
         BarGraphSeries<CustomDataPoint> seriesMaterials = new BarGraphSeries<>(customDataPoints);
         graph_barchart.getGridLabelRenderer().setLabelFormatter(new CustomLabelFormatter(customDataPoints));
+        graph_barchart.getGridLabelRenderer().setHighlightZeroLines(false);
         seriesMaterials.setSpacing(1);
         graph_barchart.getGridLabelRenderer().setNumHorizontalLabels(materiale.size());
         graph_barchart.addSeries(seriesMaterials);
@@ -127,6 +128,11 @@ public class ReportActivity extends AppCompatActivity {
                 return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
             }
         });
+        //graph_barchart.getViewport().setMinX(seriesMaterials.getLowestValueX() - (1.0/2.0));
+        //graph_barchart.getViewport().setMaxX(seriesMaterials.getHighestValueX() + (1.0/2.0));
+        //graph_barchart.getViewport().setXAxisBoundsManual(true);
+
+
         // draw values on top
        // seriesMaterials.setDrawValuesOnTop(true);
        // seriesMaterials.setValuesOnTopColor(Color.RED);
@@ -187,8 +193,8 @@ public class ReportActivity extends AppCompatActivity {
                 if(i>= 0 && i<points.length)
                 {
                     String s = points[i].getName();
-                    if(s.length()>MAX_LENGTH_NAME)
-                        s = s.substring(0,MAX_LENGTH_NAME)+"...";
+                    //if(s.length()>MAX_LENGTH_NAME)
+                    //    s = s.substring(0,MAX_LENGTH_NAME)+"...";
                     return s;
                 }
                 else
@@ -203,6 +209,13 @@ public class ReportActivity extends AppCompatActivity {
         @Override
         public void setViewport(Viewport viewport) {
 
+        }
+    }
+    private class CustomLegendRenderer extends LegendRenderer
+    {
+
+        public CustomLegendRenderer(GraphView graphView) {
+            super(graphView);
         }
     }
 }

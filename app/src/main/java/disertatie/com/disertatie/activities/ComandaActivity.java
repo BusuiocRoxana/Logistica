@@ -110,7 +110,7 @@ public class ComandaActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 comanda.setTaxa(listaTaxe.get(position));
                 tvProcentTaxa.setText(comanda.getTaxa().getProcent_taxa()+"");
-                valoareTaxa =  comanda.getCerereOferta().calculeazaValoare()*comanda.getTaxa().getProcent_taxa();
+                valoareTaxa =  comanda.getCerereOferta().calculeazaValoare()*comanda.getTaxa().getProcent_taxa()/100;
                 valoareTotala =valoareTaxa+comanda.getCerereOferta().calculeazaValoare();
                 tvValoare.setText(valoareTotala+"");
             }

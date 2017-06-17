@@ -16,36 +16,41 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="center_horizontal"
-            android:text="@string/raport_plati"
-            android:visibility="gone" />
+            android:orientation="vertical">
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph"
-            android:layout_width="match_parent"
-            android:layout_height="200dip"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            app:seriesType="line"
-            app:seriesColor="#ee0000"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center_horizontal"
+                android:text="@string/raport_plati"
+                android:visibility="gone" />
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph_barchart"
-            android:layout_width="match_parent"
-            android:layout_height="200dip"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-           />
-    </LinearLayout>
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph"
+                android:layout_width="match_parent"
+                android:layout_height="200dip"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:seriesColor="#ee0000"
+                app:seriesType="line" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph_barchart"
+                android:layout_width="match_parent"
+                android:layout_height="200dip"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
