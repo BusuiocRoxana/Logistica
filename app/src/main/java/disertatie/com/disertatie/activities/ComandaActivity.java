@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -91,6 +92,8 @@ public class ComandaActivity extends AppCompatActivity {
 
         comanda.setCerereOferta(cerereOferta);
         }
+
+        Toast.makeText(this, "Alegeti taxa aplicata", Toast.LENGTH_SHORT).show();
         databaseHelper = new DatabaseHelper(context);
         try {
             listaTaxe = databaseHelper.selecteazaTaxe();
@@ -124,9 +127,10 @@ public class ComandaActivity extends AppCompatActivity {
         btnTrimiteComanda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             boolean checkInsert =  databaseHelper.insertComanda(comanda);
-               if(checkInsert) {
-
+             long  row_id =  databaseHelper.insertComanda(comanda);
+             int cod_comanda =-1;
+               if(row_id != -1) {
+                    cod_comanda =  databaseHelper.getPrimaryKeyByRowId(row_id, DatabaseHelper.TABLE_COMENZI, DatabaseHelper.COLUMN_COD_COMANDA);
                     Log.e(TAG, "Sending email");
                     Log.i("Send email", "");
                     String[] TO = {comanda.getCerereOferta().getFurnizor().getEmail()};
@@ -150,9 +154,10 @@ public class ComandaActivity extends AppCompatActivity {
                     emailIntent.setType("text/plain");
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
                     emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Comanda Nr.#" + comanda.getCod_comanda());
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Comanda Nr.#" + cod_comanda);
                     emailIntent.putExtra(Intent.EXTRA_TEXT, textComanda);
                     startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                    finish();
                 }
             }
         });

@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -179,37 +180,42 @@ public class FacturaActivity extends AppCompatActivity {
         btnSalveazaFactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double cantFacturata = Double.parseDouble(etCantitateFacturata.getText().toString());
-                factura.setCantitate_facturata(cantFacturata);
-                factura.setData_factura(tvDataFactura.getText().toString());
-                factura.setReceptie(receptie);
+                if (etCantitateFacturata.getText().length() > 0) {
+                    double cantFacturata = Double.parseDouble(etCantitateFacturata.getText().toString());
+                    factura.setCantitate_facturata(cantFacturata);
+                    factura.setData_factura(tvDataFactura.getText().toString());
+                    factura.setReceptie(receptie);
 
-                databaseHelper.insertFactura(factura);
-                Log.d(TAG,"test-receptie"+receptie.toString());
+                    long row_id = databaseHelper.insertFactura(factura);
+                    int cod_factura = databaseHelper.getPrimaryKeyByRowId(row_id, DatabaseHelper.TABLE_FACTURI, DatabaseHelper.COLUMN_COD_FACTURA);
+                    Log.d(TAG, "test-receptie" + receptie.toString());
 
-                Log.e(TAG, "Sending email");
-                Log.i("Send email", "");
-                String[] TO = {factura.getReceptie().getComanda().getCerereOferta().getFurnizor().getEmail()};
-                String[] CC = {""};
-                String textReceptie = "Factura cu referinta la Receptia Nr.#" + factura.getReceptie().getComanda().getCerereOferta().getCod_cerere_oferta() + "\n\n"
-                        + "Data Facturarii\t" + factura.getData_factura() + "\n"
-                        + "Material " + factura.getReceptie().getComanda().getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
-                        + "Cantitate facturata\t" + factura.getReceptie().getComanda().getCerereOferta().getCantitate() + "\tbucati\n"
-                        + "Taxe \t" +etTaxa.getText().toString()+"\n"
-                        + "Valoare totala \t" +tvValoareFactura.getText();
+                    Log.e(TAG, "Sending email");
+                    Log.i("Send email", "");
+                    String[] TO = {factura.getReceptie().getComanda().getCerereOferta().getFurnizor().getEmail()};
+                    String[] CC = {""};
+                    String textReceptie = "Factura cu referinta la Receptia Nr.#" + factura.getReceptie().getComanda().getCerereOferta().getCod_cerere_oferta() + "\n\n"
+                            + "Data Facturarii\t" + factura.getData_factura() + "\n"
+                            + "Material " + factura.getReceptie().getComanda().getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
+                            + "Cantitate facturata\t" + factura.getReceptie().getComanda().getCerereOferta().getCantitate() + "\tbucati\n"
+                            + "Taxe \t" + etTaxa.getText().toString() + "\n"
+                            + "Valoare totala \t" + tvValoareFactura.getText();
 
-                // +"Adresa Livrare\t"+"+"";
+                    // +"Adresa Livrare\t"+"+"";
 
-                //de luat adresa companie si introdus la livrare
+                    //de luat adresa companie si introdus la livrare
 
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-                emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Factura Nr.#" + factura.getCod_factura());
-                emailIntent.putExtra(Intent.EXTRA_TEXT, textReceptie);
-                startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setData(Uri.parse("mailto:"));
+                    emailIntent.setType("text/plain");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                    emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Factura Nr.#" + cod_factura);
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, textReceptie);
+                    startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                }else{
+                    Toast.makeText(context, "Introduceti cantitate facturata", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

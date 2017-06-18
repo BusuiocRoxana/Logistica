@@ -265,7 +265,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return r;
     }
 
-    public boolean insertCerereOferta(Furnizor furnizor, Material material, String status, double pret,
+    public long insertCerereOferta(Furnizor furnizor, Material material, String status, double pret,
                                       double cantitate, String termen_raspuns, String data_livrare) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -277,55 +277,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_DATA_DOCUMENT, "datetime('now','localtime')");
         contentValues.put(COLUMN_TERMEN_RASPUNS, termen_raspuns);
         contentValues.put(COLUMN_DATA_LIVRARE, data_livrare);
-        db.insert(TABLE_CERERI_OFERTA, null, contentValues);
+        long r = db.insert(TABLE_CERERI_OFERTA, null, contentValues);
         db.close();
-        return true;
+        return r;
     }
 
-    public boolean insertComanda(Comanda comanda) {
+    public long insertComanda(Comanda comanda) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_COD_CERERE_OFERTA, comanda.getCerereOferta().getCod_cerere_oferta());
         contentValues.put(COLUMN_COD_TAXA, comanda.getTaxa().getCod_taxa());
-        db.insert(TABLE_COMENZI, null, contentValues);
+        long r = db.insert(TABLE_COMENZI, null, contentValues);
         db.close();
         Log.e(TAG, "cod_comanda="+comanda.getCod_comanda());
-        return true;
+        return r;
     }
 
-    public boolean insertReceptie(Receptie receptie) {
+    public long insertReceptie(Receptie receptie) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_COD_COMANDA, receptie.getComanda().getCod_comanda());
         contentValues.put(COLUMN_DATA_RECEPTIE, receptie.getData_receptie());
         contentValues.put(COLUMN_CANTITATE_RECEPTIONATA, receptie.getCantitate_receptionata());
-        db.insert(TABLE_RECEPTII, null, contentValues);
+        long r = db.insert(TABLE_RECEPTII, null, contentValues);
         db.close();
         Log.e(TAG, "cod_receptie="+receptie.getCod_receptie());
-        return true;
+        return r;
     }
-    public boolean insertFactura(Factura factura) {
+    public long insertFactura(Factura factura) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
        // contentValues.put(COLUMN_COD_FACTURA, factura.getCod_factura());
         contentValues.put(COLUMN_COD_RECEPTIE, factura.getReceptie().getCod_receptie());
         contentValues.put(COLUMN_CANTITATE_FACTURATA, factura.getCantitate_facturata());
         contentValues.put(COLUMN_DATA_FACTURA, factura.getData_factura());
-        db.insert(TABLE_FACTURI, null, contentValues);
+        long r = db.insert(TABLE_FACTURI, null, contentValues);
         db.close();
 
-        return true;
+        return r;
     }
 
-    public boolean insertPlata(Plata plata) {
+    public long insertPlata(Plata plata) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_COD_FACTURA, plata.getFactura().getCod_factura());
         contentValues.put(COLUMN_DATA_PLATA, plata.getData_plata());
         contentValues.put(COLUMN_SUMA_PLATITA, plata.getSuma_platita());
-        db.insert(TABLE_PLATI, null, contentValues);
+        long r =  db.insert(TABLE_PLATI, null, contentValues);
         db.close();
-        return true;
+        return r;
     }
 
 
@@ -391,6 +391,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(c.moveToFirst())
         {
             key = c.getInt(c.getColumnIndex(COLUMN_COD_ADRESA));
+        }
+        c.close();
+        db.close();
+        return key;
+    }
+    public int getPrimaryKeyByRowId(long rowId, String table, String column){
+        int key = -1;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query(table, new String[]{column},"rowid = "+rowId,null,null,null,null,null);
+        if(c.moveToFirst())
+        {
+            key = c.getInt(c.getColumnIndex(column));
         }
         c.close();
         db.close();

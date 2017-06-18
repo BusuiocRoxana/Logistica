@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -175,39 +176,39 @@ public class PlatiActivity extends AppCompatActivity {
         btnSalveazaPlata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  double cantReceptionata = Double.parseDouble(etCantitateReceptionata.getText().toString());
-                plata.setData_plata(tvDataPlata.getText().toString());
-                plata.setFactura(selectFactura(Integer.parseInt(spinnerFacturi.getSelectedItem().toString()), listaFacturi));
-                plata.setSuma_platita(Double.parseDouble(etSumaPlatita.getText().toString()));
-            //    sumaRamasa = Double.parseDouble(etDiferentaPlata.getText().toString());
+                if(etSumaPlatita.getText().length() >0) {
+                    //  double cantReceptionata = Double.parseDouble(etCantitateReceptionata.getText().toString());
+                    plata.setData_plata(tvDataPlata.getText().toString());
+                    plata.setFactura(selectFactura(Integer.parseInt(spinnerFacturi.getSelectedItem().toString()), listaFacturi));
+                    plata.setSuma_platita(Double.parseDouble(etSumaPlatita.getText().toString()));
+                    //    sumaRamasa = Double.parseDouble(etDiferentaPlata.getText().toString());
+                    long row_id = databaseHelper.insertPlata(plata);
+                    if (row_id != -1) {
+                        int cod_plata = databaseHelper.getPrimaryKeyByRowId(row_id, DatabaseHelper.TABLE_PLATI, DatabaseHelper.COLUMN_COD_PLATA);
+                        Log.d(TAG, "test-plata" + plata.toString());
+                        Log.e(TAG, "Sending email");
+                        Log.i("Send email", "");
+                        String[] TO = {plata.getFactura().getReceptie().getComanda().getCerereOferta().getFurnizor().getEmail()};
+                        String[] CC = {""};
+                        String textReceptie = "Plata cu referinta la Factura Nr.#" + plata.getFactura().getCod_factura() + "\n\n"
+                                + "Data Plata\t" + plata.getData_plata() + "\n"
+                                + "Suma totala " + plata.getFactura().getValoareTotala() + "\n"
+                                + "Suma platita\t" + plata.getSuma_platita() + "\tLEI\n";
+                        // + "Diferenta neplatita\t" + sumaRamasa+"\n";
 
 
-
-
-            databaseHelper.insertPlata(plata);
-                Log.d(TAG,"test-plata"+plata.toString());
-
-
-                Log.e(TAG, "Sending email");
-                Log.i("Send email", "");
-                String[] TO = {plata.getFactura().getReceptie().getComanda().getCerereOferta().getFurnizor().getEmail()};
-                String[] CC = {""};
-                String textReceptie = "Plata cu referinta la Factura Nr.#" + plata.getFactura().getCod_factura() + "\n\n"
-                        + "Data Plata\t" + plata.getData_plata() + "\n"
-                        + "Suma totala " + plata.getFactura().getValoareTotala() + "\n"
-                        + "Suma platita\t" + plata.getSuma_platita() + "\tLEI\n";
-                       // + "Diferenta neplatita\t" + sumaRamasa+"\n";
-
-
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-                emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Plata Nr.#" + plata.getCod_plata());
-                emailIntent.putExtra(Intent.EXTRA_TEXT, textReceptie);
-                startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
-
+                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                        emailIntent.setData(Uri.parse("mailto:"));
+                        emailIntent.setType("text/plain");
+                        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Plata Nr.#" + cod_plata);
+                        emailIntent.putExtra(Intent.EXTRA_TEXT, textReceptie);
+                        startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                    }else{
+                            Toast.makeText(context, "Introduceti suma platita", Toast.LENGTH_SHORT).show();
+                        }
+                }
             }
         });
     }

@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -161,38 +162,45 @@ public class ReceptieActivity extends AppCompatActivity {
         btnSalveazaReceptie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double cantReceptionata = Double.parseDouble(etCantitateReceptionata.getText().toString());
-                tvDiferenta.setText(comanda.getCerereOferta().getCantitate()-cantReceptionata+"");
-                receptie.setCantitate_receptionata(cantReceptionata);
-                receptie.setData_receptie(tvDataReceptie.getText().toString());
-                receptie.setComanda(comanda);
+                if(etCantitateReceptionata.getText().length()>0) {
+                    double cantReceptionata = Double.parseDouble(etCantitateReceptionata.getText().toString());
+                    tvDiferenta.setText(comanda.getCerereOferta().getCantitate() - cantReceptionata + "");
+                    receptie.setCantitate_receptionata(cantReceptionata);
+                    receptie.setData_receptie(tvDataReceptie.getText().toString());
+                    receptie.setComanda(comanda);
 
-                databaseHelper.insertReceptie(receptie);
-                Log.d(TAG,"test-receptie"+receptie.toString());
+                    long row_id = databaseHelper.insertReceptie(receptie);
+                    if (row_id != -1) {
+                        int cod_receptie = databaseHelper.getPrimaryKeyByRowId(row_id, DatabaseHelper.TABLE_RECEPTII, DatabaseHelper.COLUMN_COD_RECEPTIE);
+                        Log.d(TAG, "test-receptie" + receptie.toString());
+                        Log.e(TAG, "Sending email");
+                        Log.i("Send email", "");
+                        String[] TO = {receptie.getComanda().getCerereOferta().getFurnizor().getEmail()};
+                        String[] CC = {""};
+                        String textReceptie = "Receptie cu referinta la Comanda Nr.#" + receptie.getComanda().getCerereOferta().getCod_cerere_oferta() + "\n\n"
+                                + "Data Receptie\t" + receptie.getData_receptie() + "\n"
+                                + "Material " + receptie.getComanda().getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
+                                + "Cantitate comandata\t" + receptie.getComanda().getCerereOferta().getCantitate() + "\tbucati\n"
+                                + "Cantitate receptionata\t" + receptie.getCantitate_receptionata() + "\n"
+                                + "Diferenta \t" + tvDiferenta.getText();
 
-                Log.e(TAG, "Sending email");
-                Log.i("Send email", "");
-                String[] TO = {receptie.getComanda().getCerereOferta().getFurnizor().getEmail()};
-                String[] CC = {""};
-                String textReceptie = "Receptie cu referinta la Comanda Nr.#" + receptie.getComanda().getCerereOferta().getCod_cerere_oferta() + "\n\n"
-                        + "Data Receptie\t" + receptie.getData_receptie() + "\n"
-                        + "Material " + receptie.getComanda().getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
-                        + "Cantitate comandata\t" + receptie.getComanda().getCerereOferta().getCantitate() + "\tbucati\n"
-                        + "Cantitate receptionata\t" + receptie.getCantitate_receptionata()+"\n"
-                        + "Diferenta \t" +tvDiferenta.getText();
+                        // +"Adresa Livrare\t"+"+"";
 
-                // +"Adresa Livrare\t"+"+"";
+                        //de luat adresa companie si introdus la livrare
 
-                //de luat adresa companie si introdus la livrare
-
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-                emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Receptie Nr.#" + receptie.getCod_receptie());
-                emailIntent.putExtra(Intent.EXTRA_TEXT, textReceptie);
-                startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                        emailIntent.setData(Uri.parse("mailto:"));
+                        emailIntent.setType("text/plain");
+                        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Receptie Nr.#" + cod_receptie);
+                        emailIntent.putExtra(Intent.EXTRA_TEXT, textReceptie);
+                        startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                        finish();
+                    }
+                }else{
+                    Toast.makeText(context, "Introduceti cantitate receptionata", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

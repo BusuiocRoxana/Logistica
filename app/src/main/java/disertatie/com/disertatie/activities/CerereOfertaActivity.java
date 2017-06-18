@@ -11,6 +11,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -81,6 +82,9 @@ public class CerereOfertaActivity extends AppCompatActivity {
 
     private int indexFurnizor =-1;
     private int indexMaterial = -1;
+
+    private long row_id= -1;
+    private int cod_cerere_oferta = -1;
 
 
     @Override
@@ -186,9 +190,13 @@ public class CerereOfertaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cerereOferta = getCerereOfertaInput();
-                databaseHelper.insertCerereOferta(cerereOferta.getFurnizor(), cerereOferta.getMaterial(),
+                row_id = databaseHelper.insertCerereOferta(cerereOferta.getFurnizor(), cerereOferta.getMaterial(),
                         cerereOferta.getStatus().toString(),cerereOferta.getPret(), cerereOferta.getCantitate(), cerereOferta.getTermen_limita_raspuns(),
                         cerereOferta.getData_livrare());
+                if(row_id != -1){
+                    cod_cerere_oferta = databaseHelper.getPrimaryKeyByRowId(row_id, DatabaseHelper.TABLE_CERERI_OFERTA,
+                                                                                    DatabaseHelper.COLUMN_COD_CERERE_OFERTA);
+                }
 
 
             }
@@ -290,13 +298,17 @@ public class CerereOfertaActivity extends AppCompatActivity {
             String[] CC = {""};
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
+            String textCerereOferta = "Descarcati documentul si vizualizati cererea de oferta primita.";
+
             emailIntent.setData(Uri.parse("mailto:"));
-            emailIntent.setType("text/html");
+            emailIntent.setType("text/plain");
             emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
             emailIntent.putExtra(Intent.EXTRA_CC, CC);
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Cerere de Oferta");
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Cerere de Oferta Nr."+cod_cerere_oferta);
             emailIntent.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(f));
+            emailIntent.putExtra(Intent.EXTRA_TEXT, textCerereOferta);
             startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+            finish();
 
 
         }
