@@ -215,54 +215,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertCompanie(String denumire_companie, String nr_inreg_rc, String email, int cod_adresa) {
+    public long insertCompanie(String denumire_companie, String nr_inreg_rc, String email, int cod_adresa) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DENUMIRE_COMPANIE, denumire_companie);
         contentValues.put(COLUMN_NR_INREG_RC, nr_inreg_rc);
         contentValues.put(COLUMN_EMAIL_COMPANIE, email);
         contentValues.put(COLUMN_COD_ADRESA, cod_adresa);
-        db.insert(TABLE_COMPANIE, null, contentValues);
+        long r = db.insert(TABLE_COMPANIE, null, contentValues);
         db.close();
-        return true;
+        return r;
     }
 
-    public boolean insertMaterial(String denumire_material, double stoc_curent, double stoc_minim) {
+    public boolean insertMaterial(Material material) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_DENUMIRE_MATERIAL, denumire_material);
-        contentValues.put(COLUMN_STOC_CURENT, stoc_curent);
-        contentValues.put(COLUMN_STOC_MINIM, stoc_minim);
+        contentValues.put(COLUMN_DENUMIRE_MATERIAL, material.getDenumire_material());
+        contentValues.put(COLUMN_STOC_CURENT, material.getStoc_curent());
+        contentValues.put(COLUMN_STOC_MINIM, material.getStoc_minim());
         db.insert(TABLE_MATERIALE, null, contentValues);
         db.close();
         return true;
     }
 
-    public boolean insertFurnizor(String denumire_furnizor, String nr_inreg_rc, int cod_adresa, int rating, String email) {
+    public long insertFurnizor(Furnizor furnizor, int cod_adresa) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_DENUMIRE_FURNIZOR, denumire_furnizor);
-        contentValues.put(COLUMN_NR_INREG_RC_FURNIZORI, nr_inreg_rc);
+        contentValues.put(COLUMN_DENUMIRE_FURNIZOR, furnizor.getDenumire_furnizor());
+        contentValues.put(COLUMN_NR_INREG_RC_FURNIZORI,furnizor.getNr_inregistrare_RC());
         contentValues.put(COLUMN_COD_ADRESA, cod_adresa);
-        contentValues.put(COLUMN_RATING, rating);
-        contentValues.put(COLUMN_EMAIL_FURNIZOR, email);
-        db.insert(TABLE_FURNIZORI, null, contentValues);
+        contentValues.put(COLUMN_RATING, furnizor.getRating());
+        contentValues.put(COLUMN_EMAIL_FURNIZOR, furnizor.getEmail());
+        long r = db.insert(TABLE_FURNIZORI, null, contentValues);
         db.close();
-        return true;
+        return r;
     }
 
-    public boolean insertAdresa(int numar, String strada, String localitate, String judet_sector, String tara, String telefon) {
+    public long insertAdresa(Adresa adresa) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_NUMAR, numar);
-        contentValues.put(COLUMN_STRADA, strada);
-        contentValues.put(COLUMN_LOCALITATE, localitate);
-        contentValues.put(COLUMN_JUDET_SECTOR, judet_sector);
-        contentValues.put(COLUMN_TARA, tara);
-        contentValues.put(COLUMN_TELEFON, telefon);
-        db.insert(TABLE_ADRESE, null, contentValues);
+        contentValues.put(COLUMN_NUMAR, adresa.getNumar());
+        contentValues.put(COLUMN_STRADA, adresa.getStrada());
+        contentValues.put(COLUMN_LOCALITATE, adresa.getLocalitate());
+        contentValues.put(COLUMN_JUDET_SECTOR, adresa.getJudet_sector());
+        contentValues.put(COLUMN_TARA, adresa.getTara());
+        contentValues.put(COLUMN_TELEFON, adresa.getTelefon());
+        long r = db.insert(TABLE_ADRESE, null, contentValues);
         db.close();
-        return true;
+        return r;
     }
 
     public boolean insertCerereOferta(Furnizor furnizor, Material material, String status, double pret,
@@ -382,6 +382,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return cod_adresa;
+    }
+
+    public int getPrimaryKeyAddress(long rowId){
+        int key = -1;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query(TABLE_ADRESE, new String[]{COLUMN_COD_ADRESA},"rowid = "+rowId,null,null,null,null,null);
+        if(c.moveToFirst())
+        {
+            key = c.getInt(c.getColumnIndex(COLUMN_COD_ADRESA));
+        }
+        c.close();
+        db.close();
+        return key;
     }
 
     public int getMaxIdAdresa(){

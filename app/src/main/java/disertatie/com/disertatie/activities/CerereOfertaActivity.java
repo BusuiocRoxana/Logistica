@@ -211,6 +211,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
                 Intent i = new Intent(CerereOfertaActivity.this, ComandaActivity.class);
                 Bundle bundle = new Bundle();
                 Log.d(TAG, cerereOferta.toString());
+                Log.d(TAG, "cerere-oferta="+cerereOferta.toString());
                 bundle.putSerializable(CERERE_OFERTA, cerereOferta);
                 i.putExtras(bundle);
                 startActivity(i);
@@ -368,6 +369,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
                     tvDataLivrare.setText(DateConvertor.dateToString(new Date()));
                     tvTermenRaspuns.setText(DateConvertor.dateToString(new Date()));
                     tvStatus.setText("NEDEFINIT");
+                    flAdaugaComanda.setVisibility(View.GONE);
 
                     break;
                 case "EDIT":
@@ -391,14 +393,18 @@ public class CerereOfertaActivity extends AppCompatActivity {
                     btnTrimiteCerere.setEnabled(true);
                     btnVerificaCerere.setEnabled(true);
                     tvStatus.setEnabled(true);
+                    flAdaugaComanda.setVisibility(View.GONE);
 
                     break;
                 case "VIEW":
-                    cerereOferta = (CerereOferta) getIntent().getExtras().getSerializable(CERERE_OFERTA) ;
-                   /* if(cof.getStatus().toString().equals(CerereOferta.Status.ACCEPTAT) ||
-                            cof.getStatus().toString().equals(CerereOferta.Status.MODIFICAT)){
+                    cerereOferta = (CerereOferta) getIntent().getExtras().getSerializable(CERERE_OFERTA);
+                    Log.d(TAG,"status cerere oferta="+cerereOferta.getStatus());
+                    if(cerereOferta.getStatus().equals(CerereOferta.Status.ACCEPTAT) ||
+                            cerereOferta.getStatus().equals(CerereOferta.Status.MODIFICAT)){
                         flAdaugaComanda.setVisibility(View.VISIBLE);
-                    }*/
+                    }else{
+                        flAdaugaComanda.setVisibility(View.GONE);
+                    }
 
                     indexFurnizor = findIndexByCode(listaFurnizori, cerereOferta);
                     spinnerFurnizor.setSelection(indexFurnizor);

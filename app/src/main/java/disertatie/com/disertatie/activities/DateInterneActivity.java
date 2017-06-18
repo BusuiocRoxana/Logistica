@@ -1,5 +1,6 @@
 package disertatie.com.disertatie.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
@@ -44,11 +46,17 @@ public class DateInterneActivity extends AppCompatActivity {
     private EditText etTara;
     private int cod_adresa;
     private int cod_companie;
+    private Adresa adresa = new Adresa();
+    private Companie companie  = new Companie();
+
+    private Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_interne);
+        context = this;
 
         // toolbar setup
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -133,25 +141,77 @@ public class DateInterneActivity extends AppCompatActivity {
         btnSalveaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String collectedErrors = "";
                /* boolean isAddressInserted = databaseHelper.insertAdresa(
                         Integer.parseInt(etNumar.getText().toString()),
                         etStrada.getText().toString(),
                         etLocalitate.getText().toString(),
                         etJudetSector.getText().toString(),
                         etTara.getText().toString(), etTelefonCompanie.getText().toString());*/
-                databaseHelper.insertAdresa(
-                        Integer.parseInt(etNumar.getText().toString()),
-                        etStrada.getText().toString(),
-                        etLocalitate.getText().toString(),
-                        etJudetSector.getText().toString(),
-                        etTara.getText().toString(), etTelefonCompanie.getText().toString());
+                if(etDenumireCompanie.getText().length()>0){
+                    companie.setDenumire_companie(etDenumireCompanie.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti denumire companie\n";
+                }
+                if(etNrInregRC.getText().length()>0){
+                    companie.setNr_inreg_RC(etNrInregRC.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti Nr. Inregistrare Registrul Comertului\n";
+                }
+                if(etEmailCompanie.getText().length()>0){
+                    companie.setEmail(etEmailCompanie.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti email companie\n";
+                }
+                if(etTelefonCompanie.getText().length()>0){
+                    adresa.setTelefon(etTelefonCompanie.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti numar de telefon\n";
+                }
+                if(etNumar.getText().length()>0){
+                    adresa.setNumar(Integer.parseInt(etNumar.getText().toString()));
+                }else{
+                    collectedErrors += "Introduceti numar adresa\n";
+                } if(etStrada.getText().length()>0){
+                    adresa.setStrada(etStrada.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti strada\n";
+                } if(etJudetSector.getText().length()>0){
+                    adresa.setJudet_sector(etJudetSector.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti judet/sector\n";
+                } if(etLocalitate.getText().length()>0){
+                    adresa.setLocalitate(etLocalitate.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti localitate\n";
+                }if(etTara.getText().length()>0){
+                    adresa.setTara(etTara.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti tara\n";
+                }
+                collectedErrors =  collectedErrors.trim();
+                if(collectedErrors.length() > 0){
+                    Toast.makeText(context, collectedErrors,Toast.LENGTH_SHORT).show();
+                }else {
+                    long lastInsertedAddress = databaseHelper.insertAdresa(adresa);
+                    if (lastInsertedAddress != -1 ) {
+                        Log.d("TEST_ADRESA", "lastInsertedAddress=" + lastInsertedAddress);
+                        int cod_adresa = databaseHelper.getPrimaryKeyAddress(lastInsertedAddress);
+                        Log.d("TEST_ADRESA", "cod_adresa=" + cod_adresa);
+                        databaseHelper.insertCompanie(etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
+                                etEmailCompanie.getText().toString(), cod_adresa);
+                        Toast.makeText(context, "Date inserate cu succes",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
 
               //  if(isAddressInserted) {
-                    cod_adresa = databaseHelper.getMaxIdAdresa();
+                  /*  cod_adresa = databaseHelper.getMaxIdAdresa();
                     Log.d("TEST_ADRESA", "cod_adresa=" + cod_adresa);
                     databaseHelper.insertCompanie(etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
-                            etEmailCompanie.getText().toString(), cod_adresa);
+                            etEmailCompanie.getText().toString(), cod_adresa);*/
              //   }/*else{
               //      databaseHelper.insertAdresa(Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
               //              etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString(), etTelefonCompanie.getText().toString());

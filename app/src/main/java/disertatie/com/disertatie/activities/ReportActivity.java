@@ -120,6 +120,7 @@ public class ReportActivity extends AppCompatActivity {
         graph_barchart.getGridLabelRenderer().setNumHorizontalLabels(materiale.size());
         graph_barchart.addSeries(seriesMaterials);
         graph_barchart.setTitle("Situatie stocuri materiale");
+       // graph_barchart.getGridLabelRenderer().setHorizontalLabelsAngle(45);
         // styling
 
         seriesMaterials.setValueDependentColor(new ValueDependentColor<CustomDataPoint>() {
@@ -179,7 +180,7 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private class CustomLabelFormatter implements LabelFormatter {
-        private static final int MAX_LENGTH_NAME = 8;
+        private static final int MAX_LENGTH_NAME = 6;
         private CustomDataPoint[] points;
         public CustomLabelFormatter(CustomDataPoint[] points)
         {
@@ -193,8 +194,8 @@ public class ReportActivity extends AppCompatActivity {
                 if(i>= 0 && i<points.length)
                 {
                     String s = points[i].getName();
-                    //if(s.length()>MAX_LENGTH_NAME)
-                    //    s = s.substring(0,MAX_LENGTH_NAME)+"...";
+                    if(s.length()>MAX_LENGTH_NAME)
+                        s = s.substring(0,MAX_LENGTH_NAME)+"...";
                     return s;
                 }
                 else

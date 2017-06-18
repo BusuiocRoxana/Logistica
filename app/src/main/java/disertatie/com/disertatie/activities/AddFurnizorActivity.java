@@ -1,11 +1,13 @@
 package disertatie.com.disertatie.activities;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -54,10 +57,17 @@ public class AddFurnizorActivity extends AppCompatActivity {
     Integer[] ratings = new Integer[]{1, 2, 3, 4, 5};
 
 
+    private Furnizor furnizor =  new Furnizor();
+    private Adresa adresa = new Adresa();
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_furnizor);
+
+        context = this;
+
         // toolbar setup
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -109,30 +119,84 @@ public class AddFurnizorActivity extends AppCompatActivity {
         btnAdaugaFurnizor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               boolean isAddressInserted = databaseHelper.insertAdresa(Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
-                        etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString(), etTelefon.getText().toString());
-
-                if(isAddressInserted) {
-                   // int cod_adresa = databaseHelper.printAutoIncrements();
-                    int cod_adresa = databaseHelper.getMaxIdAdresa();
-                    Log.d("TEST_ADRESA", "cod_adresa=" + cod_adresa);
-                    databaseHelper.insertFurnizor(etDenumireFurnizor.getText().toString(),
-                            etNrInregRC.getText().toString(),
-                            cod_adresa,
-                            Integer.parseInt(spinnerRating.getSelectedItem().toString()), etEmailFurnizor.getText().toString());
+                String collectedErrors = "";
+                if(etDenumireFurnizor.getText().length()>0){
+                    furnizor.setDenumire_furnizor(etDenumireFurnizor.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti denumire furnizor\n";
+                }
+                if(etNrInregRC.getText().length()>0){
+                    furnizor.setNr_inregistrare_RC(etNrInregRC.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti Nr. Inregistrare Registrul Comertului\n";
+                }
+                if(etEmailFurnizor.getText().length()>0){
+                    furnizor.setEmail(etEmailFurnizor.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti email furnizor\n";
+                }if(spinnerRating.getSelectedItem() != null){
+                   furnizor.setRating(Integer.parseInt(spinnerRating.getSelectedItem().toString()));
+                }else{
+                    collectedErrors += "Selectati rating\n";
                 }
 
-                etNumar.setText("");
-                etStrada.setText("");
-                etLocalitate.setText("");
-                etJudetSector.setText("");
-                etTara.setText("");
+                if(etTelefon.getText().length()>0){
+                   adresa.setTelefon(etTelefon.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti numar de telefon\n";
+                }
+                if(etNumar.getText().length()>0){
+                    adresa.setNumar(Integer.parseInt(etNumar.getText().toString()));
+                }else{
+                    collectedErrors += "Introduceti numar adresa\n";
+                } if(etStrada.getText().length()>0){
+                    adresa.setStrada(etStrada.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti strada\n";
+                } if(etJudetSector.getText().length()>0){
+                    adresa.setJudet_sector(etJudetSector.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti judet/sector\n";
+                } if(etLocalitate.getText().length()>0){
+                    adresa.setLocalitate(etLocalitate.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti localitate\n";
+                }if(etTara.getText().length()>0){
+                    adresa.setTara(etTara.getText().toString());
+                }else{
+                    collectedErrors += "Introduceti tara\n";
+                }
 
-                etDenumireFurnizor.setText("");
-                etNrInregRC.setText("");
-                etAdresa.setText("");
-                etEmailFurnizor.setText("");
-                finish();
+              // boolean isAddressInserted = databaseHelper.insertAdresa(Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
+             //           etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString(), etTelefon.getText().toString());
+                collectedErrors =  collectedErrors.trim();
+                if(collectedErrors.length()>0){
+                    Toast.makeText(context, collectedErrors,Toast.LENGTH_SHORT).show();
+                }else {
+                    long lastInsertedAddress = databaseHelper.insertAdresa(adresa);
+
+                    if (lastInsertedAddress != -1 ) {
+                        // int cod_adresa = databaseHelper.printAutoIncrements();
+                       // int cod_adresa = databaseHelper.getMaxIdAdresa();
+                        Log.d("TEST_ADRESA", "lastInsertedAddress=" + lastInsertedAddress);
+                        int cod_adresa = databaseHelper.getPrimaryKeyAddress(lastInsertedAddress);
+                        Log.d("TEST_ADRESA", "cod_adresa=" + cod_adresa);
+                        databaseHelper.insertFurnizor(furnizor, cod_adresa);
+                    }
+
+                    etNumar.setText("");
+                    etStrada.setText("");
+                    etLocalitate.setText("");
+                    etJudetSector.setText("");
+                    etTara.setText("");
+
+                    etDenumireFurnizor.setText("");
+                    etNrInregRC.setText("");
+                    etAdresa.setText("");
+                    etEmailFurnizor.setText("");
+                    Toast.makeText(context, "Furnizor inserat cu succes",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
 

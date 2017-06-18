@@ -68,8 +68,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 mBuilder = new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.logo)
                         .setContentTitle("Cerere de oferta modificata")
-                        .setContentText(String.format("codDocument=%d\ncantitate=%f\npret=%f\ndataLivrare=%s",
-                                codDocument,cantitate,pret,dataLivrare));
+                        .setContentText(String.format("Cod Document este %d",
+                        codDocument,cantitate,pret,dataLivrare));
+
+                /*.setContentText(String.format("Cod Document este %d, cantitatea %f, pretul %f, data de livrare %s",
+                        codDocument,cantitate,pret,dataLivrare));*/
                 int mNotificationId = 001;
                 NotificationManager mNotifyMgr =
                         (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -94,7 +97,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 mBuilder = new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.logo)
                         .setContentTitle("Cerere de oferta acceptata")
-                        .setContentText(String.format("codDocument=%d",
+                        .setContentText(String.format("Cod Document este %d",
                                 codDocument));
                 int mNotificationId = 001;
                 NotificationManager mNotifyMgr =

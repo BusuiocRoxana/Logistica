@@ -278,7 +278,7 @@ public class GeneratorCerereDeOferta {
                 "'}';\n"+
                 "request.onreadystatechange = function () {\n" +
                 "    if (request.readyState === 4) {\n" +
-                "       alert('Oferta a fost trimisa cu succes : '+j);\n" +
+                "       alert('Oferta a fost trimisa cu succes');\n" +
                 "    }\n" +
                 "}\n" +
                 "request.send(j);\n" +
@@ -306,7 +306,7 @@ public class GeneratorCerereDeOferta {
                 "'}';\n"+
                 "request.onreadystatechange = function () {\n" +
                 "    if (request.readyState === 4) {\n" +
-                "       alert('Actualizarea a fost trimisa cu succes : '+j);\n" +
+                "       alert('Actualizarea a fost trimisa cu succes');\n" +
                 "    }\n" +
                 "}\n" +
                 "request.send(j);\n" +

@@ -1,5 +1,6 @@
 package disertatie.com.disertatie.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
@@ -25,6 +27,8 @@ public class AddMaterialActivity extends AppCompatActivity {
     private EditText etStocMinim;
     private Button btnAdaugaMaterial;
     private Button btnModificaMaterial;
+    private Material material = new Material();
+    private Context context;
 
     DatabaseHelper databaseHelper;
     private static String MATERIAL = "MATERIAL";
@@ -34,6 +38,7 @@ public class AddMaterialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_material);
+        context = this;
 
         // toolbar setup
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,14 +65,34 @@ public class AddMaterialActivity extends AppCompatActivity {
         btnAdaugaMaterial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.insertMaterial(etDenumireMaterial.getText().toString(),
-                        Double.parseDouble(etStocCurent.getText().toString()),
-                        Double.parseDouble(etStocMinim.getText().toString()));
+                String collectedErrors = "";
+                if(etDenumireMaterial.getText().length() >0){
+                    material.setDenumire_material(etDenumireMaterial.getText().toString());
+                }else{
+                    collectedErrors += "Adaugati denumire material\n";
+                }
+                if(etStocCurent.getText().length() > 0){
+                    material.setStoc_curent(Double.parseDouble(etStocCurent.getText().toString()));
+                }else{
+                    collectedErrors += "Adaugati stoc curent\n";
+                }
+                if(etStocMinim.getText().length() >0){
+                    material.setStoc_minim(Double.parseDouble(etStocMinim.getText().toString()));
+                }else{
+                    collectedErrors += "Adaugati stoc minim\n";
+                }
+                if(collectedErrors.length() > 0){
+                    Toast.makeText(context, collectedErrors,Toast.LENGTH_SHORT).show();
+                }else {
+                    databaseHelper.insertMaterial(material);
+                    etDenumireMaterial.setText("");
+                    etStocMinim.setText("");
+                    etStocCurent.setText("");
+                    finish();
+                    Toast.makeText(context, "Material inserat cu succes",Toast.LENGTH_SHORT).show();
+                }
 
-                etDenumireMaterial.setText("");
-                etStocMinim.setText("");
-                etStocCurent.setText("");
-                finish();
+
             }
         });
 
