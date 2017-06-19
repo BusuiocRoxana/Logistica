@@ -31,7 +31,8 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="@string/denumire_furnizor" />
+                android:text="@string/denumire_furnizor"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etDenumireFurnizor"
@@ -53,7 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="@string/numar_inreg_RC" />
+                android:text="@string/numar_inreg_RC"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etNrInregRCFurnizor"
@@ -71,9 +73,15 @@
             tools:layout_editor_absoluteY="8dp">
 
             <TextView
+                android:id="@+id/textView33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/adresa_furnizor" />
+                android:text="@string/adresa_furnizor"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/adresaFurnizor"
+                layout="@layout/adauga_adresa" />
 
             <EditText
                 android:id="@+id/etAdresaFurnizor"
@@ -83,10 +91,6 @@
                 android:ems="10"
                 android:inputType="text"
                 android:visibility="gone" />
-
-            <include
-                android:id="@+id/adresaFurnizor"
-                layout="@layout/adauga_adresa" />
 
         </LinearLayout>
         <LinearLayout
@@ -99,7 +103,8 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="@string/email_furnizor" />
+                android:text="@string/email_furnizor"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etEmailFurnizor"
@@ -117,17 +122,12 @@
             tools:layout_editor_absoluteY="8dp">
 
             <TextView
+                android:id="@+id/textView34"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="@string/rating" />
-
-            <Spinner
-                android:id="@+id/spinnerRating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-               />
+                android:text="@string/rating"
+                android:textColor="@android:color/black" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -145,6 +145,12 @@
                 android:layout_weight="1"
                 android:visibility="gone" />
 
+            <Spinner
+                android:id="@+id/spinnerRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -156,6 +162,7 @@
 
             <Button
                 android:id="@+id/btnModificaFurnizor"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -164,6 +171,7 @@
 
             <Button
                 android:id="@+id/btnAdaugaFurnizor"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

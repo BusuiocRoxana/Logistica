@@ -44,7 +44,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
     private Button btnAdaugaFurnizor;
     private Button btnModificaFurnizor;
 
-    private RelativeLayout rlAdresa;
+    private LinearLayout rlAdresa;
     private EditText etNumar;
     private EditText etStrada;
     private EditText etLocalitate;
@@ -97,7 +97,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
         btnModificaFurnizor = (Button) findViewById(R.id.btnModificaFurnizor) ;
         spinnerRating = (Spinner) findViewById(R.id.spinnerRating);
 
-        rlAdresa = (RelativeLayout)findViewById(R.id.adresaFurnizor);
+        rlAdresa = (LinearLayout)findViewById(R.id.adresaFurnizor);
         etNumar = (EditText) rlAdresa.findViewById(R.id.etNumar);
         etStrada = (EditText) rlAdresa.findViewById(R.id.etStrada);
         etJudetSector = (EditText) rlAdresa.findViewById(R.id.etJudetSector);
@@ -163,6 +163,25 @@ public class AddFurnizorActivity extends AppCompatActivity {
                         actionId == EditorInfo.IME_ACTION_DONE ||
                         event.getAction() == KeyEvent.ACTION_DOWN &&
                                 event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    if(etNrInregRC.getText().length()<17){
+                        Toast.makeText(context, "Numar Registrul Comertului incomplet",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+
+
+                }
+
+                return false;
+            }
+        });
+
+      /*  etNrInregRC.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        actionId == EditorInfo.IME_ACTION_DONE ||
+                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     isActionPressed = true;
 
                     if(etNrInregRC.getText().length() > 0) {
@@ -191,7 +210,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
 
                 return false;
             }
-        });
+        });*/
 
         btnAdaugaFurnizor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,10 +226,10 @@ public class AddFurnizorActivity extends AppCompatActivity {
                 }else{
                     collectedErrors += "Introduceti Nr. Inregistrare Registrul Comertului\n";
                 }
-                if(etEmailFurnizor.getText().length()>0){
+                if(etEmailFurnizor.getText().length()>0 && isValidEmail(etEmailFurnizor.getText().toString())){
                     furnizor.setEmail(etEmailFurnizor.getText().toString());
                 }else{
-                    collectedErrors += "Introduceti email furnizor\n";
+                    collectedErrors += "Email furnizor invalid\n";
                 }if(spinnerRating.getSelectedItem() != null){
                    furnizor.setRating(Integer.parseInt(spinnerRating.getSelectedItem().toString()));
                 }else{
@@ -328,7 +347,13 @@ public class AddFurnizorActivity extends AppCompatActivity {
         }
 
     }
-
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
 
 
 

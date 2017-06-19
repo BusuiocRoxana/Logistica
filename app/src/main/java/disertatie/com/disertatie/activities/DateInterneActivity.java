@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class DateInterneActivity extends AppCompatActivity {
     private Button btnSalveazaModificari;
     private Button btnTaxe;
 
-    private RelativeLayout rlAdresa;
+    private LinearLayout rlAdresa;
     private EditText etNumar;
     private EditText etStrada;
     private EditText etLocalitate;
@@ -87,12 +88,13 @@ public class DateInterneActivity extends AppCompatActivity {
         btnSalveazaModificari = (Button)findViewById(R.id.btnSalveazaModificari);
         btnTaxe = (Button) findViewById(R.id.btnDefinireTaxe);
 
-        rlAdresa = (RelativeLayout)findViewById(R.id.adresaFurnizor);
+        rlAdresa = (LinearLayout)findViewById(R.id.adresaFurnizor);
         etNumar = (EditText) rlAdresa.findViewById(R.id.etNumar);
         etStrada = (EditText) rlAdresa.findViewById(R.id.etStrada);
         etJudetSector = (EditText) rlAdresa.findViewById(R.id.etJudetSector);
         etLocalitate = (EditText) rlAdresa.findViewById(R.id.etLocalitate);
         etTara = (EditText) rlAdresa.findViewById(R.id.etTara);
+
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -136,9 +138,29 @@ public class DateInterneActivity extends AppCompatActivity {
                         actionId == EditorInfo.IME_ACTION_DONE ||
                         event.getAction() == KeyEvent.ACTION_DOWN &&
                                 event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    isActionPressed = true;
+                    if(etNrInregRC.getText().length()<17){
+                        Toast.makeText(context, "Numar Registrul Comertului incomplet",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
 
-                    if(etNrInregRC.getText().length() > 0) {
+
+                }
+
+                return false;
+            }
+        });
+
+        /*etNrInregRC.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        actionId == EditorInfo.IME_ACTION_DONE ||
+                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+
+
+                    if(etNrInregRC.getText().length() > 0 && etNrInregRC.getText().length()==17) {
+                        isActionPressed = true;
                         String nr_series = etNrInregRC.getText().toString().substring(0, 7);
                         String nr_date = etNrInregRC.getText().toString().substring(7, 17);
                         String[] date_elem =  nr_date.split("/");
@@ -155,10 +177,14 @@ public class DateInterneActivity extends AppCompatActivity {
                             Log.d(TAG, "nr_date=" + nr_date);
                             Log.d(TAG, "nr_all=" + nr_all);
                             Log.d(TAG, "date=" + date_elem.toString());
+                            etNrInregRC.clearFocus();
                             etTelefonCompanie.requestFocus();
                             return true;
                         }
 
+                    }else{
+                        Toast.makeText(context, "Numar Registrul Comertului incomplet",Toast.LENGTH_SHORT).show();
+                        return false;
                     }
 
                 }
@@ -166,7 +192,7 @@ public class DateInterneActivity extends AppCompatActivity {
 
                 return false;
             }
-        });
+        });*/
 
 
         if(databaseHelper.numberOfRowsCompanie() != 0) {
@@ -219,27 +245,21 @@ public class DateInterneActivity extends AppCompatActivity {
         btnSalveaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String collectedErrors = "";
-               /* boolean isAddressInserted = databaseHelper.insertAdresa(
-                        Integer.parseInt(etNumar.getText().toString()),
-                        etStrada.getText().toString(),
-                        etLocalitate.getText().toString(),
-                        etJudetSector.getText().toString(),
-                        etTara.getText().toString(), etTelefonCompanie.getText().toString());*/
+              /*  String collectedErrors = "";
                 if(etDenumireCompanie.getText().length()>0){
                     companie.setDenumire_companie(etDenumireCompanie.getText().toString());
                 }else{
                     collectedErrors += "Introduceti denumire companie\n";
                 }
-                if(etNrInregRC.getText().length()>0){
+                if(etNrInregRC.getText().length() == 17){
                     companie.setNr_inreg_RC(etNrInregRC.getText().toString());
                 }else{
-                    collectedErrors += "Introduceti Nr. Inregistrare Registrul Comertului\n";
+                    collectedErrors += "Nr. Inregistrare Registrul Comertului incomplet\n";
                 }
-                if(etEmailCompanie.getText().length()>0){
+                if(etEmailCompanie.getText().length()>0 && isValidEmail(etEmailCompanie.getText().toString())){
                     companie.setEmail(etEmailCompanie.getText().toString());
                 }else{
-                    collectedErrors += "Introduceti email companie\n";
+                    collectedErrors += "Email companie invalid\n";
                 }
                 if(etTelefonCompanie.getText().length()>0){
                     adresa.setTelefon(etTelefonCompanie.getText().toString());
@@ -270,7 +290,8 @@ public class DateInterneActivity extends AppCompatActivity {
                 collectedErrors =  collectedErrors.trim();
                 if(collectedErrors.length() > 0){
                     Toast.makeText(context, collectedErrors,Toast.LENGTH_SHORT).show();
-                }else {
+                }*/
+              if(checkInput()){
                     long lastInsertedAddress = databaseHelper.insertAdresa(adresa);
                     if (lastInsertedAddress != -1 ) {
                         Log.d("TEST_ADRESA", "lastInsertedAddress=" + lastInsertedAddress);
@@ -279,37 +300,27 @@ public class DateInterneActivity extends AppCompatActivity {
                         databaseHelper.insertCompanie(etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
                                 etEmailCompanie.getText().toString(), cod_adresa);
                         Toast.makeText(context, "Date inserate cu succes",Toast.LENGTH_SHORT).show();
+
+                        btnSalveaza.setVisibility(View.GONE);
+                        btnModifica.setVisibility(View.VISIBLE);
+
+                        etDenumireCompanie.setEnabled(false);
+                        etNrInregRC.setEnabled(false);
+                        etEmailCompanie.setEnabled(false);
+                        etCodAdresaCompanie.setEnabled(false);
+                        etTelefonCompanie.setEnabled(false);
+                        etNumar.setEnabled(false);
+                        etStrada.setEnabled(false);
+                        etLocalitate.setEnabled(false);
+                        etJudetSector.setEnabled(false);
+                        etTara.setEnabled(false);
+                        etTelefonCompanie.setEnabled(false);
+                        rlAdresa.setEnabled(false);
                     }
 
                 }
 
 
-
-              //  if(isAddressInserted) {
-                  /*  cod_adresa = databaseHelper.getMaxIdAdresa();
-                    Log.d("TEST_ADRESA", "cod_adresa=" + cod_adresa);
-                    databaseHelper.insertCompanie(etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
-                            etEmailCompanie.getText().toString(), cod_adresa);*/
-             //   }/*else{
-              //      databaseHelper.insertAdresa(Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
-              //              etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString(), etTelefonCompanie.getText().toString());
-              //  }*/
-
-
-                btnSalveaza.setVisibility(View.GONE);
-                btnModifica.setVisibility(View.VISIBLE);
-
-                etDenumireCompanie.setEnabled(false);
-                etNrInregRC.setEnabled(false);
-                etEmailCompanie.setEnabled(false);
-                etCodAdresaCompanie.setEnabled(false);
-                etTelefonCompanie.setEnabled(false);
-                etNumar.setEnabled(false);
-                etStrada.setEnabled(false);
-                etLocalitate.setEnabled(false);
-                etJudetSector.setEnabled(false);
-                etTara.setEnabled(false);
-                etTelefonCompanie.setEnabled(false);
 
             }
         });
@@ -331,6 +342,7 @@ public class DateInterneActivity extends AppCompatActivity {
                 etJudetSector.setEnabled(true);
                 etTara.setEnabled(true);
                 etTelefonCompanie.setEnabled(true);
+                rlAdresa.setEnabled(true);
 
 
             }
@@ -339,26 +351,28 @@ public class DateInterneActivity extends AppCompatActivity {
         btnSalveazaModificari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnSalveazaModificari.setVisibility(View.GONE);
-                btnModifica.setVisibility(View.VISIBLE);
-                etDenumireCompanie.setEnabled(false);
-                etNrInregRC.setEnabled(false);
-                etEmailCompanie.setEnabled(false);
-                etCodAdresaCompanie.setEnabled(false);
-                etTelefonCompanie.setEnabled(false);
-                etNumar.setEnabled(false);
-                etStrada.setEnabled(false);
-                etLocalitate.setEnabled(false);
-                etJudetSector.setEnabled(false);
-                etTara.setEnabled(false);
-                etTelefonCompanie.setEnabled(false);
+                if(checkInput()) {
+                    btnSalveazaModificari.setVisibility(View.GONE);
+                    btnModifica.setVisibility(View.VISIBLE);
+                    etDenumireCompanie.setEnabled(false);
+                    etNrInregRC.setEnabled(false);
+                    etEmailCompanie.setEnabled(false);
+                    etCodAdresaCompanie.setEnabled(false);
+                    etTelefonCompanie.setEnabled(false);
+                    etNumar.setEnabled(false);
+                    etStrada.setEnabled(false);
+                    etLocalitate.setEnabled(false);
+                    etJudetSector.setEnabled(false);
+                    etTara.setEnabled(false);
+                    etTelefonCompanie.setEnabled(false);
+                    rlAdresa.setEnabled(false);
+                    Adresa adresa = new Adresa(cod_adresa, Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
+                            etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString(), etTelefonCompanie.getText().toString());
 
-                Adresa adresa = new Adresa(cod_adresa,Integer.parseInt(etNumar.getText().toString()), etStrada.getText().toString(),
-                        etLocalitate.getText().toString(), etJudetSector.getText().toString(), etTara.getText().toString(), etTelefonCompanie.getText().toString());
-
-                databaseHelper.updateCompanie(cod_companie,etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
-                        etEmailCompanie.getText().toString(),
-                        adresa);
+                    databaseHelper.updateCompanie(cod_companie, etDenumireCompanie.getText().toString(), etNrInregRC.getText().toString(),
+                            etEmailCompanie.getText().toString(),
+                            adresa);
+                }
             }
         });
 
@@ -384,5 +398,65 @@ public class DateInterneActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
+
+    public boolean checkInput(){
+        String collectedErrors = "";
+        if(etDenumireCompanie.getText().length()>0){
+            companie.setDenumire_companie(etDenumireCompanie.getText().toString());
+        }else{
+            collectedErrors += "Introduceti denumire companie\n";
+        }
+        if(etNrInregRC.getText().length() == 17){
+            companie.setNr_inreg_RC(etNrInregRC.getText().toString());
+        }else{
+            collectedErrors += "Nr. Inregistrare Registrul Comertului incomplet\n";
+        }
+        if(etEmailCompanie.getText().length()>0 && isValidEmail(etEmailCompanie.getText().toString())){
+            companie.setEmail(etEmailCompanie.getText().toString());
+        }else{
+            collectedErrors += "Email companie invalid\n";
+        }
+        if(etTelefonCompanie.getText().length()>0){
+            adresa.setTelefon(etTelefonCompanie.getText().toString());
+        }else{
+            collectedErrors += "Introduceti numar de telefon\n";
+        }
+        if(etNumar.getText().length()>0){
+            adresa.setNumar(Integer.parseInt(etNumar.getText().toString()));
+        }else{
+            collectedErrors += "Introduceti numar adresa\n";
+        } if(etStrada.getText().length()>0){
+            adresa.setStrada(etStrada.getText().toString());
+        }else{
+            collectedErrors += "Introduceti strada\n";
+        } if(etJudetSector.getText().length()>0){
+            adresa.setJudet_sector(etJudetSector.getText().toString());
+        }else{
+            collectedErrors += "Introduceti judet/sector\n";
+        } if(etLocalitate.getText().length()>0){
+            adresa.setLocalitate(etLocalitate.getText().toString());
+        }else{
+            collectedErrors += "Introduceti localitate\n";
+        }if(etTara.getText().length()>0){
+            adresa.setTara(etTara.getText().toString());
+        }else{
+            collectedErrors += "Introduceti tara\n";
+        }
+        collectedErrors =  collectedErrors.trim();
+        if(collectedErrors.length() > 0){
+            Toast.makeText(context, collectedErrors,Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            return true;
+        }
     }
 }

@@ -14,16 +14,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
         android:background="@color/white"
         android:elevation="1dp"
         android:orientation="vertical"
-        android:visibility="visible"
-        android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
@@ -37,12 +39,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Denumire Companie"
+                android:singleLine="true"
                 android:textSize="@dimen/edit_text" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
@@ -56,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Numar Inregistrare Registrul Comertului"
+                android:singleLine="true"
                 android:textSize="@dimen/edit_text" />
         </LinearLayout>
 
@@ -63,13 +68,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="top"
             android:orientation="horizontal">
+
+            <include
+                android:id="@+id/adresaFurnizor"
+                layout="@layout/adauga_adresa" />
 
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/address" />
+                android:src="@drawable/address"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/etAdresaCompanie"
@@ -79,14 +90,13 @@
                 android:hint="Adresa"
                 android:textSize="@dimen/edit_text"
                 android:visibility="gone" />
-            <include
-                android:id="@+id/adresaFurnizor"
-                layout="@layout/adauga_adresa" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
@@ -101,6 +111,7 @@
                 android:layout_weight="1"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
+                android:singleLine="true"
                 android:textSize="@dimen/edit_text" />
         </LinearLayout>
 
@@ -117,6 +128,7 @@
 
             <Button
                 android:id="@+id/btnSalveazaModificari"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -126,6 +138,7 @@
 
             <Button
                 android:id="@+id/btnModifica"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -135,11 +148,10 @@
 
             <Button
                 android:id="@+id/btnSalveaza"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/btnSalveazaModificari"
+                android:layout_alignParentBottom="true"
                 android:foregroundGravity="center_horizontal"
                 android:text="@string/salveaza"
                 android:visibility="visible" />

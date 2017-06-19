@@ -32,7 +32,8 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@string/denumire_material" />
+                android:text="@string/denumire_material"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etDenumireMaterial"
@@ -40,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1.05"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,10 +53,12 @@
             tools:layout_editor_absoluteY="8dp">
 
             <TextView
+                android:id="@+id/textView32"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@string/stoc_curent" />
+                android:text="@string/stoc_curent"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etStocCurent"
@@ -62,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -76,7 +81,8 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@string/stoc_minim" />
+                android:text="@string/stoc_minim"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etStocMinim"
@@ -84,7 +90,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
 
         </LinearLayout>
 
@@ -97,6 +104,7 @@
 
             <Button
                 android:id="@+id/btnModificaMaterial"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -105,6 +113,7 @@
 
             <Button
                 android:id="@+id/btnAdaugaMaterial"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
