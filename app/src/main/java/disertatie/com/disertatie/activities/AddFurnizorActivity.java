@@ -67,6 +67,8 @@ public class AddFurnizorActivity extends AppCompatActivity {
     private Context context;
     private static String TAG = "Logistica";
 
+    private boolean isActionPressed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +134,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(isEdiging) return;
+                if(isEdiging || isActionPressed) return;
                 isEdiging = true;
                 // removing old dashes
                 StringBuilder sb = new StringBuilder();
@@ -161,6 +163,8 @@ public class AddFurnizorActivity extends AppCompatActivity {
                         actionId == EditorInfo.IME_ACTION_DONE ||
                         event.getAction() == KeyEvent.ACTION_DOWN &&
                                 event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    isActionPressed = true;
+
                     if(etNrInregRC.getText().length() > 0) {
                     String nr_series = etNrInregRC.getText().toString().substring(0, 7);
                     String nr_date = etNrInregRC.getText().toString().substring(7, 17);
@@ -169,7 +173,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
                     String month = date_elem[1].toString();
                     String year = date_elem[2].toString();
                     String data_elem_final = day+"."+month+"."+year;
-                    String nr_all = nr_series.concat(data_elem_final);
+                    StringBuilder nr_all = new StringBuilder(nr_series.concat(data_elem_final));
                     etNrInregRC.setText("");
                     etNrInregRC.setText(nr_all.toString());
 
@@ -178,30 +182,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
                     Log.d(TAG, "nr_all="+nr_all);
                     Log.d(TAG, "date="+date_elem .toString());
 
-                        /*for(int i=0;i<date_elem .length;i++){
-                           Log.d(TAG, date_elem [i].toString());
-                            day = date_elem[0].toString();
-                            month = date_elem[1].toString();
-                            year = date_elem[2].toString();
-
-                        }*/
-
                     return true;
-
-                   /* Editable s = etNrInregRC.getText();
-                    StringBuilder sb =  new StringBuilder(etNrInregRC.getText().toString());
-                    sb.replace(8,8, ".");
-                    sb.replace(11, 11, ".");
-                    etNrInregRC.setText(sb);
-
-
-                       String myName = etNrInregRC.getText().toString();
-                       char[] myNameChars = myName.toCharArray();
-                       myNameChars[9] = '.';
-                       myNameChars[12] = '.';
-                       myName = String.valueOf(myNameChars);
-
-                       etNrInregRC.setText(myName);*/
 
                    }
 
