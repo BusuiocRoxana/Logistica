@@ -119,7 +119,7 @@ public class GeneratorCerereDeOferta {
         String currentDate = dateformat.format(new Date());
        // String termenRaspunsString = dateformat.format(termenRaspuns);
 
-        String adresaFurnizorString = furnizor.getAdresa().toString();
+        String adresaFurnizorString = furnizor.getAdresa().toStringCustom();
         Log.d(TAG,adresaFurnizorString.toString());
 
        // String termenLivrareString = dateformat.format(termenLivrare);

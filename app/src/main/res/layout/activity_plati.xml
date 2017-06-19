@@ -100,8 +100,7 @@
                     android:layout_weight="1.05"
                     android:enabled="false"
                     android:inputType="textPersonName"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/black" />
+                    android:textColor="@android:color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -129,8 +128,7 @@
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="numberDecimal"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/black" />
+                    android:textColor="@android:color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -156,8 +154,7 @@
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="numberDecimal"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/black" />
+                    android:textColor="@android:color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -210,8 +207,7 @@
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="numberDecimal"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/black" />
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 
@@ -238,9 +234,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:ems="10"
+                    android:hint="Introdu suma platita"
                     android:inputType="numberDecimal"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/black" />
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 

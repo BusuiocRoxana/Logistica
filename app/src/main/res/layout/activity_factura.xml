@@ -97,8 +97,7 @@
                 android:layout_weight="1.05"
                 android:enabled="false"
                 android:inputType="textPersonName"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/black" />
+                android:textColor="@android:color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -126,9 +125,9 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="numberDecimal"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/black" />
+                android:textColor="@android:color/black" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,10 +153,10 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="numberDecimal"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/black" />
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -181,11 +180,12 @@
                 android:layout_margin="5dp"
                 android:ems="10"
                 android:enabled="true"
+                android:hint="Introdu cantitate facturata"
                 android:inputType="numberDecimal"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/black" />
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -211,8 +211,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="numberDecimal"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/black" />
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
 
@@ -223,6 +222,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView35"
                 android:layout_width="77dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -235,7 +235,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="0.79"
+                android:layout_weight="0.37"
                 android:gravity="center_vertical"
                 android:text="Furnizor"
                 android:textColor="@android:color/black" />
@@ -243,10 +243,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/textView36"
                 android:layout_width="77dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -258,9 +258,9 @@
             <TextView
                 android:id="@+id/tvValoareFactura"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:layout_weight="0.79"
+                android:layout_weight="0.33"
                 android:gravity="center_vertical"
                 android:text="0.00"
                 android:textColor="@android:color/black"
@@ -277,6 +277,7 @@
 
             <Button
                 android:id="@+id/btnSalveazaFactura"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

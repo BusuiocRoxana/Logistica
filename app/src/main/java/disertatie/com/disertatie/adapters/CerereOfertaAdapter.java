@@ -39,6 +39,7 @@ public class CerereOfertaAdapter extends RecyclerView.Adapter<CerereOfertaAdapte
         public TextView tvTermenLimita;
         private TextView tvPret;
         private TextView tvStatus;
+        private TextView tvCodCerereOferta;
         private LinearLayout llView;
 
 
@@ -50,6 +51,7 @@ public class CerereOfertaAdapter extends RecyclerView.Adapter<CerereOfertaAdapte
             tvTermenLimita = (TextView) view.findViewById(R.id.tvTermenLimita);
             tvPret = (TextView) view.findViewById(R.id.tvPret);
             tvStatus = (TextView) view.findViewById(R.id.tvStatus);
+            tvCodCerereOferta = (TextView) view.findViewById(R.id.tvCodCerereOferta);
             llView = (LinearLayout) view.findViewById(R.id.llView);
 
         }
@@ -80,6 +82,7 @@ public class CerereOfertaAdapter extends RecyclerView.Adapter<CerereOfertaAdapte
         holder.tvPret.setText(cerereOferta.getPret()+"");
         holder.tvTermenLimita.setText(cerereOferta.getTermen_limita_raspuns());
         holder.tvStatus.setText(cerereOferta.getStatus().toString());
+        holder.tvCodCerereOferta.setText(cerereOferta.getCod_cerere_oferta()+"");
 
 
         holder.llView.setOnClickListener(new View.OnClickListener() {

@@ -107,7 +107,6 @@
                         android:inputType="numberDecimal"
                         android:textColor="@android:color/black"
                         android:textColorHighlight="@android:color/black"
-                        android:textColorHint="@android:color/black"
                         android:textSize="18sp" />
 
                     <EditText
@@ -121,7 +120,6 @@
                         android:hint="@string/pret"
                         android:inputType="numberDecimal"
                         android:textColor="@android:color/black"
-                        android:textColorHint="@android:color/black"
                         android:textSize="18sp" />
 
                 </LinearLayout>

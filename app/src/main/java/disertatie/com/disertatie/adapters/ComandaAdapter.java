@@ -37,6 +37,7 @@ public class ComandaAdapter extends RecyclerView.Adapter<ComandaAdapter.MyViewHo
         public TextView tvPret;
         public TextView tvProcentTaxa;
         public TextView tvValoareTotala;
+        public TextView tvCodComanda;
         private LinearLayout llView;
 
 
@@ -48,6 +49,7 @@ public class ComandaAdapter extends RecyclerView.Adapter<ComandaAdapter.MyViewHo
             tvPret = (TextView) view.findViewById(R.id.tvPret);
             tvProcentTaxa = (TextView) view.findViewById(R.id.tvProcentTaxa);
             tvValoareTotala = (TextView) view.findViewById(R.id.tvValoareComanda);
+            tvCodComanda = (TextView) view.findViewById(R.id.tvCodComanda);
             llView = (LinearLayout) view.findViewById(R.id.llView);
 
         }
@@ -77,6 +79,7 @@ public class ComandaAdapter extends RecyclerView.Adapter<ComandaAdapter.MyViewHo
         holder.tvCantitate.setText(comanda.getCerereOferta().getCantitate()+"");
         holder.tvPret.setText(comanda.getCerereOferta().getPret()+"");
         holder.tvProcentTaxa.setText(comanda.getTaxa().getProcent_taxa()+"");
+        holder.tvCodComanda.setText(comanda.getCod_comanda()+"");
         holder.tvValoareTotala.setText(comanda.getCerereOferta().calculeazaValoare()+comanda.getCerereOferta().calculeazaValoare()*comanda.getTaxa().getProcent_taxa()+"");
 
 

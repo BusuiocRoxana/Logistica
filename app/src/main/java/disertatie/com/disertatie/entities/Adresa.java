@@ -102,4 +102,18 @@ public class Adresa implements Serializable {
                 "\nTelefon "+telefon;
 
     }
+
+    public String toStringCustom() {
+
+        return "Adresa"+
+                "\nNumar " + numar +
+                ",\tStrada " + strada +
+                ",\nLocalitate " + localitate +
+                ",\tJudet/Sector " + judet_sector+
+                ",\tTara " + tara+
+                "\nTelefon "+telefon;
+
+    }
+
+
 }

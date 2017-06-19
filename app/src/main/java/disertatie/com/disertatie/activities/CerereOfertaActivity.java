@@ -294,7 +294,7 @@ public class CerereOfertaActivity extends AppCompatActivity {
 
             Log.e(TAG,"Sending email");
             Log.i("Send email", "");
-            String[] TO = {"busuioc.roxana@gmail.com"};
+            String[] TO = {cerereOferta.getFurnizor().getEmail()};
             String[] CC = {""};
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
 

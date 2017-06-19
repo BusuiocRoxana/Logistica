@@ -150,7 +150,7 @@ public class ReceptieActivity extends AppCompatActivity {
         etCantitateReceptionata.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
+                if(!hasFocus && etCantitateReceptionata.getText().length() >0) {
                     double diferenta = Double.parseDouble(etCantitateComandata.getText().toString()) -
                             Double.parseDouble(etCantitateReceptionata.getText().toString());
                     tvDiferenta.setText(diferenta + "");
@@ -177,7 +177,7 @@ public class ReceptieActivity extends AppCompatActivity {
                         Log.i("Send email", "");
                         String[] TO = {receptie.getComanda().getCerereOferta().getFurnizor().getEmail()};
                         String[] CC = {""};
-                        String textReceptie = "Receptie cu referinta la Comanda Nr.#" + receptie.getComanda().getCerereOferta().getCod_cerere_oferta() + "\n\n"
+                        String textReceptie = "Receptie cu referinta la Comanda Nr.#" + receptie.getComanda().getCod_comanda() + "\n\n"
                                 + "Data Receptie\t" + receptie.getData_receptie() + "\n"
                                 + "Material " + receptie.getComanda().getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
                                 + "Cantitate comandata\t" + receptie.getComanda().getCerereOferta().getCantitate() + "\tbucati\n"
