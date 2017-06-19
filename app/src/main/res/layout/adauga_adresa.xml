@@ -17,13 +17,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/telefon" />
+                android:text="@string/telefon"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etTelefonCompanie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/edit_text" />
         </LinearLayout>
 
@@ -40,14 +42,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/numar" />
+                    android:text="@string/numar"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etNumar"
                     android:layout_width="59dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 
@@ -57,16 +61,19 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/textView28"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/strada" />
+                    android:text="@string/strada"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etStrada"
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
         </LinearLayout>
@@ -87,7 +94,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/judet" />
+                    android:text="@string/judet"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etJudetSector"
@@ -95,7 +103,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
         </LinearLayout>
@@ -108,7 +117,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/localitate" />
+                android:text="@string/localitate"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etLocalitate"
@@ -116,7 +126,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
 
@@ -129,7 +140,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tara" />
+                android:text="@string/tara"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etTara"
@@ -137,7 +149,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
     </LinearLayout>

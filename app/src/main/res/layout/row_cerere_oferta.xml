@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Inghetata"
+            android:textColor="@android:color/black"
             android:textSize="20sp" />
 
         <TextView
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="BettyIce"
+            android:textColor="@android:color/black"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -48,13 +50,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
                 android:gravity="center_horizontal"
-                android:text="50" />
+                android:text="50"
+                android:textColor="@android:color/black" />
 
             <TextView
+                android:id="@+id/textView29"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="buc" />
+                android:text="buc"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/tvPret"
@@ -62,13 +67,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
                 android:gravity="center_horizontal"
-                android:text="12.33" />
+                android:text="12.33"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="LEI" />
+                android:text="LEI"
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
 
@@ -99,7 +106,8 @@
                 android:layout_height="wrap_content"
                 android:foregroundGravity="right"
                 android:gravity="right"
-                android:text="NEDEFINIT" />
+                android:text="NEDEFINIT"
+                android:textColor="@android:color/black" />
         </LinearLayout>
     </LinearLayout>
 

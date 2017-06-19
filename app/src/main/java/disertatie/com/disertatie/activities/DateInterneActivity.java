@@ -142,20 +142,22 @@ public class DateInterneActivity extends AppCompatActivity {
                         String nr_series = etNrInregRC.getText().toString().substring(0, 7);
                         String nr_date = etNrInregRC.getText().toString().substring(7, 17);
                         String[] date_elem =  nr_date.split("/");
-                        String day = date_elem[0].toString();
-                        String month = date_elem[1].toString();
-                        String year = date_elem[2].toString();
-                        String data_elem_final = day+"."+month+"."+year;
-                        StringBuilder nr_all = new StringBuilder(nr_series.concat(data_elem_final));
-                        etNrInregRC.setText("");
-                        etNrInregRC.setText(nr_all.toString());
+                        if(date_elem.length > 0) {
+                            String day = date_elem[0].toString();
+                            String month = date_elem[1].toString();
+                            String year = date_elem[2].toString();
+                            String data_elem_final = day + "." + month + "." + year;
+                            StringBuilder nr_all = new StringBuilder(nr_series.concat(data_elem_final));
+                            etNrInregRC.setText("");
+                            etNrInregRC.setText(nr_all.toString());
 
-                        Log.d(TAG, "nr_series="+nr_series);
-                        Log.d(TAG, "nr_date="+nr_date);
-                        Log.d(TAG, "nr_all="+nr_all);
-                        Log.d(TAG, "date="+date_elem .toString());
-
-                        return true;
+                            Log.d(TAG, "nr_series=" + nr_series);
+                            Log.d(TAG, "nr_date=" + nr_date);
+                            Log.d(TAG, "nr_all=" + nr_all);
+                            Log.d(TAG, "date=" + date_elem.toString());
+                            etTelefonCompanie.requestFocus();
+                            return true;
+                        }
 
                     }
 

@@ -37,7 +37,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
-                    android:text="@string/referinta_plata" />
+                    android:text="@string/referinta_plata"
+                    android:textColor="@android:color/black" />
 
                 <Spinner
                     android:id="@+id/spinnerReferintaPlata"
@@ -60,7 +61,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.70"
                     android:paddingLeft="5dp"
-                    android:text="@string/data_plata" />
+                    android:text="@string/data_plata"
+                    android:textColor="@android:color/black" />
 
                 <TextView
                     android:id="@+id/tvDataPlata"
@@ -69,6 +71,7 @@
                     android:layout_weight="0.14"
                     android:gravity="center_horizontal"
                     android:text="11.12.2015"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -86,7 +89,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="0.02"
-                    android:text="@string/denumire_material" />
+                    android:text="@string/denumire_material"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etDenumireMat"
@@ -95,7 +99,9 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1.05"
                     android:enabled="false"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,7 +117,9 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center_vertical"
-                    android:text="@string/cantitate" />
+                    android:text="@string/cantitate"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etCantitate"
@@ -120,7 +128,9 @@
                     android:layout_margin="5dp"
                     android:ems="10"
                     android:enabled="false"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,7 +145,8 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center_vertical"
-                    android:text="@string/pret" />
+                    android:text="@string/pret"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etPret"
@@ -144,7 +155,9 @@
                     android:layout_margin="5dp"
                     android:ems="10"
                     android:enabled="false"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -155,11 +168,13 @@
                 tools:layout_editor_absoluteY="8dp">
 
                 <TextView
+                    android:id="@+id/textView26"
                     android:layout_width="85dp"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center_vertical"
-                    android:text="@string/taxa_aplicata" />
+                    android:text="@string/taxa_aplicata"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etTaxaAplicata"
@@ -168,7 +183,8 @@
                     android:layout_margin="5dp"
                     android:ems="10"
                     android:enabled="false"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@android:color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -183,7 +199,8 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center_vertical"
-                    android:text="@string/valoare_totala"/>
+                    android:text="@string/valoare_totala"
+                    android:textColor="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etValoare"
@@ -192,7 +209,9 @@
                     android:layout_margin="5dp"
                     android:ems="10"
                     android:enabled="false"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black" />
 
             </LinearLayout>
 
@@ -209,7 +228,9 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center_vertical"
-                    android:text="@string/suma_platita" />
+                    android:text="@string/suma_platita"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black" />
 
                 <EditText
                     android:id="@+id/etSumaPlatita"
@@ -217,7 +238,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:ems="10"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black" />
 
             </LinearLayout>
 
@@ -260,6 +283,7 @@
 
                 <Button
                     android:id="@+id/btnSalveazaPlata"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"

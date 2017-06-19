@@ -19,6 +19,7 @@
             android:layout_weight="0.5"
             android:gravity="left"
             android:text="Inghetata"
+            android:textColor="@android:color/black"
             android:textSize="20sp" />
 
         <TextView
@@ -28,6 +29,7 @@
             android:layout_weight="0.55"
             android:gravity="left"
             android:text="BettyIce"
+            android:textColor="@android:color/black"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -50,13 +52,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
                 android:gravity="left|center_vertical"
-                android:text="50" />
+                android:text="50"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="buc" />
+                android:text="buc"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/tvPret"
@@ -64,13 +68,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
                 android:gravity="center_horizontal"
-                android:text="12.33" />
+                android:text="12.33"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="LEI" />
+                android:text="LEI"
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
 
@@ -94,7 +100,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left|center_horizontal"
-                android:text="@string/taxa" />
+                android:text="@string/taxa"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/tvProcentTaxa"
@@ -102,7 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="19%" />
+                android:text="19%"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/tvStatus"
@@ -126,13 +134,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.19"
-            android:text="@string/valoare_totala" />
+            android:text="@string/valoare_totala"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/tvValoareComanda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300.00" />
+            android:text="300.00"
+            android:textColor="@android:color/black" />
     </LinearLayout>
 
     <include
