@@ -49,4 +49,23 @@ public class DateConvertor {
         return dateFormat.format(date);
     }
 
+
+    public static String formatTextAsDate(String dtStart) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String returnedDate = "";
+        {
+            Date date = new Date(dtStart);
+            try {
+                date = format.parse(dtStart);
+                returnedDate = date.toString();
+                Log.d(TAG, "textToDate-date="+date);
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+            System.out.println(date);
+            return returnedDate;
+        }
+    }
+
+
 }

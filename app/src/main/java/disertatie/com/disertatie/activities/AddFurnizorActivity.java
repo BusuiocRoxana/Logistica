@@ -6,10 +6,14 @@ import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +28,7 @@ import org.w3c.dom.Text;
 
 import disertatie.com.disertatie.Database.DatabaseHelper;
 import disertatie.com.disertatie.R;
+import disertatie.com.disertatie.Utils.DateConvertor;
 import disertatie.com.disertatie.entities.Adresa;
 import disertatie.com.disertatie.entities.Furnizor;
 import disertatie.com.disertatie.entities.Material;
@@ -60,6 +65,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
     private Furnizor furnizor =  new Furnizor();
     private Adresa adresa = new Adresa();
     private Context context;
+    private static String TAG = "Logistica";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +121,96 @@ public class AddFurnizorActivity extends AppCompatActivity {
         spinnerRating.setAdapter(spinnerRatingArrayAdapter);
 
         databaseHelper = new DatabaseHelper(this);
+
+        etNrInregRC.addTextChangedListener(new TextWatcher() {
+            boolean isEdiging;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isEdiging) return;
+                isEdiging = true;
+                // removing old dashes
+                StringBuilder sb = new StringBuilder();
+                sb.append(s.toString().replace("/", ""));
+
+                if (sb.length()> 3)
+                    sb.insert(3, "/");
+                if (sb.length()> 6)
+                    sb.insert(6, "/");
+                if (sb.length()> 9)
+                    sb.insert(9, "/");
+                if (sb.length()> 12)
+                    sb.insert(12, "/");
+               if(sb.length()> 17)
+                    sb.delete(17, sb.length());
+
+                s.replace(0, s.length(), sb.toString());
+                isEdiging = false;
+            }
+        });
+
+        etNrInregRC.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        actionId == EditorInfo.IME_ACTION_DONE ||
+                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    if(etNrInregRC.getText().length() > 0) {
+                    String nr_series = etNrInregRC.getText().toString().substring(0, 7);
+                    String nr_date = etNrInregRC.getText().toString().substring(7, 17);
+                    String[] date_elem =  nr_date.split("/");
+                    String day = date_elem[0].toString();
+                    String month = date_elem[1].toString();
+                    String year = date_elem[2].toString();
+                    String data_elem_final = day+"."+month+"."+year;
+                    String nr_all = nr_series.concat(data_elem_final);
+                    etNrInregRC.setText("");
+                    etNrInregRC.setText(nr_all.toString());
+
+                    Log.d(TAG, "nr_series="+nr_series);
+                    Log.d(TAG, "nr_date="+nr_date);
+                    Log.d(TAG, "nr_all="+nr_all);
+                    Log.d(TAG, "date="+date_elem .toString());
+
+                        /*for(int i=0;i<date_elem .length;i++){
+                           Log.d(TAG, date_elem [i].toString());
+                            day = date_elem[0].toString();
+                            month = date_elem[1].toString();
+                            year = date_elem[2].toString();
+
+                        }*/
+
+                    return true;
+
+                   /* Editable s = etNrInregRC.getText();
+                    StringBuilder sb =  new StringBuilder(etNrInregRC.getText().toString());
+                    sb.replace(8,8, ".");
+                    sb.replace(11, 11, ".");
+                    etNrInregRC.setText(sb);
+
+
+                       String myName = etNrInregRC.getText().toString();
+                       char[] myNameChars = myName.toCharArray();
+                       myNameChars[9] = '.';
+                       myNameChars[12] = '.';
+                       myName = String.valueOf(myNameChars);
+
+                       etNrInregRC.setText(myName);*/
+
+                   }
+
+                }
+
+
+                return false;
+            }
+        });
 
         btnAdaugaFurnizor.setOnClickListener(new View.OnClickListener() {
             @Override
