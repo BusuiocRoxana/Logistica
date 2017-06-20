@@ -80,7 +80,7 @@ public class ComandaAdapter extends RecyclerView.Adapter<ComandaAdapter.MyViewHo
         holder.tvPret.setText(comanda.getCerereOferta().getPret()+"");
         holder.tvProcentTaxa.setText(comanda.getTaxa().getProcent_taxa()+"");
         holder.tvCodComanda.setText(comanda.getCod_comanda()+"");
-        holder.tvValoareTotala.setText(comanda.getCerereOferta().calculeazaValoare()+comanda.getCerereOferta().calculeazaValoare()*comanda.getTaxa().getProcent_taxa()+"");
+        holder.tvValoareTotala.setText(comanda.getCerereOferta().calculeazaValoare()+comanda.getCerereOferta().calculeazaValoare()*(comanda.getTaxa().getProcent_taxa()/100)+"");
 
 
         holder.llView.setOnClickListener(new View.OnClickListener() {

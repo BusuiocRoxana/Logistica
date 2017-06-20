@@ -137,11 +137,11 @@ public class ComandaActivity extends AppCompatActivity {
                     String[] CC = {""};
                     String textComanda = "Comanda cu referinta la Cererea de Oferta Nr.#" + comanda.getCerereOferta().getCod_cerere_oferta() + "\n\n"
                             + "Material " + comanda.getCerereOferta().getMaterial().getDenumire_material().toUpperCase() + "\n"
-                            + "Cantitate\t" + comanda.getCerereOferta().getCantitate() + "bucati\n"
-                            + "Pret\t" + comanda.getCerereOferta().getPret() + " LEI\n"
-                            + "Taxa\t" + comanda.getTaxa().getDenumire_taxa().toUpperCase()
-                            + "\nProcent Taxa\t" + comanda.getTaxa().getProcent_taxa()
-                            + " = " + valoareTaxa + " LEI\n"
+                            + "Cantitate " + comanda.getCerereOferta().getCantitate() + "\tbucati\n"
+                            + "Pret " + comanda.getCerereOferta().getPret() + "\tLEI\n"
+                            + "Taxa " + comanda.getTaxa().getDenumire_taxa().toUpperCase()
+                            + "\nProcent Taxa " + comanda.getTaxa().getProcent_taxa()+"\t%"
+                            + " = " + valoareTaxa + "\tLEI\n"
                             + "-------------------------------------------------------\n"
                             + "Valoare Totala\t" + valoareTotala + " LEI\n"
                             + "Data Livrare\t" + comanda.getCerereOferta().getData_livrare() + "";

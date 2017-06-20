@@ -310,6 +310,7 @@ public class AddFurnizorActivity extends AppCompatActivity {
             etLocalitate.setText(furnizor.getAdresa().getLocalitate());
             etJudetSector.setText(furnizor.getAdresa().getJudet_sector());
             etTara.setText(furnizor.getAdresa().getTara());
+            etTelefon.setText(furnizor.getAdresa().getTelefon());
 
             cod_furnizor = furnizor.getCod_furnizor();
             cod_adresa = furnizor.getAdresa().getCod_adresa();

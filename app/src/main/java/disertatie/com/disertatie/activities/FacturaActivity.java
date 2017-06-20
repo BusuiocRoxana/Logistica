@@ -144,7 +144,7 @@ public class FacturaActivity extends AppCompatActivity {
                     etCantitateReceptionata.setText(receptie.getCantitate_receptionata() + "");
                     etPret.setText(receptie.getComanda().getCerereOferta().getPret()+"");
                     tvFurnizor.setText(receptie.getComanda().getCerereOferta().getFurnizor().getDenumire_furnizor());
-                    etTaxa.setText(receptie.getComanda().getTaxa().getDenumire_taxa()+"("+receptie.getComanda().getTaxa().getProcent_taxa()+")");
+                    etTaxa.setText(receptie.getComanda().getTaxa().getDenumire_taxa()+"\t("+receptie.getComanda().getTaxa().getProcent_taxa()+"%)");
 
                 }
             }
@@ -164,7 +164,7 @@ public class FacturaActivity extends AppCompatActivity {
                 double valoareTotala = -1;
 
                 if ((!hasFocus) && (etCantitateFacturata.getText().length() > 0)) {
-                    procentTaxa = Double.parseDouble(receptie.getComanda().getTaxa().getProcent_taxa() + "");
+                    procentTaxa = Double.parseDouble(receptie.getComanda().getTaxa().getProcent_taxa()/100 + "");
                     cantitateFacturata = Double.parseDouble(etCantitateFacturata.getText().toString() + "");
                     pret = Double.parseDouble(etPret.getText().toString());
                     ;

@@ -83,7 +83,7 @@ public class ListaCereriOfertaActivity extends  AppCompatActivity implements  Ce
         recyclerView.setAdapter(mAdapter);
 
 
-
+        fabAdaugaMaterial.setVisibility(View.GONE);
 
         fabAdaugaMaterial.setOnClickListener(new View.OnClickListener() {
             @Override

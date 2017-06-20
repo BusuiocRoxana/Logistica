@@ -69,7 +69,7 @@ public class Factura implements Serializable {
     }
 
     public double getValoareTotala(){
-        double valoare  = (cantitate_facturata*receptie.getComanda().getCerereOferta().getPret())*receptie.getComanda().getTaxa().getProcent_taxa()
+        double valoare  = (cantitate_facturata*receptie.getComanda().getCerereOferta().getPret())*(receptie.getComanda().getTaxa().getProcent_taxa()/100)
                 +cantitate_facturata*receptie.getComanda().getCerereOferta().getPret();
         return valoare;
     }

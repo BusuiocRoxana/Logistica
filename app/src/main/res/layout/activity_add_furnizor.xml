@@ -29,7 +29,8 @@
             tools:layout_editor_absoluteY="8dp">
 
             <TextView
-                android:layout_width="80dp"
+                android:id="@+id/textView37"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/denumire_furnizor"
                 android:textColor="@android:color/black" />
@@ -101,7 +102,7 @@
             tools:layout_editor_absoluteY="8dp">
 
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/email_furnizor"
                 android:textColor="@android:color/black" />
@@ -123,7 +124,7 @@
 
             <TextView
                 android:id="@+id/textView34"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="@string/rating"

@@ -146,10 +146,10 @@ public class PlatiActivity extends AppCompatActivity {
                 if(factura != null) {
                     etCantitate.setText(factura.getCantitate_facturata()+"");
                     etMaterial.setText(factura.getReceptie().getComanda().getCerereOferta().getMaterial() + "");
-                    etPret.setText(factura.getReceptie().getComanda().getCerereOferta().getCantitate() + "");
+                    etPret.setText(factura.getReceptie().getComanda().getCerereOferta().getPret() + "");
                     etValoareTotala.setText(factura.getReceptie().getComanda().getCerereOferta().getPret()+"");
-                    etTaxaAplicata.setText(factura.getReceptie().getComanda().getTaxa().getDenumire_taxa()+" - "
-                            +factura.getReceptie().getComanda().getTaxa().getProcent_taxa());
+                    etTaxaAplicata.setText(factura.getReceptie().getComanda().getTaxa().getDenumire_taxa()+" ("
+                            +factura.getReceptie().getComanda().getTaxa().getProcent_taxa()+" %)");
                     etValoareTotala.setText(factura.getValoareTotala()+"");
 
                 }
@@ -192,7 +192,7 @@ public class PlatiActivity extends AppCompatActivity {
                         String[] CC = {""};
                         String textReceptie = "Plata cu referinta la Factura Nr.#" + plata.getFactura().getCod_factura() + "\n\n"
                                 + "Data Plata\t" + plata.getData_plata() + "\n"
-                                + "Suma totala " + plata.getFactura().getValoareTotala() + "\n"
+                                + "Suma totala " + plata.getFactura().getValoareTotala() + "\tLEI\n"
                                 + "Suma platita\t" + plata.getSuma_platita() + "\tLEI\n";
                         // + "Diferenta neplatita\t" + sumaRamasa+"\n";
 
