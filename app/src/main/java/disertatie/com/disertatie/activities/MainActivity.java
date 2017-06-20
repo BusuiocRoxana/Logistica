@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.llReceptie:
                     i = new Intent(MainActivity.this, ReceptieActivity.class);
+                    i.putExtra("IS_FIRST_DISPLAYED",true);
                     startActivity(i);
                     break;
                 case R.id.llFacturare:

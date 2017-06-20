@@ -179,6 +179,33 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llCantReceptAnt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0.02"
+                android:text="Cantitate Receptionata Anterior"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvCantReceptionataAnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0.63"
+                android:gravity="center_vertical"
+                android:text="0.00"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

@@ -1072,5 +1072,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return months;
     }
 
+    public double checkCantitateComanda(int cod_comanda){
+        SQLiteDatabase db = this.getReadableDatabase();
+        double suma_receptii = -1;
+        String query ="SELECT SUM("+TABLE_RECEPTII+"."+COLUMN_CANTITATE_RECEPTIONATA+") FROM "+TABLE_RECEPTII+
+                " WHERE "+COLUMN_COD_COMANDA+"="+ cod_comanda+
+                " GROUP BY "+COLUMN_COD_COMANDA;
+        Cursor c = db.rawQuery(query, null);
+        if(c.moveToFirst())
+        {
+            suma_receptii = c.getDouble(0);
+        }
+        c.close();
+        db.close();
+        Log.d(TAG, "sum(receptii)="+suma_receptii);
+        return suma_receptii;
+
+    }
+
 
 }

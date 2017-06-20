@@ -2,19 +2,23 @@ package disertatie.com.disertatie.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +56,10 @@ public class ReceptieActivity extends AppCompatActivity {
     private static String TAG = "Logistica";
     private Calendar calendar;
     private Toolbar toolbar;
+    private LinearLayout llCantReceptAnt;
+    private TextView tvCantReceptAnt;
+    private boolean isFirstDisplayed = false;
+    private boolean userIsInteracting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +90,8 @@ public class ReceptieActivity extends AppCompatActivity {
         etCantitateComandata = (EditText) findViewById(R.id.etCantComandata);
         etCantitateReceptionata = (EditText) findViewById(R.id.etCantReceptionata);
         btnSalveazaReceptie = (Button)findViewById(R.id.btnSalveazaReceptie);
+        llCantReceptAnt = (LinearLayout)findViewById(R.id.llCantReceptAnt);
+        tvCantReceptAnt = (TextView) findViewById(R.id.tvCantReceptionataAnt);
 
 
         databaseHelper = new DatabaseHelper(context);
@@ -99,7 +109,14 @@ public class ReceptieActivity extends AppCompatActivity {
         ArrayAdapter<Integer> spinnerComenziArrayAdapter = new ArrayAdapter<Integer>(context,
                 android.R.layout.simple_spinner_dropdown_item, listaReferinteComenzi);
 
+
+        if(getIntent().getExtras()!=null) {
+         isFirstDisplayed = getIntent().getExtras().getBoolean("IS_FIRST_DISPLAYED");
+        }
         spinnerComenzi.setAdapter(spinnerComenziArrayAdapter);
+        //spinnerComenzi.setSelection(Adapter.NO_SELECTION, false);
+        spinnerComenzi.clearFocus();
+
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -132,6 +149,34 @@ public class ReceptieActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 idComandaSelectata = listaReferinteComenzi.get(position);
                 comanda =  selectComanda(idComandaSelectata, listaComenzi);
+                double cantReceptAnt = databaseHelper.checkCantitateComanda(comanda.getCod_comanda());
+                if(cantReceptAnt > 0 ){
+                    llCantReceptAnt.setVisibility(View.VISIBLE);
+                    tvCantReceptAnt.setText(cantReceptAnt+"");
+                    if(cantReceptAnt ==  comanda.getCerereOferta().getCantitate() && userIsInteracting) {
+                        new AlertDialog.Builder(context)
+                                .setTitle("Receptie completa")
+                                .setMessage("Cantitatea din comanda #" + comanda.getCod_comanda() + " a fost receptionata complet.\n" +
+                                        "Doriti sa receptionati alta comanda?")
+                                .setPositiveButton(R.string.da, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                })
+                                .setNegativeButton(R.string.nu, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent i = new Intent(ReceptieActivity.this, MainActivity.class);
+                                        startActivity(i);
+                                        dialog.cancel();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
+
+                }else{
+                    llCantReceptAnt.setVisibility(View.GONE);
+                }
                 Log.d(TAG, "test comanda="+comanda.toString());
                 if(comanda != null) {
                     etCantitateReceptionata.setText("");
@@ -228,4 +273,11 @@ public class ReceptieActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        userIsInteracting = true;
+    }
+
 }
